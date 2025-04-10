@@ -1,17 +1,22 @@
 <script setup lang="ts">
 import HelloWorld from './components/custom/HelloWorld.vue'
+import TheDiscovery from './components/TheDiscovery/TheDiscovery.vue';
 </script>
 
 <template>
+    <TheDiscovery />
+</template>
+
+<!-- <template>
   <div>
     <a href="https://vite.dev" target="_blank">
       <img src="./assets/vue.svg" class="logo" alt="Vite logo" />
     </a>
   </div>
   <HelloWorld msg="Vite + Vue" />
-</template>
+</template> -->
 
-<style scoped>
+<!-- <style scoped>
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -24,4 +29,4 @@ import HelloWorld from './components/custom/HelloWorld.vue'
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
-</style>
+</style> -->
