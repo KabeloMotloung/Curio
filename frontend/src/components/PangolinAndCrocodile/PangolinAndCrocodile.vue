@@ -26,50 +26,105 @@ let ctx: gsap.Context;
 
 onMounted(() => {
   ctx = gsap.context(() => {
-
-
     const imgs = gsap.utils.toArray('.pangolin-image');
     const texts = gsap.utils.toArray('.text-content');
+    
 
+    gsap.to(".arrow", {
+    duration: 1.5,
+    y: 20,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+    scrollTrigger: {
+        trigger: "#arrow",
+        start: "top bottom",
+        toggleActions: "play pause play pause",
+    }
+    });
+
+      const mainTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.header',
+          markers: true,
+          scrub: 4
+        }
+    });
+    mainTimeline.to('.header', {
+    xPercent: 100,
+    scrollTrigger: {
+      trigger: '.header',
+      pin: true,
+      start: "top top",
+      end: "+=2000",
+      scrub: 2,
+    },
+    ease: "none",
+    });
     imgs.forEach((img, index) => {
-      const text = texts[index];
-
-      if (text) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: img,
-            start: "top 85%",
-            end: "top 30%",
-            scrub: true
-          }
-        });
-        tl.to('.SpinPango', {
-          rotation: 360,
-          duration: 1,
-          ease: "circ.out",
+        const text = texts[index];
+        if(img.classList.contains('SpinPango')){
+          mainTimeline.to('.SpinPango', {
           scrollTrigger: {
             trigger: '.SpinPango',
-            scrub: true
+            scrub: 3,
+          },
+          rotation: 360,
+          duration: 2,
+          ease: "circ.out",
+        })
+        }
+        mainTimeline.to(img, {
+          xPercent: -30,
+          yPercent: -40,
+          duration: 3,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: img,
+            scrub: 2,
+            start: "top center",
+            end: "bottom center"
+          }
+        })
+        .to(text, {
+          xPercent: -30,
+          yPercent: -40,
+          duration: 3,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: text,
+            scrub: 2,
+            start: "top center",
+            end: "bottom center"
+          }
+        })
+        .to(img, {
+          xPercent: -100,
+          yPercent: -100,
+          duration: 3,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: img,
+            scrub: 2,
+            start: "top center",
+            end: "bottom center"
+          }
+        })
+        .to(text, {
+          xPercent: -100,
+          yPercent: -100,
+          duration: 3,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: text,
+            scrub: 2,
+            start: "top center",
+            end: "bottom center"
           }
         });
-        tl.from(img, {
-          opacity: 0,
-          scale: 0.8,
-          x: index % 2 === 0 ? -200 : 200, // Alternate image slide directions
-          rotation: -10,
-          duration: 1.5,
-          ease: "slow(0.7,0.7,false)"
-        })
-            .to(img, { rotation: 0, ease: "slow(0.7,0.7,false)", duration: 1.2 }, "-=1")
-            .from(text, {
-              opacity: 0,
-              x: index % 2 !== 0 ? -150 : 150, // Alternate text slide direction
-              duration: 1.5,
-              ease: "slow(0.7,0.7,false)"
-            }, "-=1") // Start text animation slightly earlier
-            .to(text, { y: -20, duration: 1, ease: "slow(0.7,0.7,false)" }, "-=0.5");
       }
-    });
+    )
+    
   }, main.value);
 });
 
@@ -80,11 +135,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="bg-gray-200  h-full w-full ">
+  <div class="bg-gray-200  h-full w-full " style="overflow-x: hidden;">
     <div id="smooth-content">
-      <header class="h-screen flex flex-col justify-center items-center text-center p-8">
+      <header class="header h-screen flex flex-col justify-center items-center text-center p-8">
         <h1 class="text-5xl font-bold text-gray-800 mb-4">Pangolin and Crocodile Gallery</h1>
-        <p class="text-xl text-gray-600">Scroll down to explore the collection</p>
+        <p class="text-xl text-gray-600">Scroll to explore</p>
+        <p class="arrow">|</p>
+        <p class="arrow">&#8595;</p>
       </header>
 
       <section v-for="(image, index) in images" :key="index" class="h-screen flex flex-col md:flex-row items-center justify-between px-16 py-8 space-y-8 md:space-y-0" :class="{'md:flex-row-reverse': index % 2 !== 0}">
@@ -105,5 +162,11 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+
+  .arrow{
+    padding:0;
+    margin:0;
+    line-height: 0.89;
+  }
 
 </style>
