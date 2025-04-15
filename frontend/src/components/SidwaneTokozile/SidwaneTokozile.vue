@@ -114,6 +114,19 @@
                 </div>
             </section>
 
+            <!-- Additional Images Title Section -->
+            <section class="h-screen flex items-center justify-center px-16">
+                <div class="w-full max-w-6xl text-center">
+                    <h2 class="text-6xl font-serif mb-8">Additional Images</h2>
+                    <div class="relative mx-auto max-w-2xl">
+                        <div class="absolute left-0 top-0 w-1 h-full bg-amber-500/20"></div>
+                        <p class="text-lg leading-relaxed pl-6">
+                            Explore different perspectives of Sidwane Tokozile through these detailed views of the sculpture.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             <!-- Additional Images -->
             <section v-for="(image, index) in additionalImages" 
                 :key="index" 
@@ -149,12 +162,12 @@ const image = ref(null)
 const scrollIndicator = ref(null)
 const arrow = ref(null)
 const currentSection = ref(0)
-const totalSections = ref(6) // Total number of sections including main and additional images
+const totalSections = ref(7) // Total number of sections including main, additional images title, and additional images
 
 const additionalImages = [
-    { src: '/angle2.png', alt: 'Additional View', caption: 'Placeholder' },
-    { src: '/side.png', alt: 'Side View', caption: 'Placeholder' },
-    { src: '/side2.png', alt: 'Alternative View', caption: 'Placeholder' },
+    { src: '/angle2.png', alt: 'Full View', caption: 'Full View' },
+    { src: '/side.png', alt: 'Face View', caption: 'Face Close Up' },
+    { src: '/side2.png', alt: 'Side View', caption: 'Side view' },
 ]
 
 // Update current section based on scroll position
@@ -225,23 +238,10 @@ onUnmounted(() => {
 })
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
 .font-serif {
     font-family: 'Playfair Display', serif;
-}
-
-::-webkit-scrollbar {
-    display: none;
-}
-
-* {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 </style>

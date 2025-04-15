@@ -9,3 +9,16 @@
     line-height: 1.5;
     font-weight: 600;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
