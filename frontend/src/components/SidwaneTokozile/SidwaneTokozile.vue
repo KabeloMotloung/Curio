@@ -214,42 +214,6 @@ onMounted(() => {
             duration: 1.2,
             ease: 'power2.out'
         })
-
-        // Animate images within each section
-        const img = section.querySelector('img')
-        if (img) {
-            gsap.from(img, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%',
-                    end: 'bottom 60%',
-                    toggleActions: 'play none none reverse',
-                },
-                scale: 0.9,
-                opacity: 0,
-                duration: 1.2,
-                ease: 'power2.out',
-                delay: 0.2
-            })
-        }
-
-        // Animate text content within each section
-        const textContent = section.querySelector('div:not(.relative)')
-        if (textContent) {
-            gsap.from(textContent, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%',
-                    end: 'bottom 60%',
-                    toggleActions: 'play none none reverse',
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1.2,
-                ease: 'power2.out',
-                delay: 0.4
-            })
-        }
     })
 
     // Add scroll event listener for section indicators
