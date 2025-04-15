@@ -1,214 +1,283 @@
 <template>
-    <div class="fixed inset-0 overflow-hidden flex items-center justify-center font-sans" @wheel="handleScroll"
-        ref="container">
-        <nav class="fixed top-0 left-0 right-0 z-50">
-            <div class="max-w-7xl mx-auto px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="text-white text-2xl font-light tracking-[0.2em]">
-                        CURIO
-                    </div>
-                    <div class="flex items-center gap-8">
-                        <a href="#"
-                            class="text-white/70 text-xs tracking-[0.2em] relative py-2 transition-colors duration-300 hover:text-white font-light group">
-                            <span>DISCOVER</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                        <a href="#"
-                            class="text-white/70 text-xs tracking-[0.2em] relative py-2 transition-colors duration-300 hover:text-white font-light group">
-                            <span>COLLECTIONS</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                        <a href="#"
-                            class="text-white/70 text-xs tracking-[0.2em] relative py-2 transition-colors duration-300 hover:text-white font-light group">
-                            <span>ARTISTS</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                        <a href="#"
-                            class="text-white/70 text-xs tracking-[0.2em] relative py-2 transition-colors duration-300 hover:text-white font-light group">
-                            <span>ABOUT</span>
-                            <span
-                                class="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-cover bg-center blur-3xl" ref="bgA"></div>
-            <div class="absolute inset-0 bg-cover bg-center blur-3xl" ref="bgB"></div>
-        </div>
-
-        <div class="flex items-center justify-center gap-16 relative z-10">
-            <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8">
-                <div class="flex items-center justify-center gap-16">
-                    <div class="relative w-[30vw] h-[80vh] overflow-hidden rounded-2xl" ref="imageContainer">
-                        <div class="absolute inset-0 flex items-center justify-center" ref="imageWrapper">
-                            <img ref="imageA" class="absolute w-full h-full object-cover rounded-2xl" src="" alt="" />
-                            <img ref="imageB" class="absolute w-full h-full object-cover rounded-2xl" src="" alt="" />
-                        </div>
-                    </div>
-
-                    <div class="w-[400px] bg-black/30 backdrop-blur-xl p-8 text-white rounded-2xl"
-                        ref="descriptionPanel">
-                        <div class="flex flex-col gap-6">
-                            <h2 class="text-4xl tracking-wide">Sidwane Tokozile</h2>
-                            <h3 class="text-2xl tracking-wide">About the Artwork</h3>
-                            <p class="text-white/70 text-xs tracking-[0.2em]">
-                                Created by Anton van Wouw, known as the 'father of South African sculpture', this piece
-                                is
-                                believed to share its model with the famous "Bust of a Zulu" (1907).
-                                The sculpture masterfully captures a Zulu man with pronounced cheekbones and an angular
-                                beard,
-                                conveying a sense of humble resignation as he clasps both hands around a mug.
-                            </p>
-                            <p class="text-white/70 text-xs tracking-[0.2em]">
-                                The subject's slumped position and tattered clothing poignantly represent both poverty
-                                and
-                                humble thankfulness. This work, while part of van Wouw's colonial-era output,
-                                successfully
-                                captures the untamed and vulnerable essence of its subject.
-                            </p>
-                            <div class="flex flex-col gap-3">
-                                <div class="flex justify-between">
-                                    <span class="text-white/50 text-xs tracking-[0.2em]">Artist</span>
-                                    <span class="text-white/80 text-xs tracking-[0.2em]">Anton van Wouw</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/50 text-xs tracking-[0.2em]">Year</span>
-                                    <span class="text-white/80 text-xs tracking-[0.2em]">1907</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-white/50 text-xs tracking-[0.2em]">Medium</span>
-                                    <span class="text-white/80 text-xs tracking-[0.2em]">Bronze</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="min-h-screen w-full bg-gradient-to-br from-amber-900 via-zinc-800 to-gray-800 text-white overflow-x-hidden">
+        <!-- Decorative Elements -->
+        <div class="fixed top-0 left-0 w-full h-full pointer-events-none">
+            <div class="absolute top-0 left-0 w-1 h-32 bg-gradient-to-b from-amber-500/20 to-transparent"></div>
+            <div class="absolute top-0 right-0 w-1 h-32 bg-gradient-to-b from-amber-500/20 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 w-1 h-32 bg-gradient-to-t from-amber-500/20 to-transparent"></div>
+            <div class="absolute bottom-0 right-0 w-1 h-32 bg-gradient-to-t from-amber-500/20 to-transparent"></div>
+            
+            <!-- Section Indicators -->
+            <div class="absolute right-8 top-1/2 transform -translate-y-1/2 flex flex-col gap-4">
+                <div v-for="(_, index) in totalSections" 
+                    :key="index"
+                    class="w-2 h-2 rounded-full transition-all duration-300"
+                    :class="currentSection === index ? 'bg-amber-500 scale-150' : 'bg-amber-500/30'"
+                ></div>
             </div>
         </div>
 
-        <div class="fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" ref="scrollIndicator">
-            <div v-for="index in totalImages" :key="index"
-                class="w-2 h-2 rounded-full bg-white/30 transition-all duration-300"
-                :class="{ 'bg-white scale-150': currentImageIndex === index - 1 }"></div>
+        <!-- Main content section -->
+        <div class="h-screen w-full flex items-start p-8 relative">
+            <!-- Title section -->
+            <div class="w-1/2">
+                <h1 ref="title" class="text-[200px] font-serif tracking-tight">
+                    Sidwane Tokozile
+                </h1>
+                <p class="text-xl mt-4 text-amber-200/80">Anton van Wouw, 1907</p>
+                <div class="mt-8 flex items-center gap-4">
+                    <span class="text-amber-200/60">Bronze Sculpture</span>
+                    <div class="w-8 h-px bg-amber-200/30"></div>
+                    <span class="text-amber-200/60">South African Art</span>
+                </div>
+            </div>
+            
+            <!-- Image section -->
+            <div class="w-1/2 h-full flex items-center justify-center">
+                <div class="relative group">
+                    <img ref="image" src="/front.png" alt="Sidwane Tokozile" class="max-h-[80vh] hover:scale-105 transition-transform duration-500" />
+                </div>
+            </div>
+            
+            <!-- Scroll indicator -->
+            <div ref="scrollIndicator" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2">
+                <span class="text-lg tracking-widest font-light text-amber-200/80">SCROLL TO VIEW</span>
+                <div class="w-8 h-12">
+                    <svg ref="arrow" class="w-full h-full" viewBox="0 0 24 24" fill="none"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5L12 19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+       
+        <!-- Scroll-triggered sections -->
+        <div class="relative">
+            <!-- Artist Section -->
+            <section class="h-screen flex items-center justify-center px-16">
+                <div class="flex flex-row items-center w-full max-w-6xl">
+                    <div class="w-1/2">
+                        <div class="relative group">
+                            <img src="/artist.jpg" alt="Anton van Wouw" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                        </div>
+                    </div>
+                    <div class="w-1/2 text-left px-8">
+                        <h2 class="text-4xl mb-4 font-serif">Anton van Wouw</h2>
+                        <div class="relative">
+                            <div class="absolute left-0 top-0 w-1 h-full bg-amber-500/20"></div>
+                            <p class="text-lg leading-relaxed pl-6">
+                                Considered the 'father of South African sculpture', Anton van Wouw created an extraordinary and era-defining body of work, ranging from monumental to small-scale bronzes. His smaller works achieved sculptural expression at a level that his monumental works rarely did.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Historical Context Section -->
+            <section class="h-screen flex items-center justify-center px-16">
+                <div class="flex flex-row-reverse items-center w-full max-w-6xl">
+                    <div class="w-1/2">
+                        <div class="relative group">
+                            <img src="/angle.png" alt="Historical Context" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                        </div>
+                    </div>
+                    <div class="w-1/2 text-left px-8">
+                        <h2 class="text-4xl mb-4 font-serif">Historical Context</h2>
+                        <div class="relative">
+                            <div class="absolute left-0 top-0 w-1 h-full bg-amber-500/20"></div>
+                            <p class="text-lg leading-relaxed pl-6">
+                                Van Wouw grew to have a deep respect for the Boer nation during his stay in the wilderness. This admiration significantly impacted his artistic growth as he related to their tribulations and aspirations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sculpture Details Section -->
+            <section class="h-screen flex items-center justify-center px-16">
+                <div class="flex flex-row items-center w-full max-w-6xl">
+                    <div class="w-1/2">
+                        <div class="relative group">
+                            <img src="/close.png" alt="Sculpture Details" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                        </div>
+                    </div>
+                    <div class="w-1/2 text-left px-8">
+                        <h2 class="text-4xl mb-4 font-serif">The Sculpture</h2>
+                        <div class="relative">
+                            <div class="absolute left-0 top-0 w-1 h-full bg-amber-500/20"></div>
+                            <p class="text-lg leading-relaxed pl-6">
+                                Sidwane Tokozile's slumped position conveys humble resignation as he clasps both hands around a mug. Wearing a head cloth and a tattered shirt that is torn on the left, "the utter poverty and humble thankfulness for the cup of coffee is well represented."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Additional Images -->
+            <section v-for="(image, index) in additionalImages" 
+                :key="index" 
+                :ref="'section' + (index + 3)" 
+                class="h-screen flex items-center justify-center px-16"
+            >
+                <div :class="index % 2 === 0 ? 'flex flex-row items-center' : 'flex flex-row-reverse items-center'"
+                    class="w-full max-w-6xl">
+                    <div class="w-1/2">
+                        <div class="relative group">
+                            <img :src="image.src" :alt="image.alt" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                        </div>
+                    </div>
+                    <div class="w-1/2 text-center px-8">
+                        <p class="mt-4 text-amber-200/80">{{ image.caption }}</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue';
-import { gsap } from 'gsap';
 
-const currentImageIndex = ref(0);
-const totalImages = 4;
-let scrollTimeout: number | null = null;
+<script setup>
+import { onMounted, ref, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
-const imageA = ref<HTMLImageElement | null>(null);
-const imageB = ref<HTMLImageElement | null>(null);
-const activeImg = ref(0);
+gsap.registerPlugin(ScrollTrigger)
 
-const bgA = ref<HTMLElement | null>(null);
-const bgB = ref<HTMLElement | null>(null);
-const activeBg = ref(0);
+const title = ref(null)
+const image = ref(null)
+const scrollIndicator = ref(null)
+const arrow = ref(null)
+const currentSection = ref(0)
+const totalSections = ref(6) // Total number of sections including main and additional images
 
-const container = ref<HTMLElement | null>(null);
-const descriptionPanel = ref<HTMLElement | null>(null);
+const additionalImages = [
+    { src: '/angle2.png', alt: 'Additional View', caption: 'Placeholder' },
+    { src: '/side.png', alt: 'Side View', caption: 'Placeholder' },
+    { src: '/side2.png', alt: 'Alternative View', caption: 'Placeholder' },
+]
 
-const getInactiveImage = () => (activeImg.value === 0 ? imageB.value : imageA.value);
-const getActiveImage = () => (activeImg.value === 0 ? imageA.value : imageB.value);
-
-const getInactiveBg = () => (activeBg.value === 0 ? bgB.value : bgA.value);
-const getActiveBg = () => (activeBg.value === 0 ? bgA.value : bgB.value);
-
-const animateImageAndBgChange = async () => {
-    const activeImage = getActiveImage();
-    const newImage = getInactiveImage();
-    const activeBackground = getActiveBg();
-    const newBackground = getInactiveBg();
-    if (!activeImage || !newImage || !activeBackground || !newBackground) return;
-
-    newImage.src = `/${currentImageIndex.value + 1}.jpg`;
-    gsap.set(newImage, { opacity: 0 });
-    newBackground.style.backgroundImage = `url(/${currentImageIndex.value + 1}.jpg)`;
-    gsap.set(newBackground, { opacity: 0 });
-
-    const tl = gsap.timeline();
-    tl.to([activeImage, activeBackground], {
-        opacity: 0,
-        duration: 0.4,
-        ease: 'power2.inOut'
+// Update current section based on scroll position
+const updateCurrentSection = () => {
+    const sections = document.querySelectorAll('section')
+    const scrollPosition = window.scrollY + window.innerHeight / 2
+    
+    sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection.value = index
+        }
     })
-        .to([newImage, newBackground], {
-            opacity: (el: HTMLElement) =>
-                el === newBackground ? 0.5 : 1,
-            duration: 0.4,
-            ease: 'power2.inOut'
-        }, 0)
-        .then(() => {
-            activeImg.value = activeImg.value === 0 ? 1 : 0;
-            activeBg.value = activeBg.value === 0 ? 1 : 0;
-        });
-};
-
-const handleScroll = (event: WheelEvent) => {
-    event.preventDefault();
-
-    if (scrollTimeout) return;
-    scrollTimeout = window.setTimeout(() => {
-        scrollTimeout = null;
-    }, 100);
-
-    if (event.deltaY > 0) {
-        currentImageIndex.value = (currentImageIndex.value + 1) % totalImages;
-        nextTick(() => animateImageAndBgChange());
-    } else {
-        currentImageIndex.value = (currentImageIndex.value - 1 + totalImages) % totalImages;
-        nextTick(() => animateImageAndBgChange());
-    }
-};
+}
 
 onMounted(() => {
-    if (bgA.value) {
-        bgA.value.style.backgroundImage = `url(/${currentImageIndex.value + 1}.jpg)`;
-        gsap.set(bgA.value, { opacity: 0.5 });
-    }
-    if (bgB.value) {
-        gsap.set(bgB.value, { opacity: 0 });
-    }
+    // Initial animation for title and image
+    gsap.from(title.value, {
+        duration: 1.5,
+        x: -100,
+        opacity: 0,
+        ease: 'power3.out'
+    })
 
-    if (imageA.value) {
-        imageA.value.src = `/${currentImageIndex.value + 1}.jpg`;
-        gsap.set(imageA.value, { opacity: 1 });
-    }
-    if (imageB.value) {
-        gsap.set(imageB.value, { opacity: 0 });
-    }
+    gsap.from(image.value, {
+        duration: 1.5,
+        x: 100,
+        opacity: 0,
+        ease: 'power3.out',
+        delay: 0.3
+    })
 
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-            currentImageIndex.value = (currentImageIndex.value + 1) % totalImages;
-            nextTick(() => animateImageAndBgChange());
-        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-            currentImageIndex.value = (currentImageIndex.value - 1 + totalImages) % totalImages;
-            nextTick(() => animateImageAndBgChange());
-        }
-    });
+    // Scroll indicator animation
+    gsap.to(arrow.value, {
+        duration: 1.5,
+        y: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+    })
 
-    if (descriptionPanel.value) {
-        gsap.from(descriptionPanel.value, {
-            x: 50,
+    // Scroll-triggered animations for each section
+    document.querySelectorAll('section').forEach((section, index) => {
+        const direction = index % 2 === 0 ? -100 : 100
+        
+        gsap.from(section, {
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 80%',
+                end: 'bottom 60%',
+                toggleActions: 'play none none reverse',
+            },
+            x: direction,
             opacity: 0,
-            duration: 0.8,
-            delay: 0.1,
+            duration: 1.2,
             ease: 'power2.out'
-        });
-    }
-});
+        })
+
+        // Animate images within each section
+        const img = section.querySelector('img')
+        if (img) {
+            gsap.from(img, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    end: 'bottom 60%',
+                    toggleActions: 'play none none reverse',
+                },
+                scale: 0.9,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power2.out',
+                delay: 0.2
+            })
+        }
+
+        // Animate text content within each section
+        const textContent = section.querySelector('div:not(.relative)')
+        if (textContent) {
+            gsap.from(textContent, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    end: 'bottom 60%',
+                    toggleActions: 'play none none reverse',
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power2.out',
+                delay: 0.4
+            })
+        }
+    })
+
+    // Add scroll event listener for section indicators
+    window.addEventListener('scroll', updateCurrentSection)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', updateCurrentSection)
+})
 </script>
 
-<style scoped lang="postcss"></style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+.font-serif {
+    font-family: 'Playfair Display', serif;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+</style>
