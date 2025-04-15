@@ -188,14 +188,14 @@ const updateCurrentSection = () => {
 onMounted(() => {
     // Initial animation for title and image
     gsap.from(title.value, {
-        duration: 1.5,
+        duration: 1,
         x: -100,
         opacity: 0,
         ease: 'power3.out'
     })
 
     gsap.from(image.value, {
-        duration: 1.5,
+        duration: 1,
         x: 100,
         opacity: 0,
         ease: 'power3.out',
@@ -204,7 +204,7 @@ onMounted(() => {
 
     // Scroll indicator animation
     gsap.to(arrow.value, {
-        duration: 1.5,
+        duration: 1,
         y: 10,
         repeat: -1,
         yoyo: true,
@@ -220,7 +220,7 @@ onMounted(() => {
                 trigger: section,
                 start: 'top 80%',
                 end: 'bottom 60%',
-                toggleActions: 'play none none reverse',
+                toggleActions: 'play reverse play reverse',
             },
             x: direction,
             opacity: 0,
