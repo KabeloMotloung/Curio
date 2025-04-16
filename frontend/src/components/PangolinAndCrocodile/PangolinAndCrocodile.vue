@@ -138,10 +138,16 @@ onUnmounted(() => {
   <div class="bg-gray-200  h-full w-full " style="overflow-x: hidden;">
     <div id="smooth-content">
       <header class="header h-screen flex flex-col justify-center items-center text-center p-8">
+        <video autoplay muted loop playsinline class="background-video">
+          <source src="../../assets/Pangolin.mov" type="video/mp4" />
+         Your browser does not support the video tag.
+      </video>
+      <div class="header-content">
         <h1 class="text-5xl font-bold text-gray-800 mb-4">Pangolin and Crocodile Gallery</h1>
         <p class="text-xl text-gray-600">Scroll to explore</p>
         <p class="arrow">|</p>
         <p class="arrow">&#8595;</p>
+      </div>
       </header>
 
       <section v-for="(image, index) in images" :key="index" class="h-screen flex flex-col md:flex-row items-center justify-between px-16 py-8 space-y-8 md:space-y-0" :class="{'md:flex-row-reverse': index % 2 !== 0}">
@@ -168,5 +174,16 @@ onUnmounted(() => {
     margin:0;
     line-height: 0.89;
   }
-
+  .background-video {
+  z-index: 0;
+  position: absolute;
+  object-fit: cover;
+}
+.header-content {
+  position: relative;
+  z-index: 1;
+  color: white; /* Make text visible over video */
+  text-align: center;
+  padding-top: 100px;
+}
 </style>
