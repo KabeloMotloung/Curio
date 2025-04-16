@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import PangolinAndCrocodileNoBackground from "../../assets/PangolinAndCrocodile/PangolinAndCrocodile.png";
-import PangolinAndCrocodileBottomViewWhiteBackground from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileBottomViewWhiteBackground.jpg";
-import PangolinAndCrocodileBottomZoomedOutWhiteBackground from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileBottomZoomedOutViewWhiteBackground.jpg";
-import PangolinAndCrocodileLeftViewWhiteBackground from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileLeftViewWhiteBackground.jpg";
-import PangolinAndCrocodileRightViewWhiteBackground from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileRightViewWhiteBackground.jpg";
-import PangolinAndCrocodileWhiteBackground from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileWhiteBackground.jpg";
+import PangolinAndCrocodileBottomView from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileBottomView.png";
+import PangolinAndCrocodileBottomZoomedOut from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileBottomZoomedOutView.png";
+import PangolinAndCrocodileLeftView from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileLeftView.png";
+import PangolinAndCrocodileRightView from "../../assets/PangolinAndCrocodile/PangolinAndCrocodileRightView.png";
+import PangolinAndCrocodile from "../../assets/PangolinAndCrocodile/PangolinAndCrocodile.png";
 
 import { gsap, ScrollTrigger } from "gsap/all";
 import { onMounted, onUnmounted, ref } from "vue";
@@ -14,11 +14,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const images = [
   { src: PangolinAndCrocodileNoBackground, alt: "Pangolin and Crocodile", title: "The Encounter", description: "This unique sculpture captures the moment of interaction between a pangolin and crocodile, symbolizing the delicate balance of nature." },
-  { src: PangolinAndCrocodileBottomViewWhiteBackground, alt: "Bottom View", title: "Bottom View", description: "From below, we can see the intricate details of both creatures, showing the craftsmanship involved in creating this piece." },
-  { src: PangolinAndCrocodileBottomZoomedOutWhiteBackground, alt: "Bottom Zoomed Out", title: "Panoramic View", description: "Stepping back gives us perspective on the full composition, allowing appreciation of the sculpture's overall form and balance." },
-  { src: PangolinAndCrocodileLeftViewWhiteBackground, alt: "Left View", title: "Left Profile", description: "The left view highlights the pangolin's defensive posture, showcasing its scaled armor that has evolved over millions of years." },
-  { src: PangolinAndCrocodileRightViewWhiteBackground, alt: "Right View", title: "Right Profile", description: "From the right side, the crocodile's powerful form becomes more prominent, illustrating the strength and resilience of this ancient predator." },
-  { src: PangolinAndCrocodileWhiteBackground, alt: "Full White Background", title: "Complete Composition", description: "The final view presents the entire sculpture in its intended form, a testament to the beauty of wildlife and artistic expression." }
+  { src: PangolinAndCrocodileBottomView, alt: "Bottom View", title: "Bottom View", description: "From below, we can see the intricate details of both creatures, showing the craftsmanship involved in creating this piece." },
+  { src: PangolinAndCrocodileBottomZoomedOut, alt: "Bottom Zoomed Out", title: "Panoramic View", description: "Stepping back gives us perspective on the full composition, allowing appreciation of the sculpture's overall form and balance." },
+  { src: PangolinAndCrocodileLeftView, alt: "Left View", title: "Left Profile", description: "The left view highlights the pangolin's defensive posture, showcasing its scaled armor that has evolved over millions of years." },
+  { src: PangolinAndCrocodileRightView, alt: "Right View", title: "Right Profile", description: "From the right side, the crocodile's powerful form becomes more prominent, illustrating the strength and resilience of this ancient predator." },
+  { src: PangolinAndCrocodile, alt: "Full White Background", title: "Complete Composition", description: "The final view presents the entire sculpture in its intended form, a testament to the beauty of wildlife and artistic expression." }
 ];
 
 const main = ref();
@@ -50,17 +50,30 @@ onMounted(() => {
           scrub: 4
         }
     });
-    mainTimeline.to('.header', {
-    xPercent: 100,
-    scrollTrigger: {
-      trigger: '.header',
-      pin: true,
-      start: "top top",
-      end: "+=2000",
-      scrub: 2,
-    },
-    ease: "none",
-    });
+    mainTimeline.fromTo(
+      ".header",
+      {
+        xPercent: 0,
+        scale: 1,
+        filter: "blur(0px) brightness(1)",
+        opacity: 1,
+      },
+      {
+        xPercent: 100,
+        scale: 0.8,
+        filter: "blur(8px) brightness(1.2)",
+        opacity: 0.4,
+        scrollTrigger: {
+          trigger: ".header",
+          pin: true,
+          start: "top top",
+          end: "+=1000",
+          scrub: 2,
+          anticipatePin: 1,
+        },
+        ease: "power3.inOut",
+      }
+    );
     imgs.forEach((img, index) => {
         const text = texts[index];
         if(img.classList.contains('SpinPango')){
@@ -80,10 +93,9 @@ onMounted(() => {
           duration: 3,
           ease: "power1.inOut",
           scrollTrigger: {
+            markers: true,
             trigger: img,
             scrub: 2,
-            start: "top center",
-            end: "bottom center"
           }
         })
         .to(text, {
@@ -92,10 +104,9 @@ onMounted(() => {
           duration: 3,
           ease: "power1.inOut",
           scrollTrigger: {
+            markers: true,
             trigger: text,
             scrub: 2,
-            start: "top center",
-            end: "bottom center"
           }
         })
         .to(img, {
@@ -106,8 +117,6 @@ onMounted(() => {
           scrollTrigger: {
             trigger: img,
             scrub: 2,
-            start: "top center",
-            end: "bottom center"
           }
         })
         .to(text, {
@@ -118,8 +127,6 @@ onMounted(() => {
           scrollTrigger: {
             trigger: text,
             scrub: 2,
-            start: "top center",
-            end: "bottom center"
           }
         });
       }
@@ -135,19 +142,25 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="bg-gray-200  h-full w-full " style="overflow-x: hidden;">
+  <div class="bg-gradient-to-tl from-slate-200 to-slate-50 h-full w-full" style="overflow-x: hidden;">
     <div id="smooth-content">
       <header class="header h-screen flex flex-col justify-center items-center text-center p-8">
         <video autoplay muted loop playsinline class="background-video">
           <source src="../../assets/Pangolin.mov" type="video/mp4" />
-         Your browser does not support the video tag.
-      </video>
-      <div class="header-content">
-        <h1 class="text-5xl font-bold text-gray-800 mb-4">Pangolin and Crocodile Gallery</h1>
-        <p class="text-xl text-gray-600">Scroll to explore</p>
-        <p class="arrow">|</p>
-        <p class="arrow">&#8595;</p>
-      </div>
+          Your browser does not support the video tag.
+        </video>
+        <div class="behind-video">
+
+            <h2 class="text-white text-6xl font-bold opacity-0" id="backgroundTitle">
+              Wildlife in Focus
+            </h2>
+        </div>
+        <div class="header-content">
+          <h1 class="text-5xl font-bold text-amber-100 mb-4 drop-shadow-lg">Pangolin and Crocodile Gallery</h1>
+          <p class="text-xl text-amber-200/90 drop-shadow-lg">Scroll to explore</p>
+          <p class="arrow text-amber-200/90">|</p>
+          <p class="arrow text-amber-200/90">&#8595;</p>
+        </div>
       </header>
 
       <section v-for="(image, index) in images" :key="index" class="h-screen flex flex-col md:flex-row items-center justify-between px-16 py-8 space-y-8 md:space-y-0" :class="{'md:flex-row-reverse': index % 2 !== 0}">
@@ -182,8 +195,14 @@ onUnmounted(() => {
 .header-content {
   position: relative;
   z-index: 1;
-  color: white; /* Make text visible over video */
   text-align: center;
-  padding-top: 100px;
+}
+.behind-video {
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #000;
 }
 </style>
