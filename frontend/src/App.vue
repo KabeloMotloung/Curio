@@ -5,7 +5,6 @@ import TheDiscoveryCard from './components/Cards/TheDiscoveryCard.vue';
 
 <template>
   <!-- <LandingPage>  -->
-   <TheDiscoveryCard
-    />
+    <RouterView/>
   <!-- </LandingPage> -->
 </template>
