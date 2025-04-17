@@ -9,10 +9,11 @@ import imgUrl from '../../assets/LandingPage/ImageOfMuseum.jpeg'
 <style>
 .image-of-museum {
     width: 100%;
-    height: 80vh;
+    height: 90vh;
     /* object-fit: cover; */
     /* object-position: center; */
     /* position: absolute; */
     z-index: -1; /* Ensure the image is behind other content */
+    filter: blur(5px); /* Adjust the blur amount here */
 }
 </style>
