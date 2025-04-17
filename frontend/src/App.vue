@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import LandingPage from './components/LandingPage/LandingPage.vue';
+// import LandingPage from './components/LandingPage/LandingPage.vue';
 </script>
 
 <template>
-  <LandingPage/>
+  <!-- <LandingPage>  -->
+   
+  <!-- </LandingPage> -->
 </template>
