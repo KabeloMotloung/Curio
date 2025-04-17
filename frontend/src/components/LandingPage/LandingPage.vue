@@ -9,7 +9,7 @@ import imgUrl from '../../assets/LandingPage/ImageOfMuseum.jpeg'
 <style>
 .image-of-museum {
     width: 100%;
-    height: 90vh;
+    height: 85vh;
     /* object-fit: cover; */
     /* object-position: center; */
     /* position: absolute; */
