@@ -1,9 +1,8 @@
 <template>
   <div class="relative w-full overflow-hidden h-[300vh]">
-    <!-- Sky Background with oil painting colors -->
     <div class="fixed inset-0 bg-transition" ref="skyBackground">
       <img 
-        src="./sky-background.jpg" 
+        src="./assets/sky-background.jpg" 
         class="h-screen w-full object-cover" 
         ref="background" 
         alt="Background 1"
@@ -11,101 +10,88 @@
     </div>
 
 
-    <!-- Cloud Images Container -->
     <div class="fixed inset-0 pointer-events-none" ref="cloudContainer">      
-      <div class="absolute top-0 left-0 w-full h-screen flex items-center justify-center text-4xl text-white">
-      <h1>The Swan</h1>
-    </div>
-      <!-- Cloud images -->
+      <div class="absolute top-[10%] left-0 w-full flex items-center justify-center text-white/90 transition-opacity duration-500" ref="titleText">
+        <h1 class="text-7xl font-extralight tracking-[0.25em] uppercase">The Swan</h1>
+      </div>
       <img 
-        src="./cloud.png" 
-        class="absolute top-[15%] left-[10%] w-[30%] opacity-0" 
+        src="./assets/cloud.png" 
+        class="absolute top-[15%] left-[10%] w-[30%] opacity-0 animate-float-slow" 
         ref="cloud1" 
         alt="Cloud 1"
       />
       <img 
-        src="./cloud.png" 
-        class="absolute top-[25%] right-[20%] w-[40%] opacity-0" 
+        src="./assets/cloud.png" 
+        class="absolute top-[25%] right-[20%] w-[40%] opacity-0 animate-float-medium" 
         ref="cloud2" 
         alt="Cloud 2"
       />
       <img 
-        src="./cloud.png" 
-        class="absolute top-[60%] left-[30%] w-[35%] opacity-0" 
+        src="./assets/cloud.png" 
+        class="absolute top-[60%] left-[30%] w-[35%] opacity-0 animate-float-fast" 
         ref="cloud3" 
         alt="Cloud 3"
       />
     </div>
-    <!-- Main container for the painting -->
+
+    <div class="fixed bottom-12 left-1/2 -translate-x-1/2 text-[#1F2937] flex flex-col items-center gap-3 transition-opacity duration-500" ref="scrollIndicator">
+      <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway']">Scroll to explore</span>
+      <svg class="w-5 h-5 animate-bounce opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 13l-7 7-7-7"></path>
+      </svg>
+    </div>
+
     <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
-      <!-- Painting container with scroll animation -->
       <div ref="paintingContainer" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1200px] aspect-[4/3] opacity-0">
-        <!-- Antique Picture Frame -->
         <div class="relative w-full h-full">
-          <!-- Frame background -->
           <div class="absolute inset-0 bg-[#1a0f0f]/95"></div>
           
-          <!-- Wood grain texture overlays -->
           <div class="absolute inset-0">
-            <!-- Deep wood grain (primary) -->
             <div class="absolute inset-0 opacity-25">
               <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0id29vZCIgd2lkdGg9IjUiIGhlaWdodD0iNSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA1IDAgTCAwIDAgMCA1IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0gMCAwIEwgNSA1IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0gNSAwIEwgMCA1IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjd29vZCkiLz48L3N2Zz4=')]"></div>
             </div>
             
-            <!-- Aged wood grain (secondary) -->
             <div class="absolute inset-0 opacity-20">
               <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0id29vZDIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTSAwIDAgTCAxMCAxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDEwIDAgTCAwIDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjd29vZDIpIi8+PC9zdmc+')]"></div>
             </div>
             
-            <!-- Natural imperfections -->
             <div class="absolute inset-0 opacity-15">
               <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0iaW1wZXJmZWN0aW9ucyIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDIwIDAgTCAwIDAgMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDAgMCAgTCAyMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDIwIDAgTCAwIDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0gMTAgMCAgTCAwIDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0gMjAgMTAgIEwgMTAgMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0idXJsKCNpbXBlcmZlY3Rpb25zKSIvPjwvc3ZnPg==')]"></div>
           </div>
 
-          <!-- Wood knots and cracks -->
           <div class="absolute inset-0 opacity-10">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0ia25vdHMiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDIwIDAgTCAyMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDAgMjAgTCA0MCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJ1cmwoI2tub3RzKSIvPjwvc3ZnPg==')]"></div>
           </div>
         </div>
         
-        <!-- Outer frame layer with 3D effect -->
         <div class="absolute inset-0 border-[12px] border-[#2a1f1f] bg-gradient-to-b from-[#3a2f2f] via-[#2a1f1f] to-[#1a0f0f] shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
-          <!-- Natural wood color variations -->
           <div class="absolute inset-0 bg-[#4a3f3f]/20"></div>
           <div class="absolute inset-0 bg-[#5a4f4f]/10"></div>
           <div class="absolute inset-0 bg-[#3a2f2f]/30"></div>
-          <!-- 3D depth effect -->
           <div class="absolute inset-0 bg-gradient-to-r from-[#2a1f1f]/50 to-transparent"></div>
           <div class="absolute inset-0 bg-gradient-to-b from-[#2a1f1f]/50 to-transparent"></div>
         </div>
         
-        <!-- Inner frame layers with 3D effect -->
         <div class="absolute inset-12 border-6 border-[#2a1f1f] bg-gradient-to-b from-[#3a2f2f] via-[#2a1f1f] to-[#1a0f0f] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)]">
-          <!-- Natural wood color variations -->
           <div class="absolute inset-0 bg-[#4a3f3f]/15"></div>
           <div class="absolute inset-0 bg-[#5a4f4f]/8"></div>
           <div class="absolute inset-0 bg-[#3a2f2f]/25"></div>
-          <!-- 3D depth effect -->
           <div class="absolute inset-0 bg-gradient-to-r from-[#2a1f1f]/40 to-transparent"></div>
           <div class="absolute inset-0 bg-gradient-to-b from-[#2a1f1f]/40 to-transparent"></div>
         </div>
         <div class="absolute inset-16 border-4 border-[#1a0f0f] bg-gradient-to-b from-[#2a1f1f] to-[#1a0f0f] shadow-[inset_0_0_10px_rgba(0,0,0,0.3)]">
-          <!-- Natural wood color variations -->
           <div class="absolute inset-0 bg-[#4a3f3f]/10"></div>
           <div class="absolute inset-0 bg-[#5a4f4f]/5"></div>
           <div class="absolute inset-0 bg-[#3a2f2f]/20"></div>
-          <!-- 3D depth effect -->
           <div class="absolute inset-0 bg-gradient-to-r from-[#2a1f1f]/30 to-transparent"></div>
           <div class="absolute inset-0 bg-gradient-to-b from-[#2a1f1f]/30 to-transparent"></div>
         </div>
         
-        <!-- Inner border transition -->
         <div class="absolute inset-20 border-2 border-[#2a1f1f]/20"></div>
         <div class="absolute inset-20 bg-gradient-to-b from-[#1a0f0f]/40 via-[#1a0f0f]/20 to-[#1a0f0f]/10"></div>
         <div class="absolute inset-20 bg-gradient-to-r from-[#1a0f0f]/40 via-[#1a0f0f]/20 to-[#1a0f0f]/10"></div>
         <div class="absolute inset-20 bg-gradient-to-tr from-[#1a0f0f]/30 via-transparent to-transparent"></div>
         
-        <!-- Aged gold accents with 3D effect -->
         <div class="absolute top-0 left-0 w-32 h-32 border-t-8 border-l-8 border-[#b49474] transform rotate-0 shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3)]">
           <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#c4a484] transform rotate-0"></div>
           <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#a48464] transform rotate-180"></div>
@@ -123,7 +109,6 @@
           <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#a48464] transform rotate-0"></div>
         </div>
 
-        <!-- Aged decorative elements with 3D effect -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-16 border-t-4 border-[#b49474] shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3)]">
           <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-8 border-t-2 border-[#c4a484]"></div>
         </div>
@@ -137,17 +122,13 @@
           <div class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-32 border-r-2 border-[#c4a484]"></div>
         </div>
 
-        <!-- The Swan Image -->
           <div id = "painting" class="absolute inset-20 w-[calc(100%-10rem)] h-[calc(100%-10rem)]">
-          <!-- Image vignette overlay -->
           <div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#1a0f0f]/40"></div>
-          <!-- Natural texture overlay -->
           <div class="absolute inset-0 opacity-10">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0idGV4dHVyZSIgd2lkdGg9IjUiIGhlaWdodD0iNSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA1IDAgTCAwIDAgMCA1IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjdGV4dHVyZSkiLz48L3N2Zz4=')]"></div>
           </div>
-          <!-- The actual image -->
           <img 
-            src="../../../assets/TheSwan.png" 
+            src="./assets/TheSwan.png" 
             alt="The Swan" 
             class="w-full h-full object-contain brightness-90 drop-shadow-[0_0_10px_rgba(0,0,0,0.2)]"
           />
@@ -155,60 +136,89 @@
         </div>
       </div>
 
-      <!-- Parchment card container -->
       <div ref="parchmentContainer" class="fixed top-1/2 right-0 w-[35vw] max-w-[500px] transform translate-y-1/2 translate-x-full opacity-0">
-        <!-- Parchment background -->
-        <div class="relative bg-[#f4e4bc] shadow-2xl p-6 rounded-lg">
-          <!-- Parchment texture -->
-          <div class="absolute inset-0 opacity-20">
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0icGFyY2htZW50IiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gMTAgMCBMIDAgMCAwIDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0gMCAwIEwgMTAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PHBhdGggZD0iTSAxMCAwIEwgMCAxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJ1cmwoI3BhcmNobWVudCkiLz48L3N2Zz4=')]"></div>
-          </div>
+        <div class="relative p-6 rounded-lg overflow-hidden bg-transparent">
+          <img 
+            :src="currentParchmentImage" 
+            class="absolute inset-0 w-full h-full object-contain"
+            alt="Parchment"
+          />
           
-          <!-- Aged edges -->
-          <div class="absolute inset-0 border-4 border-[#e4d4ac] rounded-lg"></div>
-          <div class="absolute inset-2 border-2 border-[#d4c49c] rounded-lg"></div>
-          
-          <!-- Content -->
-          <div class="relative z-10">
-            <h2 class="text-2xl font-serif text-[#2a1f1f] mb-4">The Swan</h2>
-            <div class="space-y-4 text-[#2a1f1f]">
-              <div>
-                <h3 class="text-lg font-serif mb-2">Jan Jacob Spohler</h3>
-                <p class="text-base">1849</p>
-              </div>
-              
-              <div>
-                <h3 class="text-lg font-serif mb-3">Key Details</h3>
-                <p class="text-sm mb-3">Oil on Canvas by Dutch artist Jan Jacob Spohler (1811-1879). The painting depicts "Het Zwaantjie" (The Swan), an imagined inn set against a dramatic cloudy sky, with a small ship and the St. Dionysius church of Tilburg in the background.</p>
-              </div>
+          <div class="relative z-10 px-12 py-20">
+            <div class="relative" :style="{ 
+              opacity: currentParchmentIndex >= 7 ? 1 : 0
+            }">
+              <h2 class="text-2xl font-serif text-[#2a1f1f] mb-1">The Swan</h2>
+            </div>
 
-              <div>
-                <h3 class="text-lg font-serif mb-3">Hidden Symbolism</h3>
-                <p class="text-sm mb-3">The painting is rich with symbols of death and transition: a ghostly figure at the inn's entrance, a swan (believed to carry souls to the afterlife), a knotted bale of hay on the roof, and a black flag on the boat. The inn itself represents a place between life and the afterlife.</p>
+            <div class="relative" :style="{ 
+              opacity: currentParchmentIndex >= 7 ? 1 : 0
+            }">
+              <div class="space-y-1 text-[#2a1f1f] mb-4">
+                <div>
+                  <h3 class="text-lg font-serif mb-1">Jan Jacob Spohler</h3>
+                  <p class="text-base mb-0">1849</p>
+                </div>
               </div>
+            </div>
 
-              <div>
-                <h3 class="text-lg font-serif mb-3">Historical Significance</h3>
-                <p class="text-sm mb-3">The painting is believed to commemorate the death of King Willem II of the Netherlands, who died in Tilburg in 1849. This is suggested by the presence of the Dutch flag, the Tilburg church, and the death symbolism throughout the composition.</p>
+            <div class="relative" :style="{ 
+              opacity: currentParchmentIndex >= 3 ? 1 : 0,
+              transform: `translateY(${
+                currentParchmentIndex >= 6 ? 0 : 
+                currentParchmentIndex >= 5 ? 0 :
+                currentParchmentIndex >= 3.5 ? 110 :
+                currentParchmentIndex >= 3 ? 135 : 135
+              }px)`,
+              transition: 'opacity 0.03s ease-out, transform 0.1s ease-out'
+            }">
+              <div class="space-y-1 text-[#2a1f1f] mb-4">
+                <div>
+                  <h3 class="text-lg font-serif mb-2">Key Details</h3>
+                  <p class="text-base">Oil on Canvas by Dutch artist Jan Jacob Spohler. Depicts "Het Zwaantjie" (The Swan), an imagined inn with the St. Dionysius church of Tilburg in the background.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative" :style="{ 
+              opacity: currentParchmentIndex >= 5 ? 1 : 0,
+              transform: `translateY(${currentParchmentIndex >= 6 ? 0 : 20}px)`,
+              transition: 'opacity 0.1s ease-out, transform 0.1s ease-out'
+            }">
+              <div class="space-y-1 text-[#2a1f1f] mb-4">
+                <div>
+                  <h3 class="text-lg font-serif mb-2">Hidden Symbolism</h3>
+                  <p class="text-base">Rich with symbols of death and transition: a ghostly figure at the entrance, a swan (carrying souls to the afterlife), a knotted bale of hay, and a black flag. The inn represents a threshold between life and the afterlife.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="relative" :style="{ 
+              opacity: currentParchmentIndex >= 7 ? 1 : 0
+            }">
+              <div class="space-y-1 text-[#2a1f1f]">
+                <div>
+                  <h3 class="text-lg font-serif mb-2">Historical Significance</h3>
+                  <p class="text-base">Commemorates the death of King Willem II of the Netherlands in Tilburg (1849), symbolized by the Dutch flag, Tilburg church, and death imagery throughout.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
 </template>
 
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
-// Refs for animation elements
+
 const paintingContainer = ref<HTMLElement | null>(null)
 const parchmentContainer = ref<HTMLElement | null>(null)
 const skyBackground = ref<HTMLElement | null>(null)
@@ -216,38 +226,56 @@ const cloudContainer = ref<HTMLElement | null>(null)
 const cloud1 = ref<HTMLElement | null>(null)
 const cloud2 = ref<HTMLElement | null>(null)
 const cloud3 = ref<HTMLElement | null>(null)
+const titleText = ref<HTMLElement | null>(null)
+const scrollIndicator = ref<HTMLElement | null>(null)
 
-// Animation parameters
-const PAINTING_REVEAL_START = 0.1; 
-const PAINTING_REVEAL_END = 0.3;    
-const PARCHMENT_REVEAL_END = 0.7;   
+const currentParchmentIndex = ref(1)
+const contentOpacity = ref(0)
 
+const currentParchmentImage = computed(() => {
+  return new URL(`./assets/parchments/parchment-${currentParchmentIndex.value}.png`, import.meta.url).href
+})
+
+const PAINTING_REVEAL_START = 0.1
+const PAINTING_REVEAL_END = 0.3
+const PARCHMENT_REVEAL_END = 0.9
+const PARCHMENT_STAGES = 7
+const PARCHMENT_MOVE_DURATION = 0.2
 
 let scrollPosition = 0
 let ticking = false
 
 const animateOnScroll = () => {
-  // Get scroll progress as percentage (0 to 1)
   const maxScroll = document.body.scrollHeight - window.innerHeight;
   scrollPosition = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-  scrollPosition = Math.max(0, Math.min(1, scrollPosition)); // Clamp between 0 and 1
+  scrollPosition = Math.max(0, Math.min(1, scrollPosition));
   
-  // Update progress indicator
   if (document.getElementById('scrollProgress')) {
     document.getElementById('scrollProgress').textContent = `${Math.round(scrollPosition * 100)}%`
   }
   
-  // Only request animation frame if we're not already processing one
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      // Animate cloud images - start fully visible and move off screen
+      if (titleText.value && scrollIndicator.value) {
+        const fadeProgress = Math.min(1, (scrollPosition - PAINTING_REVEAL_START) / 
+                           (PAINTING_REVEAL_END - PAINTING_REVEAL_START));
+        
+        gsap.to(titleText.value, {
+          opacity: Math.max(0, 1 - fadeProgress * 2),
+          y: -50 * fadeProgress,
+          duration: 0.1
+        });
+
+        gsap.to(scrollIndicator.value, {
+          opacity: Math.max(0, 1 - fadeProgress * 3), 
+          duration: 0.1
+        });
+      }
+
       if (cloud1.value && cloud2.value && cloud3.value) {
-        // Cloud animation based on painting visibility
-        // When painting starts to appear, clouds start to move off screen
         const cloudAnimProgress = Math.min(1, (scrollPosition - PAINTING_REVEAL_START) / 
                                  (PAINTING_REVEAL_END - PAINTING_REVEAL_START));
         
-        // Cloud 1 - moves left off screen
         const cloud1X = 10 - (cloudAnimProgress * 110); 
         gsap.to(cloud1.value, {
           left: `${cloud1X}%`,
@@ -255,7 +283,6 @@ const animateOnScroll = () => {
           duration: 0.1
         });
         
-        // Cloud 2 - moves right off screen
         const cloud2X = 20 + (cloudAnimProgress * 110);
         gsap.to(cloud2.value, {
           right: `${-cloud2X}%`,
@@ -263,7 +290,6 @@ const animateOnScroll = () => {
           duration: 0.1
         });
         
-        // Cloud 3 - moves down off screen
         const cloud3Y = 60 + (cloudAnimProgress * 70);
         gsap.to(cloud3.value, {
           top: `${cloud3Y}%`,
@@ -272,15 +298,12 @@ const animateOnScroll = () => {
         });
       }
       
-// Painting animation - now with transition to left side and shrink
 if (paintingContainer.value) {
-  // Initial reveal animation (from the first part of the scroll)
   if (scrollPosition < PAINTING_REVEAL_END) {
-    // Calculate painting reveal progress
+
     const paintingProgress = Math.max(0, Math.min(1, (scrollPosition - PAINTING_REVEAL_START) / 
                                      (PAINTING_REVEAL_END - PAINTING_REVEAL_START)));
     
-    // Scale and opacity based on scroll
     const paintingScale = 0.7 + (paintingProgress * 0.3); 
     const paintingOpacity = paintingProgress;
     
@@ -291,11 +314,8 @@ if (paintingContainer.value) {
       duration: 0.1
     });
   } else {
-    // After painting is fully revealed, start moving it to the left and shrinking
-    // Calculate progress for this phase with a shorter scroll range
     const laterScrollProgress = Math.max(0, Math.min(1, (scrollPosition - PAINTING_REVEAL_END) / 0.1));
     
-    // Calculate painting shrink and move left
     const paintingScale = 1 - (laterScrollProgress * 0.3); 
     const paintingX = laterScrollProgress * -25; 
     
@@ -308,28 +328,39 @@ if (paintingContainer.value) {
   }
 }
 
-// Parchment animation - only start after painting is fully shrunk
 if (parchmentContainer.value) {
-  // Define when painting should be completely shrunk 
-  const PAINTING_SHRINK_COMPLETE = PAINTING_REVEAL_END + 0.1;
+  const PAINTING_SHRINK_COMPLETE = PAINTING_REVEAL_END + 0.1
   
   if (scrollPosition > PAINTING_SHRINK_COMPLETE) {
-    // Calculate parchment reveal progress after painting is shrunk
-    const parchmentProgress = Math.max(0, Math.min(1, (scrollPosition - PAINTING_SHRINK_COMPLETE) / 
-                                     (PARCHMENT_REVEAL_END - PAINTING_SHRINK_COMPLETE)));
-    
-    // Position based on scroll - move from right side into position
-    const parchmentX = 100 - (parchmentProgress * 150); 
-    const parchmentY = -20 - (parchmentProgress * 30); 
+    const moveProgress = Math.min(1, (scrollPosition - PAINTING_SHRINK_COMPLETE) / PARCHMENT_MOVE_DURATION);
+    const parchmentX = 100 - (moveProgress * 150); 
+    const parchmentY = -20 - (moveProgress * 30); 
     
     gsap.to(parchmentContainer.value, {
       x: `${parchmentX}%`,
       y: `${parchmentY}%`,
-      opacity: 1, // Always fully visible - no fade
+      opacity: 1,
       duration: 0.1
     });
+
+    if (moveProgress >= 1) {
+      const unrollProgress = (scrollPosition - (PAINTING_SHRINK_COMPLETE + PARCHMENT_MOVE_DURATION)) / 
+                           (PARCHMENT_REVEAL_END - (PAINTING_SHRINK_COMPLETE + PARCHMENT_MOVE_DURATION));
+      
+      const parchmentStage = Math.min(
+        PARCHMENT_STAGES,
+        Math.max(1, Math.ceil(unrollProgress * PARCHMENT_STAGES))
+      );
+      currentParchmentIndex.value = parchmentStage;
+      
+      contentOpacity.value = Math.min(1, unrollProgress * 1.2);
+    } else {
+      currentParchmentIndex.value = 1;
+      contentOpacity.value = 0;
+    }
   } else {
-    // Reset parchment when scrolling back up - keep it off screen to the right
+    currentParchmentIndex.value = 1;
+    contentOpacity.value = 0;
     gsap.to(parchmentContainer.value, {
       x: '100%',
       y: '0%',
@@ -344,10 +375,8 @@ if (parchmentContainer.value) {
   }
 }
 
-// Set up and tear down the scroll event listener
 onMounted(() => {
   window.addEventListener('scroll', animateOnScroll);
-  // Initialize positions
   animateOnScroll();
 })
 
@@ -357,10 +386,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Import period-appropriate fonts */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap');
 
-/* Smooth transitions */
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -372,15 +401,13 @@ html, body {
   height: 100%;
 }
 
-/* Background transition */
 .bg-transition {
   transition: background-color 0.5s ease, background-image 0.5s ease;
 }
 
-/* Text styling */
 p {
-  line-height: 1.8;
-  margin-bottom: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
   font-family: 'Dancing Script', cursive;
   font-size: 1.2rem;
   font-weight: 800;
@@ -388,7 +415,21 @@ p {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2, h3 {
+.parchment-text h1,
+.parchment-text h2,
+.parchment-text h3,
+.parchment-text p {
+  font-family: 'Dancing Script', cursive;
+}
+
+h1 {
+  font-family: 'Raleway', sans-serif !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: #E5E7EB !important;
+  font-weight: 200 !important;
+}
+
+h2, h3 {
   font-family: 'Dancing Script', cursive;
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -396,93 +437,71 @@ h1, h2, h3 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid #2a1f1f;
-  padding-bottom: 0.5rem;
+[ref="scrollIndicator"] {
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
+  font-weight: 200;
 }
 
-h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+[ref="scrollIndicator"] span {
+  font-family: 'Raleway', sans-serif !important;
 }
 
-/* Painting container */
-#painting {
-  filter: brightness(0.7) contrast(1.05);
-  transition: filter 0.2s ease-in-out;
+@keyframes floatSlow {
+  0%, 100% { 
+    transform: translate(0, 0) rotate(0deg); 
+  }
+  25% {
+    transform: translate(25px, 8px) rotate(1deg);
+  }
+  75% {
+    transform: translate(-15px, -5px) rotate(-1deg);
+  }
 }
 
-/* Cloud animations for subtle motion */
-@keyframes driftSlow {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(20px); }
-  100% { transform: translateX(0); }
+@keyframes floatMedium {
+  0%, 100% { 
+    transform: translate(0, 0) rotate(0deg); 
+  }
+  33% {
+    transform: translate(-30px, 10px) rotate(-1deg);
+  }
+  66% {
+    transform: translate(20px, -8px) rotate(1deg);
+  }
 }
 
-@keyframes driftMedium {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(-15px); }
-  100% { transform: translateX(0); }
+@keyframes floatFast {
+  0%, 100% { 
+    transform: translate(0, 0) rotate(0deg); 
+  }
+  40% {
+    transform: translate(35px, -12px) rotate(1.5deg);
+  }
+  60% {
+    transform: translate(-25px, 8px) rotate(-1deg);
+  }
 }
 
-@keyframes driftFast {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(10px); }
-  100% { transform: translateX(0); }
+.animate-float-slow {
+  animation: floatSlow 12s ease-in-out infinite;
+  will-change: transform;
 }
 
-/* Apply cloud drift animations to images */
-[ref="cloud1"] {
-  animation: driftSlow 30s ease-in-out infinite;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+.animate-float-medium {
+  animation: floatMedium 14s ease-in-out infinite;
+  will-change: transform;
 }
 
-[ref="cloud2"] {
-  animation: driftMedium 25s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+.animate-float-fast {
+  animation: floatFast 10s ease-in-out infinite;
+  will-change: transform;
 }
 
+[ref="cloud1"],
+[ref="cloud2"],
 [ref="cloud3"] {
-  animation: driftFast 20s ease-in-out infinite;
-  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transform-origin: center center;
 }
 
-/* Add styles for parchment card */
-.parchment-card {
-  background: linear-gradient(to bottom, #f4e4bc, #e4d4ac);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Add text styling for parchment */
-.parchment-text {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Add decorative elements to text */
-h2::before,
-h2::after {
-  content: "❧";
-  margin: 0 1rem;
-  color: #2a1f1f;
-  opacity: 0.5;
-}
-
-/* Add ink-like effect to text */
-p {
-  position: relative;
-}
-
-p::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #2a1f1f, transparent);
-  opacity: 0.1;
-}
 </style> 
