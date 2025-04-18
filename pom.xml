@@ -28,7 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<kotlin.version>1.9.25</kotlin.version>
+		<kotlin.version>2.1.20</kotlin.version>
+		<aws.sdk.kotlin.version>1.4.65</aws.sdk.kotlin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -57,6 +58,12 @@
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-test-junit5</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>aws.sdk.kotlin</groupId>
+			<artifactId>s3-jvm</artifactId>
+			<version>${aws.sdk.kotlin.version}</version>
 		</dependency>
 	</dependencies>
 
