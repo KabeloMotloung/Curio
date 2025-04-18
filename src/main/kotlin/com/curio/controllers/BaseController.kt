@@ -1,4 +1,4 @@
-package controllers
+package com.curio.controllers
 
 import com.curio.CurioApplication
 import org.springframework.http.HttpStatus

@@ -1,4 +1,4 @@
-package controllers
+package com.curio.controllers
 
 import com.curio.CurioApplication
 import org.springframework.http.HttpStatus
@@ -14,6 +14,7 @@ class S3Controller(application: CurioApplication) : BaseController(application){
 
     @GetMapping
     fun get():ResponseEntity<String>{
+        application.main()
         return ResponseEntity("Hello World", HttpStatus.OK)
     }
 }
