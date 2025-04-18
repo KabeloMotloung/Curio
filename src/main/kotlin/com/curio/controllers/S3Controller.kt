@@ -1,6 +1,6 @@
 package com.curio.controllers
 
-import com.curio.CurioApplication
+import com.curio.services.S3Services
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/s3/")
-class S3Controller(application: CurioApplication) : BaseController(application){
+class S3Controller(private val s3: S3Services) : BaseController() {
     @Cacheable("s3ResponseCache")
     @GetMapping
     fun get(): ResponseEntity<List<String>> {
-        val urls=application.main()
+        val urls = s3.getObjects()
         return ResponseEntity(urls, HttpStatus.OK)
     }
 }
