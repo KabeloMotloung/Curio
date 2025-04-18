@@ -16,8 +16,8 @@ class DynamoDBController(private val dynamoDB: DynamoDBService) : BaseController
     @Cacheable("dynamoDB")
     @GetMapping
     fun get(): ResponseEntity<List<Map<String, String>>> {
-        val test = dynamoDB.getAllRecords()
-        return ResponseEntity(test, HttpStatus.OK)
+        val rows = dynamoDB.getAllRecords()
+        return ResponseEntity(rows, HttpStatus.OK)
     }
 
 }
