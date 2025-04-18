@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import HelloWorld from './components/custom/HelloWorld.vue'
+// import HelloWorld from './components/custom/HelloWorld.vue'
+import SpindleWhorl from './components/custom/SpindleWhorl.vue';
+
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     <a href="https://vite.dev" target="_blank">
       <img src="./assets/vue.svg" class="logo" alt="Vite logo" />
     </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  </div> -->
+  <!-- <HelloWorld msg="Vite + Vue" /> --> 
+  <SpindleWhorl />
 </template>
 
 <style scoped>
