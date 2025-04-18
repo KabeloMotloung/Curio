@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class S3Services {
+class S3Service {
     fun getObjects(): List<String> = runBlocking {
         val region = System.getenv("AWS_REGION")
         val bucketName = System.getenv("AWS_BUCKET_NAME")

@@ -1,6 +1,6 @@
 package com.curio.controllers
 
-import com.curio.services.S3Service
+import com.curio.services.DynamoDBService
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-@RequestMapping("/api/v1/s3/")
-class S3Controller(private val s3: S3Service) : BaseController() {
-    @Cacheable("s3")
+@RequestMapping("/api/v1/dynamoDB/")
+class DynamoDBController(private val dynamoDB: DynamoDBService) : BaseController() {
+
+    @Cacheable("dynamoDB")
     @GetMapping
-    fun get(): ResponseEntity<List<String>> {
-        val urls = s3.getObjects()
-        return ResponseEntity(urls, HttpStatus.OK)
+    fun get(): ResponseEntity<List<Map<String, String>>> {
+        val test = dynamoDB.getAllRecords()
+        return ResponseEntity(test, HttpStatus.OK)
     }
+
 }
