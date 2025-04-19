@@ -1,12 +1,4 @@
 <template>
-  <!-- <section ref="introSection" class="relative w-full h-screen flex flex-col items-center justify-center">
-
-    <div class="flex justify-center gap-10 mt-32 max-w-7xl w-full">
-      <img ref="spindleLeft" src="../../assets/spindle.png" alt="Left Spindle" class="spindle" />
-      <img ref="spindle" src="../../assets/spindle.png" alt="Spindle" class="spindle" />
-      <img ref="spindleRight" src="../../assets/spindle.png" alt="Right Spindle" class="spindle" />
-    </div>
-  </section> -->
   <div class="intro-container">
     <div class="particle-container">
       <div class="particle" v-for="n in 300" :key="n"></div>
@@ -48,8 +40,8 @@
           </div>
 
           <div class="info-text">
-            <h2 class="section-title">The <span class="highlight">Spindle Whorl</span></h2>
-            <div class="divider"></div>
+            <h2 class="section-title"><span class="highlight">The Spindle Whorl</span></h2>
+            <!-- <div class="divider"></div> -->
             <p class="main-description">
               The spindle whorl was a vital tool in ancient Mapungubwe, used for spinning fibers into thread. It
               highlights the advanced craftsmanship and trade practices of the time, symbolizing the ingenuity of the
@@ -69,7 +61,59 @@
     </div>
   </div>
 
-  <div class=""></div>
+  <div class="parallax-container">
+    <div class="spindle-track">
+      <!-- Spindle whorls will be generated dynamically -->
+      <div class="spindle-item top" v-for="i in 5" :key="`top-${i}`">
+        <img src="../../assets/spindle.png" alt="Spindle Whorl" class="spindle-parallax-image" />
+      </div>
+      <div class="spindle-item bottom" v-for="i in 5" :key="`bottom-${i}`">
+        <img src="../../assets/spindle.png" alt="Spindle Whorl" class="spindle-parallax-image" />
+      </div>
+    </div>
+    <!-- <div class="parallax-content">
+      <h2>The Evolution of Textile Tools</h2>
+      <p>Spindle whorls represent one of humanity's earliest technological innovations for textile production.</p>
+    </div> -->
+    <div class="impact-visualization">
+      <div class="central-spindle">
+        <img src="../../assets/spindle.png" alt="Central Spindle Whorl" />
+      </div>
+      <div class="ripple-circles">
+        <div class="ripple-circle" data-category="trade"></div>
+        <div class="ripple-circle" data-category="technology"></div>
+        <div class="ripple-circle" data-category="society"></div>
+        <div class="ripple-circle" data-category="art"></div>
+      </div>
+      <div class="impact-cards">
+        <div class="impact-card" data-category="trade">
+          <h3>Trade Networks</h3>
+          <p>Spindle whorls enabled textile production that became central to Mapungubwe's extensive trade networks
+            across Africa and beyond.</p>
+        </div>
+        <div class="impact-card" data-category="technology">
+          <h3>Technological Innovation</h3>
+          <p>This simple tool represented sophisticated engineering knowledge, balancing weight and momentum for
+            efficient fiber spinning.</p>
+        </div>
+        <div class="impact-card" data-category="society">
+          <h3>Social Structure</h3>
+          <p>Textile production influenced social organization, creating specialized roles and contributing to
+            Mapungubwe's complex society.</p>
+        </div>
+        <div class="impact-card" data-category="art">
+          <h3>Cultural Expression</h3>
+          <p>The decorative patterns on spindle whorls reflected artistic traditions and cultural symbolism unique to
+            the region.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <p>Continue scrolling</p>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -89,6 +133,199 @@ export default {
       { date: "1200 AD", description: "Regional trade with China and India through the east coast." },
       { date: "1300 AD", description: "Mapungubwe's influence over trade routes peaks." },
     ];
+
+    // Quick emergency fix for your setupParallaxEffect function
+function setupParallaxEffect() {
+  const parallaxContainer = document.querySelector('.parallax-container');
+  if (!parallaxContainer) return;
+
+  const topSpindles = document.querySelectorAll('.spindle-item.top');
+  const bottomSpindles = document.querySelectorAll('.spindle-item.bottom');
+  const impactVisualization = document.querySelector('.impact-visualization');
+  const centralSpindle = document.querySelector('.central-spindle');
+  
+  // Initially hide everything
+  gsap.set(topSpindles, { autoAlpha: 0, rotation: -180 });
+  gsap.set(bottomSpindles, { autoAlpha: 0, rotation: 180 });
+  gsap.set(impactVisualization, { autoAlpha: 0 });
+  gsap.set(centralSpindle, { scale: 0, opacity: 0 });
+
+  // Master timeline with scroll trigger for the entire sequence
+  const masterTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: parallaxContainer,
+      start: "top 0%",
+      end: "+=250%", 
+      scrub: true,
+      pin: true,
+      pinSpacing: true
+    }
+  });
+
+  // PART 1: Initial alignment - spindles come from top/bottom
+  const alignmentTl = gsap.timeline();
+  
+  // Animate top spindles to center
+  topSpindles.forEach((spindle, i) => {
+    alignmentTl.to(spindle, {
+      top: "50%",
+      y: "-50%",
+      autoAlpha: 1,
+      rotation: 0,
+      duration: 2,
+      ease: "power2.out"
+    }, i * 0.2);
+  });
+  
+  // Animate bottom spindles to center
+  bottomSpindles.forEach((spindle, i) => {
+    alignmentTl.to(spindle, {
+      bottom: "50%",
+      y: "50%", 
+      autoAlpha: 1,
+      rotation: 0,
+      duration: 2,
+      ease: "power2.out"
+    }, i * 0.2);
+  });
+
+  // PART 2: Convergence - all spindles move to horizontal center
+  const convergenceTl = gsap.timeline();
+  
+  // First move all spindles to horizontal center
+  convergenceTl
+    .to([topSpindles, bottomSpindles], {
+      left: "50%", 
+      x: "-50%",
+      duration: 3,
+      stagger: 0.05,
+      ease: "power3.inOut"
+    })
+    // Make them all rotate slightly
+    .to([topSpindles, bottomSpindles], {
+      rotation: 360,
+      duration: 2,
+      stagger: 0.05,
+      ease: "power2.inOut" 
+    })
+    // Scale down and gather them to center point
+    .to([topSpindles, bottomSpindles], {
+      scale: 0.3,
+      duration: 1.5,
+      stagger: 0.03,
+      ease: "power2.in"
+    })
+    // Show impact visualization container
+    .to(impactVisualization, {
+      autoAlpha: 1,
+      duration: 0.5
+    })
+    // Make the spindles fade away
+    .to([topSpindles, bottomSpindles], {
+      opacity: 0,
+      scale: 0,
+      duration: 1,
+      stagger: 0.02
+    })
+    // Reveal central spindle with dramatic entrance
+    .to(centralSpindle, {
+      scale: 1,
+      opacity: 1,
+      rotation: 360,
+      duration: 1.5,
+      ease: "back.out(2)"
+    });
+
+  // PART 3: Ripple effect - circles and cards appear
+  const rippleTl = gsap.timeline();
+
+  gsap.set(".ripple-circle", { scale: 0, opacity: 0 });
+  
+  rippleTl
+    // Expand ripple circles in sequence
+    .to(".ripple-circle[data-category='trade']", {
+      scale: 1,
+      opacity: 0.9, // Increased opacity for better visibility
+      duration: 1,
+      ease: "power2.out"
+    })
+    .to(".ripple-circle[data-category='technology']", {
+      scale: 1,
+      opacity: 0.9, // Increased opacity for better visibility
+      duration: 1,
+      ease: "power2.out"
+    }, "-=0.7")
+    .to(".ripple-circle[data-category='society']", {
+      scale: 1,
+      opacity: 0.9, // Increased opacity for better visibility
+      duration: 1,
+      ease: "power2.out"
+    }, "-=0.7")
+    .to(".ripple-circle[data-category='art']", {
+      scale: 1,
+      opacity: 0.9, // Increased opacity for better visibility
+      duration: 1,
+      ease: "power2.out"
+    }, "-=0.7")
+    // Reveal impact cards
+    .to(".impact-card[data-category='trade']", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: "back.out(1.5)"
+    }, "-=0.4")
+    .to(".impact-card[data-category='technology']", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: "back.out(1.5)"
+    }, "-=0.6")
+    .to(".impact-card[data-category='society']", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: "back.out(1.5)"
+    }, "-=0.6")
+    .to(".impact-card[data-category='art']", {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: "back.out(1.5)"
+    }, "-=0.6");
+
+  // Add all timelines to the master timeline
+  masterTimeline
+    .add(alignmentTl)
+    .add(convergenceTl)
+    .add(rippleTl);
+    
+  // Add subtle perpetual animation to the ripple circles
+  ScrollTrigger.create({
+    trigger: ".parallax-container",
+    start: "top top",
+    end: "bottom top",
+    onEnter: () => {
+      // Clear any existing animations on ripple circles first
+      gsap.killTweensOf(".ripple-circle");
+      
+      // Create a consistent animation that's less likely to be interrupted
+      gsap.to(".ripple-circle", {
+        scale: 1.05, // Small scale change for subtle effect
+        opacity: (i) => 0.7 + (i * 0.05), // Higher base opacity
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: 0.2,
+        overwrite: true // Important: ensures this animation takes precedence
+      });
+    },
+    onLeaveBack: () => {
+      // Kill the animations when scrolling back up
+      gsap.killTweensOf(".ripple-circle");
+    }
+  });
+}
 
     onMounted(() => {
       const sections = gsap.utils.toArray(".panel");
@@ -207,7 +444,6 @@ export default {
         }
       });
 
-      // Add animations that will play forward and backward based on scroll
       infoTimeline
         .to(".info-wrapper", {
           opacity: 1,
@@ -262,7 +498,7 @@ export default {
         start: "top 80%", // When the top of the container is 80% from the top of viewport
         end: "bottom top", // When the bottom of container leaves the top of viewport 
         onLeave: resetAnimation,
-        onLeaveBack: resetAnimation
+
       });
 
       // Simple function to reset the elements
@@ -278,209 +514,13 @@ export default {
         gsap.set(".feature-list li", { x: -20, opacity: 0 });
       }
 
+      setupParallaxEffect();
     });
 
     return { title, timelineEvents };
   },
 };
-// import { ref, onMounted } from "vue";
-// import { gsap } from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// gsap.registerPlugin(ScrollTrigger);
 
-// export default {
-//   setup() {
-//     const title = ref(null);
-//     const bg = ref(null);
-//     const spindle = ref(null);
-//     const spindleLeft = ref(null);
-//     const spindleRight = ref(null);
-//     const introSection = ref(null);
-//     const timelineSection = ref(null);
-//       timeline.fromTo(
-//         spindle.value,
-//         {
-//           opacity: 0,
-//           y: window.innerHeight / 2,
-//           rotation: 0,
-//         },
-//         {
-//           opacity: 1,
-//           y: 20,
-//           rotation: 360,
-//           duration: 2,
-//           ease: "power2.out",
-//         },
-//         "+=0.5"
-//       );
-
-
-//       timeline.fromTo(
-//         spindleLeft.value,
-//         {
-//           opacity: 0,
-//           y: window.innerHeight / 2,
-//           rotation: 0,
-//         },
-//         {
-//           opacity: 1,
-//           y: 20, // lower than center
-//           rotation: 360,
-//           duration: 2,
-//           ease: "power2.out",
-//         },
-//         "-=0.7"
-//       );
-
-//       timeline.fromTo(
-//         spindleRight.value,
-//         {
-//           opacity: 0,
-//           y: window.innerHeight / 2,
-//           rotation: 0,
-//         },
-//         {
-//           opacity: 1,
-//           y: 20,
-//           rotation: 360,
-//           duration: 2,
-//           ease: "power2.out",
-//           onComplete: () => {
-//             // Floating animation starts ONLY after all spindles are in place
-//             gsap.to([spindle.value, spindleLeft.value, spindleRight.value], {
-//               y: "+=20",
-//               repeat: -1,
-//               yoyo: true,
-//               duration: 2,
-//               ease: "sine.inOut",
-//             });
-
-//             gsap.to(title.value, {
-//               textShadow: "0px 0px 80px rgba(255, 215, 0, 1), 0px 0px 30px rgba(255, 165, 0, 0.7)",
-//               repeat: -1,
-//               yoyo: true,
-//               duration: 2.5,
-//               ease: "power1.inOut",
-//             });
-
-//             const particles = document.querySelectorAll(".particle");
-//             particles.forEach((particle) => {
-//               const container = document.querySelector(".particle-container");
-//               const bounds = container.getBoundingClientRect();
-
-//               const posX = Math.random() * bounds.width;
-//               const posY = Math.random() * bounds.height;
-
-//               const size = 2 + Math.random() * 4;
-//               const blinkDuration = 1 + Math.random(); // 1 to 2 seconds
-//               const blinkDelay = Math.random() * 3;
-
-//               gsap.set(particle, {
-//                 x: posX,
-//                 y: posY,
-//                 scale: size / 6,
-//                 opacity: 0.2 + Math.random() * 0.6,
-//               });
-
-//               gsap.to(particle, {
-//                 opacity: "+=0.3",
-//                 duration: blinkDuration,
-//                 delay: blinkDelay,
-//                 yoyo: true,
-//                 repeat: -1,
-//                 ease: "sine.inOut",
-//               });
-
-//               gsap.to(particle, {
-//                 y: `-=${50 + Math.random() * 100}`,
-//                 x: `+=${Math.random() * 20 - 10}`,
-//                 duration: 10 + Math.random() * 10,
-//                 repeat: -1,
-//                 yoyo: true,
-//                 ease: "sine.inOut",
-//               });
-//             });
-
-
-//             gsap.to(".light-ray", {
-//               opacity: 0.2,
-//               duration: 4,
-//               repeat: -1,
-//               yoyo: true,
-//               ease: "sine.inOut",
-//             });
-//           },
-//         },
-//         "-=0.7"
-//       );
-
-
-//       ScrollTrigger.create({
-//         trigger: introSection.value,
-//         start: "top top",
-//         end: "+=150%",
-//         pin: true,
-//         scrub: true,
-//       });
-
-//       const timelineItems = gsap.utils.toArray(".timeline-item");
-//       const timelineContainer = timelineSection.value.querySelector(".timeline-container");
-//       const totalScrollWidth = timelineContainer.scrollWidth;
-//       const viewportWidth = window.innerWidth;
-
-//       timelineItems.forEach((item, index) => {
-//         gsap.set(item, {
-//           x: index * 300,
-//           scale: index === 0 ? 1.5 : 0.8,
-//           opacity: index === 0 ? 1 : 0.5,
-//         });
-//       });
-
-//       gsap.set(timelineContainer, {
-//         x: viewportWidth / 2 - 150, // Offset to center the first item (150 = half the item width)
-//       });
-
-//       gsap.to(timelineContainer, {
-//         x: () => -(totalScrollWidth - viewportWidth) + viewportWidth / 2 - 150, // Ensure the last item centers
-//         ease: "none",
-//         scrollTrigger: {
-//           trigger: timelineSection.value,
-//           start: "top top",
-//           end: () => `+=${totalScrollWidth}`, // Ensure the scroll duration matches the total width
-//           scrub: true,
-//           pin: true,
-//           onUpdate: (self) => {
-//             const progress = self.progress * (timelineItems.length - 1); // Map progress to the number of items
-//             timelineItems.forEach((item, index) => {
-//               const distance = Math.abs(progress - index); // Distance from the current progress
-//               const scale = gsap.utils.clamp(0.8, 1.5, 1.5 - distance * 0.5); // Scale based on distance
-//               const opacity = gsap.utils.clamp(0.5, 1, 1 - distance * 0.5); // Opacity based on distance
-//               gsap.to(item, {
-//                 scale,
-//                 opacity,
-//                 duration: 0.2,
-//               });
-//             });
-//           },
-//         },
-//       });
-
-
-//       ScrollTrigger.create({
-//         trigger: timelineSection.value,
-//         start: "top top",
-//         end: () => `+=${totalScrollWidth}`, // Ensure the timeline finishes scrolling before transitioning
-//         pin: true,
-//         scrub: true,
-//         anticipatePin: 1,
-//       });
-
-
-//     });
-
-//     return { title, spindle, spindleLeft, spindleRight, introSection, timelineSection, timelineEvents };
-//   },
-// };
 </script>
 
 <style scoped>
@@ -650,7 +690,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FFEF00;
+  background: linear-gradient(to bottom, #2d1e0f, #111);
   /* Refined yellow */
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
   z-index: 1;
@@ -741,6 +781,7 @@ body {
   color: white;
 }
 
+/* Fix for the title underline in the last container */
 .highlight {
   color: white;
   position: relative;
@@ -750,14 +791,52 @@ body {
 .highlight::after {
   content: '';
   position: absolute;
-  bottom: 5px;
+  bottom: -5px;
+  /* Adjusted to be below the text properly */
   left: 0;
   width: 100%;
   height: 3px;
   background: #FFEF00;
-  transform: scaleX(0);
-  transform-origin: right;
+  /* Yellow underline */
+  transform: scaleX(1);
+  /* Start with the underline visible */
+  transform-origin: left;
   transition: transform 0.5s ease;
+}
+
+/* Create the infinite animation effect for the underline */
+@keyframes underlinePulse {
+  0% {
+    opacity: 0.6;
+    box-shadow: 0 0 5px rgba(255, 239, 0, 0.5);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(255, 239, 0, 0.8);
+  }
+
+  100% {
+    opacity: 0.6;
+    box-shadow: 0 0 5px rgba(255, 239, 0, 0.5);
+  }
+}
+
+/* Apply the animation to the underline */
+.highlight::after {
+  animation: underlinePulse 2s infinite;
+}
+
+/* Make the highlight text color more vibrant */
+.highlight {
+  color: #FFEF00;
+  /* Match the underline color for consistency */
+}
+
+/* Remove the hover effect since we want the underline always visible */
+.info-text:hover .highlight::after {
+  transform: scaleX(1);
+  /* Always show full underline */
 }
 
 .info-text {
@@ -865,129 +944,337 @@ h2 {
   }
 }
 
-/* .spindle {
-  height: 10rem;
+/* Parallax Section */
+.parallax-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #111, #2d1e0f);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -1px; /* Eliminate any gap caused by rounding */
+  z-index: 10;
+}
+
+.spindle-track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  /* Make sure this is above background but below content */
+}
+
+.spindle-item {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  transform: translateX(-50%);
+  /* Center horizontally */
+  transition: all 0.5s ease;
+}
+
+.spindle-item.top {
+  top: -150px;
+  /* Start above viewport */
+}
+
+.spindle-item.bottom {
+  bottom: -150px;
+  /* Start below viewport */
+}
+
+/* Position each spindle horizontally */
+.spindle-item:nth-child(1) {
+  left: 10%;
+}
+
+.spindle-item:nth-child(2) {
+  left: 30%;
+}
+
+.spindle-item:nth-child(3) {
+  left: 50%;
+}
+
+.spindle-item:nth-child(4) {
+  left: 70%;
+}
+
+.spindle-item:nth-child(5) {
+  left: 90%;
+}
+
+.spindle-item:nth-child(6) {
+  left: 10%;
+}
+
+.spindle-item:nth-child(7) {
+  left: 30%;
+}
+
+.spindle-item:nth-child(8) {
+  left: 50%;
+}
+
+.spindle-item:nth-child(9) {
+  left: 70%;
+}
+
+.spindle-item:nth-child(10) {
+  left: 90%;
+}
+
+.spindle-parallax-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.parallax-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+  max-width: 800px;
   opacity: 0;
-  transition: transform 0.3s ease;
+  margin-top: 200px;
+  /* Make space for spindles */
 }
 
-h1 {
-  transition: all 0.3s ease;
+.parallax-content h2 {
+  font-size: 3rem;
+  color: #ffd700;
+  margin-bottom: 1rem;
 }
 
-.particle-container {
+.parallax-content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: white;
+}
+
+/* Ripple Effect Section */
+.impact-visualization {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
   pointer-events: none;
-  z-index: 5;
 }
 
-.particle {
+.central-spindle {
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: rgba(255, 255, 200, 0.8);
-  border-radius: 50%;
-  filter: blur(1px);
-  z-index: 6;
-}
-
-@keyframes floatUp {
-  to {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
-}
-
-.light-ray {
-  position: absolute;
-  top: 0;
   width: 200px;
-  height: 100%;
-  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.15) 0%, transparent 80%);
-  pointer-events: none;
-  mix-blend-mode: screen;
-  z-index: 0;
-  filter: blur(8px);
+  height: 200px;
+  z-index: 25;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.7));
+  transform: scale(0.8);
+  opacity: 0;
 }
 
-.ray-left {
-  left: 20%;
-  transform: rotate(25deg);
-}
-
-.ray-right {
-  right: 20%;
-  transform: rotate(-25deg);
-}
-
-.timeline-section {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.timeline-wrapper {
-  height: 100%;
+.central-spindle img {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.timeline-container {
-  display: flex;
-  gap: 3rem;
-  align-items: center;
-  justify-content: flex-start;
   height: 100%;
-  width: max-content;
+  object-fit: contain;
 }
 
-.timeline-item {
-  min-width: 300px;
-  height: 400px;
-  background: rgba(255, 255, 255, 0.1);
+.ripple-circles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 22;
+}
+
+.ripple-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.ripple-circle[data-category="trade"] {
+  width: 300px;
+  height: 300px;
+  border-color: rgba(255, 215, 0, 0.6);
+}
+
+.ripple-circle[data-category="technology"] {
+  width: 500px;
+  height: 500px;
+  border-color: rgba(255, 215, 0, 0.5);
+}
+
+.ripple-circle[data-category="society"] {
+  width: 700px;
+  height: 700px;
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.ripple-circle[data-category="art"] {
+  width: 900px;
+  height: 900px;
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.impact-cards {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 23;
+}
+
+.impact-card {
+  position: absolute;
+  width: 250px;
+  padding: 20px;
+  background: rgba(45, 30, 15, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 10px;
-  padding: 1rem;
-  color: white;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transform-origin: center center;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: auto;
+  /* Make cards clickable */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.timeline-item .timeline-date {
-  font-size: 1.5rem;
-  font-weight: bold;
+.impact-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.impact-card[data-category="trade"] {
+  top: calc(50% - 150px);
+  left: calc(50% + 200px);
+}
+
+.impact-card[data-category="technology"] {
+  top: calc(50% + 100px);
+  left: calc(50% + 300px);
+}
+
+.impact-card[data-category="society"] {
+  top: calc(50% - 250px);
+  left: calc(50% - 400px);
+}
+
+.impact-card[data-category="art"] {
+  top: calc(50% + 200px);
+  left: calc(50% - 300px);
+}
+
+.impact-card h3 {
   color: #ffd700;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
 }
 
-.timeline-item .timeline-description {
+.impact-card p {
+  color: white;
   font-size: 1rem;
-  color: #fff;
-  text-align: center;
   line-height: 1.5;
 }
 
-.next-section {
-  height: 100vh;
-  background-color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 2rem;
-} */
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .ripple-circle[data-category="trade"] {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ripple-circle[data-category="technology"] {
+    width: 320px;
+    height: 320px;
+  }
+
+  .ripple-circle[data-category="society"] {
+    width: 440px;
+    height: 440px;
+  }
+
+  .ripple-circle[data-category="art"] {
+    width: 560px;
+    height: 560px;
+  }
+
+  .impact-card {
+    width: 200px;
+  }
+
+  .impact-card[data-category="trade"] {
+    top: calc(50% - 120px);
+    left: calc(50% + 120px);
+  }
+
+  .impact-card[data-category="technology"] {
+    top: calc(50% + 80px);
+    left: calc(50% + 180px);
+  }
+
+  .impact-card[data-category="society"] {
+    top: calc(50% - 200px);
+    left: calc(50% - 240px);
+  }
+
+  .impact-card[data-category="art"] {
+    top: calc(50% + 150px);
+    left: calc(50% - 220px);
+  }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;
+  animation: fadeInOut 3s infinite;
+  z-index: 15;
+}
+
+.scroll-hint p {
+  color: #ffd700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.scroll-arrow {
+  width: 15px;
+  height: 15px;
+  border-right: 2px solid #ffd700;
+  border-bottom: 2px solid #ffd700;
+  transform: rotate(45deg);
+  margin: 0 auto;
+}
+
+@keyframes fadeInOut {
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
 </style>
