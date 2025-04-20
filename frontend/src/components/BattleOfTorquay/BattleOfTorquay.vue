@@ -71,58 +71,63 @@
 
 
     <!-- Tactical Storytelling Section -->
-    <section ref="section3" class="section h-[200vh] relative bg-gray-900/50">
-      <div class="sticky top-0 h-screen flex items-center">
-        <div class="w-full max-w-6xl mx-auto px-8">
-          <h2 class="text-4xl font-bold mb-12 text-center text-amber-400 opacity-0">
-            Masterstroke at Sea: De Ruyter's Gambit
-          </h2>
+<section ref="section3" class="section h-[120vh] relative bg-gray-900/50 overflow-hidden">
+  <!-- Sticky Viewport -->
+  <div class="sticky top-0 h-screen flex items-center">
+    <div class="w-full max-w-6xl mx-auto px-8 space-y-12">
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div class="space-y-8 opacity-0">
-              <div class="bg-gray-900/90 p-6 rounded-lg border border-amber-600/30 hover:border-amber-400 transition-all">
-                <h3 class="text-xl font-bold mb-2 text-amber-300">The Dutch Advantage</h3>
-                <p class="text-gray-300">
-                  As dawn broke, de Ruyter positioned his fleet to exploit the eastern light, blinding English gunners while 
-                  his own crews, having trained relentlessly, could still pick their targets. The morning breeze carried 
-                  the scent of salt and gunpowder as the Dutch ships closed the distance.
-                </p>
-              </div>
+      <!-- Title -->
+      <h2 class="text-4xl font-bold text-center text-amber-400 animate-fade-in opacity-0 [animation-delay:0.2s]">
+        Masterstroke at Sea: De Ruyter's Gambit
+      </h2>
 
-              <div class="bg-gray-900/90 p-6 rounded-lg border border-amber-600/30 hover:border-amber-400 transition-all">
-                <h3 class="text-xl font-bold mb-2 text-amber-300">A Dance of Destruction</h3>
-                <p class="text-gray-300">
-                  English logs would later describe the Dutch formation as "a crescent of fire." Each broadside was timed 
-                  to perfection, the thunderous roar of cannons followed by the terrible sound of splintering oak. 
-                  The painting captures this moment - the chaotic beauty of disciplined violence.
-                </p>
-              </div>
-            </div>
+      <!-- Content -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Text Panels -->
+        <div class="space-y-8">
+          <div class="bg-gray-900/90 p-6 rounded-lg border border-amber-600/30 hover:border-amber-400 transition-all animate-fade-in opacity-0 [animation-delay:0.4s]">
+            <h3 class="text-xl font-bold mb-2 text-amber-300">The Dutch Advantage</h3>
+            <p class="text-gray-300">
+              As dawn broke, de Ruyter positioned his fleet to exploit the eastern light, blinding English gunners while 
+              his own crews, having trained relentlessly, could still pick their targets. The morning breeze carried 
+              the scent of salt and gunpowder as the Dutch ships closed the distance.
+            </p>
+          </div>
 
-            <div class="relative opacity-0">
-              <img
-                src="/battleOfTorquay.jpg"
-                alt="Battle Tactical Map"
-                class="w-full rounded-lg shadow-2xl border-4 border-amber-600/50"
-              />
-              <div class="absolute -bottom-4 -right-4 bg-amber-600 text-black px-4 py-2 rounded-lg shadow-lg">
-                <p class="font-bold">The Battle Painting</p>
-              </div>
-              <div class="absolute top-4 left-4 bg-black/80 p-3 rounded-lg">
-                <p class="text-sm text-amber-300 italic">"Their line held like tempered steel"<br>- English Captain's Log</p>
-              </div>
-            </div>
+          <div class="bg-gray-900/90 p-6 rounded-lg border border-amber-600/30 hover:border-amber-400 transition-all animate-fade-in opacity-0 [animation-delay:0.6s]">
+            <h3 class="text-xl font-bold mb-2 text-amber-300">A Dance of Destruction</h3>
+            <p class="text-gray-300">
+              English logs would later describe the Dutch formation as "a crescent of fire." Each broadside was timed 
+              to perfection, the thunderous roar of cannons followed by the terrible sound of splintering oak. 
+              The painting captures this moment - the chaotic beauty of disciplined violence.
+            </p>
+          </div>
+        </div>
+
+        <!-- Image Panel -->
+        <div class="relative animate-fade-in opacity-0 [animation-delay:0.8s]">
+          <img
+            src="/battleOfTorquay.jpg"
+            alt="Battle Tactical Map"
+            class="w-full rounded-lg shadow-2xl border-4 border-amber-600/50 parallax-img"
+          />
+          
+          <div class="absolute top-4 left-4 bg-black/80 p-3 rounded-lg">
+            <p class="text-sm text-amber-300 italic">"Their line held like tempered steel"<br>- English Captain's Log</p>
           </div>
         </div>
       </div>
 
-      <div class="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-400 opacity-0">
+      <!-- Quote pinned to bottom -->
+      <div class="text-center text-sm text-gray-400 animate-fade-in opacity-0 [animation-delay:1s]">
         "By midday, the Channel ran red with the blood of sailors from both nations..."
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <!-- Neural Network Canvas Section -->
-    <section class="min-h-[300vh] relative" ref="section4">
+    <section class="min-h-[250vh] relative" ref="section4">
       <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         <!-- AI Analysis Overlay -->
         <div class="absolute inset-0 z-0 ai-grid-pattern"></div>
