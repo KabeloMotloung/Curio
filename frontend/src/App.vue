@@ -1,27 +1,22 @@
-<script setup lang="ts">
-import HelloWorld from './components/custom/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="./assets/vue.svg" class="logo" alt="Vite logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <Base />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<script setup>
+import PaintCanvas from './components/PaintCanvas.vue'
+import Page from './components/Page.vue'
+import Needle from './components/Needle.vue'
+import Thread from './components/Thread.vue'
+import Base from './components/Base.vue'
+
+
+
+</script>
+
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background-color: #f9fafb;
 }
 </style>
