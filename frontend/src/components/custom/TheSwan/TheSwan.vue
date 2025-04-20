@@ -1,5 +1,30 @@
 <template>
   <div class="relative w-full overflow-hidden h-[300vh]">
+
+    <div v-if="isLoading" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#545863]/80">
+      <div class="flex flex-col items-center gap-4">
+        <div class="w-16 h-16 border-4 border-[#E5E7EB] border-t-transparent rounded-full animate-spin shadow-[0_0_15px_rgba(229,231,235,0.3)]"></div>
+        <span class="text-[#E5E7EB] font-['Raleway'] tracking-[0.25em] uppercase text-sm text-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">Loading</span>
+      </div>
+    </div>
+
+    <div class="fixed top-8 left-8 z-50">
+      <button 
+        @click="$router.back()" 
+        class="text-white/40 hover:text-white/80 transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30"
+      >
+        <svg 
+          class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway'] leading-none">Back</span>
+      </button>
+    </div>
+
     <div class="fixed inset-0 bg-transition" ref="skyBackground">
       <img 
         src="./assets/sky-background.jpg" 
@@ -44,7 +69,7 @@
     <div class="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
       <div ref="paintingContainer" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-[1200px] aspect-[4/3] opacity-0">
         <div class="relative w-full h-full">
-          <div class="absolute inset-0 bg-[#1a0f0f]/95"></div>
+          <div class="absolute inset-0 bg-[#2a1f1f]/95"></div>
           
           <div class="absolute inset-0">
             <div class="absolute inset-0 opacity-25">
@@ -64,62 +89,82 @@
           </div>
         </div>
         
-        <div class="absolute inset-0 border-[12px] border-[#2a1f1f] bg-gradient-to-b from-[#3a2f2f] via-[#2a1f1f] to-[#1a0f0f] shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
-          <div class="absolute inset-0 bg-[#4a3f3f]/20"></div>
-          <div class="absolute inset-0 bg-[#5a4f4f]/10"></div>
-          <div class="absolute inset-0 bg-[#3a2f2f]/30"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-[#2a1f1f]/50 to-transparent"></div>
-          <div class="absolute inset-0 bg-gradient-to-b from-[#2a1f1f]/50 to-transparent"></div>
+        <div class="absolute inset-0 border-[12px] border-[#b9956c] bg-gradient-to-b from-[#d4b494] via-[#b9956c] to-[#997554] shadow-[inset_0_0_20px_rgba(0,0,0,0.3)]">
+          <div class="absolute inset-0 bg-[#d4b494]/20"></div>
+          <div class="absolute inset-0 bg-[#e4c4a4]/10"></div>
+          <div class="absolute inset-0 bg-[#b9956c]/30"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#b9956c]/50 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-[#b9956c]/50 to-transparent"></div>
+          
+
+          <div class="absolute -inset-6 overflow-visible">
+
+            <div class="absolute inset-0 animate-glow-cloud-1">
+              <div class="absolute inset-0 bg-gradient-to-r from-white/25 via-white/10 to-transparent blur-xl transform rotate-12 scale-105"></div>
+              <div class="absolute inset-0 bg-gradient-to-b from-white/25 via-white/10 to-transparent blur-xl transform -rotate-12 scale-105"></div>
+            </div>
+            <div class="absolute inset-0 animate-glow-cloud-2">
+              <div class="absolute inset-0 bg-gradient-to-r from-white/20 via-white/8 to-transparent blur-lg transform -rotate-6 scale-102"></div>
+              <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-white/8 to-transparent blur-lg transform rotate-6 scale-102"></div>
+            </div>
+            <div class="absolute inset-0 animate-glow-cloud-3">
+              <div class="absolute inset-0 bg-gradient-to-r from-white/15 via-white/5 to-transparent blur-md transform rotate-3"></div>
+              <div class="absolute inset-0 bg-gradient-to-b from-white/15 via-white/5 to-transparent blur-md transform -rotate-3"></div>
+            </div>
+            <div class="absolute inset-0 animate-glow-cloud-4">
+              <div class="absolute inset-0 bg-gradient-to-tr from-white/15 via-transparent to-white/15 blur-xl transform scale-105"></div>
+            </div>
+          </div>
         </div>
         
-        <div class="absolute inset-12 border-6 border-[#2a1f1f] bg-gradient-to-b from-[#3a2f2f] via-[#2a1f1f] to-[#1a0f0f] shadow-[inset_0_0_15px_rgba(0,0,0,0.4)]">
-          <div class="absolute inset-0 bg-[#4a3f3f]/15"></div>
-          <div class="absolute inset-0 bg-[#5a4f4f]/8"></div>
-          <div class="absolute inset-0 bg-[#3a2f2f]/25"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-[#2a1f1f]/40 to-transparent"></div>
-          <div class="absolute inset-0 bg-gradient-to-b from-[#2a1f1f]/40 to-transparent"></div>
+        <div class="absolute inset-12 border-6 border-[#b9956c] bg-gradient-to-b from-[#d4b494] via-[#b9956c] to-[#997554] shadow-[inset_0_0_15px_rgba(0,0,0,0.2)]">
+          <div class="absolute inset-0 bg-[#d4b494]/15"></div>
+          <div class="absolute inset-0 bg-[#e4c4a4]/8"></div>
+          <div class="absolute inset-0 bg-[#b9956c]/25"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#b9956c]/40 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-[#b9956c]/40 to-transparent"></div>
         </div>
-        <div class="absolute inset-16 border-4 border-[#1a0f0f] bg-gradient-to-b from-[#2a1f1f] to-[#1a0f0f] shadow-[inset_0_0_10px_rgba(0,0,0,0.3)]">
-          <div class="absolute inset-0 bg-[#4a3f3f]/10"></div>
-          <div class="absolute inset-0 bg-[#5a4f4f]/5"></div>
-          <div class="absolute inset-0 bg-[#3a2f2f]/20"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-[#2a1f1f]/30 to-transparent"></div>
-          <div class="absolute inset-0 bg-gradient-to-b from-[#2a1f1f]/30 to-transparent"></div>
+        <div class="absolute inset-16 border-4 border-[#997554] bg-gradient-to-b from-[#b9956c] to-[#997554] shadow-[inset_0_0_10px_rgba(0,0,0,0.2)]">
+          <div class="absolute inset-0 bg-[#d4b494]/10"></div>
+          <div class="absolute inset-0 bg-[#e4c4a4]/5"></div>
+          <div class="absolute inset-0 bg-[#b9956c]/20"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#b9956c]/30 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-[#b9956c]/30 to-transparent"></div>
         </div>
         
-        <div class="absolute inset-20 border-2 border-[#2a1f1f]/20"></div>
-        <div class="absolute inset-20 bg-gradient-to-b from-[#1a0f0f]/40 via-[#1a0f0f]/20 to-[#1a0f0f]/10"></div>
-        <div class="absolute inset-20 bg-gradient-to-r from-[#1a0f0f]/40 via-[#1a0f0f]/20 to-[#1a0f0f]/10"></div>
-        <div class="absolute inset-20 bg-gradient-to-tr from-[#1a0f0f]/30 via-transparent to-transparent"></div>
+        <div class="absolute inset-20 border-2 border-[#b9956c]/20"></div>
+        <div class="absolute inset-20 bg-gradient-to-b from-[#d4b494]/40 via-[#b9956c]/20 to-[#997554]/10"></div>
+        <div class="absolute inset-20 bg-gradient-to-r from-[#d4b494]/40 via-[#b9956c]/20 to-[#997554]/10"></div>
+        <div class="absolute inset-20 bg-gradient-to-tr from-[#d4b494]/30 via-transparent to-transparent"></div>
         
-        <div class="absolute top-0 left-0 w-32 h-32 border-t-8 border-l-8 border-[#b49474] transform rotate-0 shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#c4a484] transform rotate-0"></div>
-          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#a48464] transform rotate-180"></div>
+        <div class="absolute top-0 left-0 w-32 h-32 border-t-8 border-l-8 border-[#d4b494] transform rotate-0 shadow-[inset_-2px_-2px_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#e4c4a4] transform rotate-0"></div>
+          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#b9956c] transform rotate-180"></div>
         </div>
-        <div class="absolute top-0 right-0 w-32 h-32 border-t-8 border-r-8 border-[#b49474] transform rotate-90 shadow-[inset_2px_-2px_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#c4a484] transform rotate-90"></div>
-          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#a48464] transform -rotate-90"></div>
+        <div class="absolute top-0 right-0 w-32 h-32 border-t-8 border-r-8 border-[#d4b494] transform rotate-90 shadow-[inset_2px_-2px_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#e4c4a4] transform rotate-90"></div>
+          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#b9956c] transform -rotate-90"></div>
         </div>
-        <div class="absolute bottom-0 left-0 w-32 h-32 border-b-8 border-l-8 border-[#b49474] transform -rotate-90 shadow-[inset_-2px_2px_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#c4a484] transform -rotate-90"></div>
-          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#a48464] transform rotate-90"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 border-b-8 border-l-8 border-[#d4b494] transform -rotate-90 shadow-[inset_-2px_2px_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#e4c4a4] transform -rotate-90"></div>
+          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#b9956c] transform rotate-90"></div>
         </div>
-        <div class="absolute bottom-0 right-0 w-32 h-32 border-b-8 border-r-8 border-[#b49474] transform rotate-180 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#c4a484] transform rotate-180"></div>
-          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#a48464] transform rotate-0"></div>
+        <div class="absolute bottom-0 right-0 w-32 h-32 border-b-8 border-r-8 border-[#d4b494] transform rotate-180 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#e4c4a4] transform rotate-180"></div>
+          <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#b9956c] transform rotate-0"></div>
         </div>
 
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-16 border-t-4 border-[#b49474] shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-8 border-t-2 border-[#c4a484]"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-16 border-t-4 border-[#d4b494] shadow-[inset_0_-2px_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-8 border-t-2 border-[#e4c4a4]"></div>
         </div>
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-16 border-b-4 border-[#b49474] shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-8 border-b-2 border-[#c4a484]"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-16 border-b-4 border-[#d4b494] shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-8 border-b-2 border-[#e4c4a4]"></div>
         </div>
-        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-16 h-64 border-l-4 border-[#b49474] shadow-[inset_-2px_0_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-32 border-l-2 border-[#c4a484]"></div>
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-16 h-64 border-l-4 border-[#d4b494] shadow-[inset_-2px_0_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-32 border-l-2 border-[#e4c4a4]"></div>
         </div>
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-16 h-64 border-r-4 border-[#b49474] shadow-[inset_2px_0_4px_rgba(0,0,0,0.3)]">
-          <div class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-32 border-r-2 border-[#c4a484]"></div>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-16 h-64 border-r-4 border-[#d4b494] shadow-[inset_2px_0_4px_rgba(0,0,0,0.2)]">
+          <div class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-32 border-r-2 border-[#e4c4a4]"></div>
         </div>
 
           <div id = "painting" class="absolute inset-20 w-[calc(100%-10rem)] h-[calc(100%-10rem)]">
@@ -140,7 +185,7 @@
         <div class="relative p-6 rounded-lg overflow-hidden bg-transparent">
           <img 
             :src="currentParchmentImage" 
-            class="absolute inset-0 w-full h-full object-contain"
+            class="absolute inset-0 w-full h-full object-contain filter contrast-[0.85] brightness-[0.92] saturate-[0.8] sepia-[0.15]"
             alt="Parchment"
           />
           
@@ -148,13 +193,13 @@
             <div class="relative" :style="{ 
               opacity: currentParchmentIndex >= 7 ? 1 : 0
             }">
-              <h2 class="text-2xl font-serif text-[#2a1f1f] mb-1">The Swan</h2>
+              <h2 class="text-2xl font-serif text-[#2a1f1f]/90 mb-1">The Swan</h2>
             </div>
 
             <div class="relative" :style="{ 
               opacity: currentParchmentIndex >= 7 ? 1 : 0
             }">
-              <div class="space-y-1 text-[#2a1f1f] mb-4">
+              <div class="space-y-1 text-[#2a1f1f]/80 mb-4">
                 <div>
                   <h3 class="text-lg font-serif mb-1">Jan Jacob Spohler</h3>
                   <p class="text-base mb-0">1849</p>
@@ -172,7 +217,7 @@
               }px)`,
               transition: 'opacity 0.03s ease-out, transform 0.1s ease-out'
             }">
-              <div class="space-y-1 text-[#2a1f1f] mb-4">
+              <div class="space-y-1 text-[#2a1f1f]/80 mb-4">
                 <div>
                   <h3 class="text-lg font-serif mb-2">Key Details</h3>
                   <p class="text-base">Oil on Canvas by Dutch artist Jan Jacob Spohler. Depicts "Het Zwaantjie" (The Swan), an imagined inn with the St. Dionysius church of Tilburg in the background.</p>
@@ -185,7 +230,7 @@
               transform: `translateY(${currentParchmentIndex >= 6 ? 0 : 20}px)`,
               transition: 'opacity 0.1s ease-out, transform 0.1s ease-out'
             }">
-              <div class="space-y-1 text-[#2a1f1f] mb-4">
+              <div class="space-y-1 text-[#2a1f1f]/80 mb-4">
                 <div>
                   <h3 class="text-lg font-serif mb-2">Hidden Symbolism</h3>
                   <p class="text-base">Rich with symbols of death and transition: a ghostly figure at the entrance, a swan (carrying souls to the afterlife), a knotted bale of hay, and a black flag. The inn represents a threshold between life and the afterlife.</p>
@@ -196,7 +241,7 @@
             <div class="relative" :style="{ 
               opacity: currentParchmentIndex >= 7 ? 1 : 0
             }">
-              <div class="space-y-1 text-[#2a1f1f]">
+              <div class="space-y-1 text-[#2a1f1f]/80">
                 <div>
                   <h3 class="text-lg font-serif mb-2">Historical Significance</h3>
                   <p class="text-base">Commemorates the death of King Willem II of the Netherlands in Tilburg (1849), symbolized by the Dutch flag, Tilburg church, and death imagery throughout.</p>
@@ -218,6 +263,49 @@ import ScrollTrigger from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const isLoading = ref(true)
+const assetsLoaded = ref(0)
+const totalAssets = ref(0)
+
+const loadAssets = () => {
+  const assets = [
+    './assets/sky-background.jpg',
+    './assets/cloud.png',
+    './assets/TheSwan.png',
+    ...Array.from({ length: 7 }, (_, i) => `./assets/parchments/parchment-${i + 1}.png`)
+  ]
+  
+  totalAssets.value = assets.length
+  
+
+  const loadingTimeout = setTimeout(() => {
+    isLoading.value = false
+  }, 5000) 
+  
+  assets.forEach(src => {
+    const img = new Image()
+    img.onload = () => {
+      assetsLoaded.value++
+      if (assetsLoaded.value === totalAssets.value) {
+        clearTimeout(loadingTimeout)
+        setTimeout(() => {
+          isLoading.value = false
+        }, 500) 
+      }
+    }
+    img.onerror = () => {
+
+      assetsLoaded.value++
+      if (assetsLoaded.value === totalAssets.value) {
+        clearTimeout(loadingTimeout)
+        setTimeout(() => {
+          isLoading.value = false
+        }, 500)
+      }
+    }
+    img.src = src
+  })
+}
 
 const paintingContainer = ref<HTMLElement | null>(null)
 const parchmentContainer = ref<HTMLElement | null>(null)
@@ -376,8 +464,9 @@ if (parchmentContainer.value) {
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', animateOnScroll);
-  animateOnScroll();
+  loadAssets()
+  window.addEventListener('scroll', animateOnScroll)
+  animateOnScroll()
 })
 
 onUnmounted(() => {
@@ -389,6 +478,25 @@ onUnmounted(() => {
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap');
+
+:root {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:root::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
 
 .transition-all {
   transition-property: all;
@@ -412,7 +520,8 @@ p {
   font-size: 1.2rem;
   font-weight: 800;
   color: #2a1f1f;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+  filter: contrast(0.95) brightness(0.98);
 }
 
 .parchment-text h1,
@@ -420,6 +529,7 @@ p {
 .parchment-text h3,
 .parchment-text p {
   font-family: 'Dancing Script', cursive;
+  filter: contrast(0.95) brightness(0.98);
 }
 
 h1 {
@@ -434,7 +544,8 @@ h2, h3 {
   font-weight: 800;
   letter-spacing: 0.05em;
   color: #2a1f1f;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+  filter: contrast(0.95) brightness(0.98);
 }
 
 [ref="scrollIndicator"] {
@@ -504,4 +615,75 @@ h2, h3 {
   transform-origin: center center;
 }
 
+@keyframes glowCloud1 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translate(12px, -8px) rotate(4deg) scale(1.05);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-8px, 6px) rotate(-3deg) scale(0.98);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(-10px, -6px) rotate(2deg) scale(1.02);
+    opacity: 0.7;
+  }
+}
+
+@keyframes glowCloud2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(-8px, 6px) rotate(-2deg) scale(1.03);
+    opacity: 0.7;
+  }
+  66% {
+    transform: translate(6px, -4px) rotate(2deg) scale(0.97);
+    opacity: 0.5;
+  }
+}
+
+@keyframes glowCloud3 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(4px, 4px) rotate(1.5deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes glowCloud4 {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.05) rotate(90deg);
+    opacity: 0.5;
+  }
+}
+
+.animate-glow-cloud-1 {
+  animation: glowCloud1 10s ease-in-out infinite;
+}
+
+.animate-glow-cloud-2 {
+  animation: glowCloud2 14s ease-in-out infinite;
+}
+
+.animate-glow-cloud-3 {
+  animation: glowCloud3 12s ease-in-out infinite;
+}
+
+.animate-glow-cloud-4 {
+  animation: glowCloud4 20s linear infinite;
+}
 </style> 
