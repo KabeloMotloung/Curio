@@ -1,7 +1,6 @@
 <template>
   <div class="w-full min-h-screen bg-gray-900 text-white overflow-x-hidden font-serif">
     <!-- Hero Section -->
-     
     <section
       ref="section1"
       class="section h-screen relative flex flex-col justify-center items-center px-8 overflow-hidden"
@@ -34,44 +33,42 @@
       </div>
     </section>
 
-    <!-- Animated Timeline Section -->
-    <section ref="section2" class="section h-[180vh] relative bg-gray-800">
-      <div class="sticky top-0 h-screen flex items-center">
-        <div class="w-full max-w-6xl mx-auto px-8">
-          <h2 class="text-4xl font-bold mb-12 text-center text-amber-400 opacity-0">
-            Dawn Approaches: The Battle Unfolds
-          </h2>
+    <section ref="section2" class="section min-h-[170vh] bg-gray-800 py-20">
+  <div class="w-full max-w-6xl mx-auto px-8">
+    <h2 class="text-4xl font-bold mb-16 text-center text-amber-400 animate-fade-in pt-10">
+      ⚔️ Dawn Approaches: The Battle Unfolds
+    </h2>
 
-          <div class="relative h-96 timeline-container opacity-0">
-            <!-- Timeline line -->
-            <div class="absolute left-8 md:left-1/2 h-full w-1 bg-amber-400/50 timeline-line transform -translate-x-1/2"></div>
-            
-            <!-- Timeline events -->
-            <div v-for="(event, index) in timelineEvents" :key="index" 
-              class="absolute timeline-event"
-              :style="{ top: `${15 + index * 25}%`}">
-              <div class="flex items-start">
-                <div class="bg-amber-400 rounded-full h-4 w-4 mt-1 flex-shrink-0 timeline-dot"></div>
-                <div class="ml-4 bg-gray-900/90 p-4 rounded-lg border border-amber-600/30 max-w-md">
-                  <h3 class="text-lg font-bold text-amber-300">{{ event.time }}</h3>
-                  <p class="text-gray-300">{{ event.description }}</p>
-                  <p class="text-sm text-amber-400/80 mt-1 italic">{{ event.quote }}</p>
-                </div>
-              </div>
-            </div>
+    <div class="relative timeline-container">
+      <!-- Timeline Line -->
+      <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-amber-400/50 -translate-x-1/2"></div>
+
+      <div class="flex flex-col gap-36">
+        <div
+          v-for="(event, index) in timelineEvents"
+          :key="index"
+          class="relative flex items-start timeline-event animate-fade-in-up"
+          :class="index % 2 === 0 ? 'pl-16' : 'pr-16 justify-end'"
+        >
+          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2">
+            <div class="h-4 w-4 bg-amber-400 rounded-full shadow-glow"></div>
           </div>
 
-          <div class="mt-12 text-center opacity-0">
-            <button
-              @click="scrollToSection(section3)"
-              class="px-6 py-3 border border-amber-400 text-amber-400 rounded-lg font-medium hover:bg-amber-400/10 transition-all"
-            >
-              Continue to Tactics →
-            </button>
+          <div class="bg-gray-900/90 p-6 rounded-lg border border-amber-600/30 max-w-md">
+            <h3 class="text-lg font-bold text-amber-300">{{ event.time }}</h3>
+            <p class="text-gray-300">{{ event.description }}</p>
+            <p class="text-sm text-amber-400/80 mt-2 italic">{{ event.quote }}</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
+
+
+
+
 
     <!-- Tactical Storytelling Section -->
     <section ref="section3" class="section h-[200vh] relative bg-gray-900/50">
@@ -129,7 +126,7 @@
       <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         <!-- AI Analysis Overlay -->
         <div class="absolute inset-0 z-0 ai-grid-pattern"></div>
-        
+
         <!-- Enhanced Painting Container -->
         <div class="relative w-full max-w-5xl px-4 z-10">
           <div class="relative overflow-hidden rounded-xl border border-amber-400/20 glow-container">
@@ -139,8 +136,6 @@
               class="w-full h-auto painting-img opacity-0"
               ref="painting"
             >
-            
-            <!-- Dynamic Analysis Overlays -->
             <div class="absolute inset-0 pointer-events-none">
               <div 
                 v-for="(layer, i) in aiAnalysisLayers"
@@ -153,43 +148,13 @@
                 }"
               ></div>
             </div>
-
-            <!-- Floating Data Nodes -->
-            <div 
-              v-for="(node, i) in dataNodes"
-              :key="i"
-              class="absolute w-4 h-4 rounded-full bg-amber-400/80 pointer-events-none data-node"
-              :style="{
-                top: `${node.y}%`,
-                left: `${node.x}%`,
-                boxShadow: `0 0 ${activeNode === i ? '20px 5px' : '10px 2px'} rgba(245,158,11,${activeNode === i ? 0.8 : 0.4})`
-              }"
-            ></div>
           </div>
         </div>
-
-        <!-- Quantum Interface Controls -->
-        <div class="absolute bottom-12 left-0 right-0 z-20">
-          <div class="flex justify-center gap-6">
-            <button 
-              v-for="(layer, i) in aiAnalysisLayers"
-              :key="i"
-              @click="activateLayer(i)"
-              class="quantum-pill"
-              :class="{ 'active-pill': activeLayer === i }"
-            >
-              {{ layer.label }}
-            </button>
-          </div>
-        </div>
-
-        <!-- Neural Connections -->
-        <canvas ref="neuralCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-5"></canvas>
       </div>
     </section>
-
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
@@ -211,26 +176,36 @@ const endContent = ref(null)
 // Data
 const timelineEvents = [
   {
-    time: "04:30 Dawn",
-    description: "Dutch scouts spot the English fleet near Torquay Bay",
-    quote: "'The horizon bloomed with sails' - Dutch sailor's account"
+    time: '04:00 AM – Mist Over the Water',
+    description: 'The Dutch fleet holds formation, cloaked in fog. English lookouts strain their eyes.',
+    quote: '“We heard them before we saw them.”',
   },
   {
-    time: "06:15 First Contact",
-    description: "De Ruyter orders the line-ahead formation",
-    quote: "'Beat to quarters! All hands make sail!'"
+    time: '06:15 AM – First Salvo',
+    description: 'De Ruyter fires the first broadside, catching the English unprepared.',
+    quote: '“Like thunder, but sharper.”',
   },
   {
-    time: "08:45 Broadside Exchange",
-    description: "Intense cannon fire begins, lasting nearly 5 hours",
-    quote: "'The very sea trembled with our guns' - Gunner's log"
+    time: '07:45 AM – Counterattack',
+    description: 'The English regroup and return fire, focusing on the Dutch flagship.',
+    quote: '“All hands to cannon!”',
   },
   {
-    time: "14:20 Disengagement",
-    description: "Both fleets break contact to assess damages",
-    quote: "'Smoke obscured the sun itself by midday'"
-  }
-]
+    time: '09:30 AM – Tactical Encirclement',
+    description: 'Using wind and tide, the Dutch begin to flank the English formation.',
+    quote: '“They moved like clockwork.”',
+  },
+  {
+    time: '11:00 AM – Fireships Deployed',
+  description: 'Dutch fireships spark panic among the English, igniting chaos in their ranks.',
+  quote: '“We saw ships ablaze like fallen stars.”',
+  },
+  {
+    time: '12:30 PM – English Retreat',
+    description: 'Overwhelmed, the English begin to withdraw. The tide turns in the Dutch favor.',
+    quote: '“Torquay burned behind us.”',
+  },
+];
 
 const aiAnalysisLayers = [
   {
@@ -268,10 +243,7 @@ const scrollToSection = (sectionRef) => {
   }
 }
 
-const activateLayer = (index) => {
-  activeLayer.value = index
-  animateDataNodes()
-}
+
 
 const animateDataNodes = () => {
   activeNode.value = (activeNode.value + 1) % dataNodes.length
@@ -481,6 +453,7 @@ onUnmounted(() => {
 html {
   scroll-behavior: smooth;
 }
+
 
 .section {
   position: relative;
