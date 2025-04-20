@@ -6,7 +6,7 @@
       ref="section1"
       class="section h-screen relative flex flex-col justify-center items-center px-8 overflow-hidden"
     >
-      <div class="absolute inset-0 bg-[url('/7.jpg')] bg-cover opacity-20 z-0"></div>
+      <div class="absolute inset-0 bg-[url('/battleOfTorquay.jpg')] bg-cover opacity-20 z-0"></div>
       <div class="painting-mask absolute inset-0 z-10 bg-black"></div>
 
       <div class="relative z-20 text-center max-w-4xl">
@@ -104,7 +104,7 @@
 
             <div class="relative opacity-0">
               <img
-                src="/7.jpg"
+                src="/battleOfTorquay.jpg"
                 alt="Battle Tactical Map"
                 class="w-full rounded-lg shadow-2xl border-4 border-amber-600/50"
               />
@@ -134,7 +134,7 @@
         <div class="relative w-full max-w-5xl px-4 z-10">
           <div class="relative overflow-hidden rounded-xl border border-amber-400/20 glow-container">
             <img 
-              src="/7.jpg" 
+              src="/battleOfTorquay.jpg" 
               alt="Enhanced battle visualization" 
               class="w-full h-auto painting-img opacity-0"
               ref="painting"
@@ -188,38 +188,6 @@
       </div>
     </section>
 
-    <!-- Hyperreal Conclusion Section -->
-    <section ref="section5" class="h-screen relative flex items-center justify-center bg-black/90">
-      <div class="absolute inset-0 overflow-hidden z-0">
-        <div 
-          class="absolute inset-0 bg-[url('/7.jpg')] bg-cover bg-center opacity-10"
-          :style="{
-            transform: `scale(${zoomLevel}) rotate(${tiltAngle}deg)`,
-            filter: `blur(${blurAmount}px)`
-          }"
-        ></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black z-1"></div>
-      </div>
-
-      <div class="relative z-10 text-center max-w-2xl px-8 opacity-0" ref="endContent">
-        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
-          BATTLE RESONANCE
-        </h2>
-        <div class="h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent my-8"></div>
-        <div class="spectrum-analyzer mb-8 mx-auto"></div>
-        <button 
-          @click="resetExperience"
-          class="neon-button"
-        >
-          <span class="flex items-center gap-2">
-            INITIATE REBOOT
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-          </span>
-        </button>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -327,21 +295,7 @@ const startExperience = () => {
   })
 }
 
-const resetExperience = () => {
-  gsap.to(window, { scrollTo: 0, duration: 1.5 })
-  
-  // Reset all animations
-  gsap.set(".opacity-0", { opacity: 0, y: 20 })
-  gsap.set(".timeline-event", { opacity: 0, x: -20 })
-  gsap.set(".timeline-line", { scaleY: 0 })
-  gsap.set(painting.value, { opacity: 0 })
-  gsap.set(endContent.value, { opacity: 0 })
-  gsap.set([zoomLevel, tiltAngle, blurAmount], {
-    zoomLevel: 1,
-    tiltAngle: 0,
-    blurAmount: 3
-  })
-}
+
 
 const animateTimeline = () => {
   gsap.to(".timeline-line", {
