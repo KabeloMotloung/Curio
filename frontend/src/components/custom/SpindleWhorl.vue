@@ -114,7 +114,7 @@
     <div class="slide-view base-slide" data-index="1">
       <div class="background-layer" style="background-image: url('../../assets/exhibit.png')"></div>
       <div class="sidebar-content">
-        <div class="project-number">[02]</div>
+        <div class="project-number">[01]</div>
         <h2 class="project-title">Early Spindle Designs</h2>
         <div class="project-tags">
           <span>900-1000 AD</span>
@@ -157,7 +157,7 @@
       <div class="slide-view" data-index="3">
         <div class="background-layer" style="background-image: url('../../assets/HOd4E901.svg')"></div>
         <div class="sidebar-content">
-          <div class="project-number">[02]</div>
+          <div class="project-number">[03]</div>
           <h2 class="project-title">Advanced Designs</h2>
           <div class="project-tags">
             <span>1200 AD</span>
@@ -179,7 +179,7 @@
       <div class="slide-view" data-index="4">
         <div class="background-layer" style="background-image: url('../../assets/exhibit.png')"></div>
         <div class="sidebar-content">
-          <div class="project-number">[02]</div>
+          <div class="project-number">[04]</div>
           <h2 class="project-title">Legacy Designs</h2>
           <div class="project-tags">
             <span>1300 AD</span>
@@ -312,7 +312,6 @@ export default {
           duration: 1,
           stagger: 0.02
         })
-        // Reveal central spindle with dramatic entrance
         .to(centralSpindle, {
           scale: 1,
           opacity: 1,
@@ -915,7 +914,6 @@ body {
   text-align: center;
 }
 
-/* Content for eye-opening effect */
 .content {
   position: absolute;
   top: 0;
@@ -923,12 +921,10 @@ body {
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, #2d1e0f, #111);
-  /* Refined yellow */
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
   z-index: 1;
 }
 
-/* Info wrapper - appears after eye effect */
 .info-wrapper {
   position: relative;
   z-index: 2;
@@ -944,11 +940,9 @@ body {
 .info-container {
   display: flex;
   flex-direction: row;
-  /* Change to row to place elements side by side */
   align-items: center;
   justify-content: center;
   gap: 4rem;
-  /* Add appropriate spacing */
   padding: 0 2rem;
   text-align: center;
   width: 100%;
@@ -956,13 +950,11 @@ body {
   margin: 0 auto;
 }
 
-/* Adjust the image container width for side-by-side layout */
 .spindle-image-container {
   position: relative;
   width: 40%;
   max-width: 350px;
   flex-shrink: 0;
-  /* Prevent shrinking */
   overflow: hidden;
   box-shadow: none;
   transform: perspective(1000px) rotateY(5deg);
@@ -975,12 +967,9 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* Change to contain to ensure no cropping */
   border-radius: 0;
-  /* Remove border radius */
   transition: transform 0.5s ease;
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
-  /* Apply shadow to image instead of container */
 }
 
 .image-overlay {
@@ -1013,7 +1002,6 @@ body {
   color: white;
 }
 
-/* Fix for the title underline in the last container */
 .highlight {
   color: white;
   position: relative;
@@ -1024,7 +1012,6 @@ body {
   content: '';
   position: absolute;
   bottom: -5px;
-  /* Adjusted to be below the text properly */
   left: 0;
   width: 100%;
   height: 3px;
@@ -1036,7 +1023,6 @@ body {
   transition: transform 0.5s ease;
 }
 
-/* Create the infinite animation effect for the underline */
 @keyframes underlinePulse {
   0% {
     opacity: 0.6;
@@ -1054,12 +1040,11 @@ body {
   }
 }
 
-/* Apply the animation to the underline */
+
 .highlight::after {
   animation: underlinePulse 2s infinite;
 }
 
-/* Make the highlight text color more vibrant */
 .highlight {
   color: #FFEF00;
   /* Match the underline color for consistency */
@@ -1813,7 +1798,7 @@ h2 {
 .sidebar-content {
   position: absolute;
   left: 5%;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
   color: white;
   z-index: 10;
