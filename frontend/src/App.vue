@@ -1,10 +1,10 @@
 <script setup lang="ts">
+// import SidwaneTokozile from './components/SidwaneTokozile/SidwaneTokozile.vue'
 import BattleOfTorquay from "./components/BattleOfTorquay/BattleOfTorquay.vue";
-import PangolinAndCrocodile from "./components/PangolinAndCrocodile/PangolinAndCrocodile.vue";
 </script>
 
+<template>
+  <BattleOfTorquay />
+</template>
 
-
-<style scoped>
-
-</style>
+<style></style>
