@@ -225,7 +225,7 @@ export default {
   width: 300vw;
   height: 100%;
   color: #99724b;
-  background: url("../assets/shaka.jpg") no-repeat center center; /* 50% opacity black overlay */
+  background: url("../../assets/shaka.jpg") no-repeat center center; /* 50% opacity black overlay */
   background-size: cover;
   background-blend-mode: overlay; /* Blend the overlay with the image */
 }

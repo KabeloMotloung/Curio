@@ -3,11 +3,11 @@
 </template>
 
 <script setup>
-import PaintCanvas from './components/testing/PaintCanvas.vue'
-import Page from './components/testing/Page.vue'
-import Needle from './components/Needle.vue'
-import Thread from './components/Thread.vue'
-import Base from './components/Base.vue'
+import PaintCanvas from './Kraal/components/testing/PaintCanvas.vue'
+import Page from './Kraal/components/testing/Page.vue'
+import Needle from './Kraal/components/Needle.vue'
+import Thread from './Kraal/components/Thread.vue'
+import Base from './Kraal/components/Base.vue'
 
 
 
