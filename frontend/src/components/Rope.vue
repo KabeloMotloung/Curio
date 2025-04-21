@@ -6,8 +6,27 @@
       The Life of Shaka
     </div>
 
-    <div class ="scroll-down">
-
+    <div
+      class="fixed bottom-12 left-1/2 -translate-x-1/2 text-[#1F2937] flex flex-col items-center gap-3 transition-opacity duration-500 scrollIndicator"
+      ref="scrollIndicator"
+    >
+      <span
+        class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway']"
+        >Scroll to explore</span
+      >
+      <svg
+        class="w-5 h-5 animate-bounce opacity-90"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+          d="M19 13l-7 7-7-7"
+        ></path>
+      </svg>
     </div>
 
     <div 
@@ -107,6 +126,8 @@ const ropes = [
 onMounted(() => {
   const ropeEls = container.value.querySelectorAll('.rope')
   const title = container.value.querySelector('.title');
+  const scrollIndicator = container.value.querySelector('.scrollIndicator');
+
 
   ropeEls.forEach((rope, index) => {
     const isLeftToRight = rope.classList.contains('left-to-right')
@@ -139,6 +160,7 @@ onMounted(() => {
     onUpdate: (self) => {
       const opacity = 1 - self.progress * 4; // Adjust the multiplier (4) to control fade speed
       gsap.to(title, { opacity: Math.max(0, Math.min(1, opacity)), duration: 0.1, overwrite: true });
+      gsap.to(scrollIndicator, { opacity: Math.max(0, Math.min(1, opacity)), duration: 0.1, overwrite: true });
     },
   });
 

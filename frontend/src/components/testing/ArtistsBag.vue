@@ -6,7 +6,7 @@
 
 <script setup>
 import { ref, defineExpose } from 'vue'
-  import myImage from '../assets/ArtistsBag.png'
+  import myImage from '../../assets/ArtistsBag.png'
 const badge = ref(null)
 defineExpose({ badge })
 </script>
