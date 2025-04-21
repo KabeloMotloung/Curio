@@ -155,7 +155,7 @@
 
     <div class="wipe-container" data-index="3">
       <div class="slide-view" data-index="3">
-        <div class="background-layer" style="background-image: url('../../assets/HOd4E901.svg')"></div>
+        <div class="background-layer" style="background-image: url('../../assets/spindle-cotton.png')"></div>
         <div class="sidebar-content">
           <div class="project-number">[03]</div>
           <h2 class="project-title">Advanced Designs</h2>
@@ -169,7 +169,7 @@
           <a href="#" class="view-project-link">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img src="../../assets/HOd4E901.svg" alt="Advanced Designs">
+          <img src="../../assets/spindle-cotton.png" alt="Advanced Designs">
           <div class="image-caption">Advanced Designs (1200 AD)</div>
         </div>
       </div>
@@ -177,7 +177,7 @@
 
     <div class="wipe-container" data-index="4">
       <div class="slide-view" data-index="4">
-        <div class="background-layer" style="background-image: url('../../assets/exhibit.png')"></div>
+        <div class="background-layer" style="background-image: url('../../assets/spindle2.jpg')"></div>
         <div class="sidebar-content">
           <div class="project-number">[04]</div>
           <h2 class="project-title">Legacy Designs</h2>
@@ -191,7 +191,7 @@
           <a href="#" class="view-project-link">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img src="../../assets/exhibit.png" alt="Legacy Designs">
+          <img src="../../assets/spindle2.jpg" alt="Legacy Designs">
           <div class="image-caption">Legacy Designs (1300 AD)</div>
         </div>
       </div>
