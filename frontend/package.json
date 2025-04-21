@@ -13,17 +13,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@types/three": "^0.175.0",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "frontend": "file:",
-
     "gsap": "^3.12.7",
     "pinia": "^2.3.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.175.0",
     "vee-validate": "^4.15.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -31,7 +28,6 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@tsconfig/node22": "^22.0.0",
-    "@types/gsap": "^3.0.0",
     "@types/node": "^22.10.7",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
