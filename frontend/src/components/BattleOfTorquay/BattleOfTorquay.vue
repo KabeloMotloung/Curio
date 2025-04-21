@@ -71,7 +71,7 @@
 
 
     <!-- Tactical Storytelling Section -->
-<section ref="section3" class="section h-[120vh] relative bg-gray-900/50 overflow-hidden">
+<section ref="section3" class="section h-[120vh] relative bg-gray-800 overflow-hidden">
   <!-- Sticky Viewport -->
   <div class="sticky top-0 h-screen flex items-center">
     <div class="w-full max-w-6xl mx-auto px-8 space-y-12">
@@ -126,6 +126,64 @@
   </div>
 </section>
 
+<section ref="contextSection" class="relative min-h-screen py-20 bg-gradient-to-b from-gray-800 to-gray-900">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
+          Historical Context
+        </span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6 parallax-item" :style="parallaxStyle">
+          <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20">
+            <h3 class="text-2xl font-semibold text-amber-400 mb-4">The Anglo-Dutch Wars</h3>
+            <p class="text-gray-300 leading-relaxed">
+              The Battle of Torquay took place during the Third Anglo-Dutch War, a conflict that arose from both 
+              commercial rivalry and political tension between England and the Dutch Republic.
+            </p>
+          </div>
+
+          <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20">
+            <h3 class="text-2xl font-semibold text-amber-400 mb-4">Naval Tactics</h3>
+            <p class="text-gray-300 leading-relaxed">
+              The battle showcased revolutionary naval tactics, with the Dutch fleet's innovative use of fireships 
+              and line-of-battle formations that would influence maritime warfare for centuries to come.
+            </p>
+          </div>
+        </div>
+
+        <!-- Stats and figures -->
+        <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20 parallax-item" :style="parallaxStyle">
+          <h3 class="text-2xl font-semibold text-amber-400 mb-6">Battle Statistics</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Dutch Ships</span>
+              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 60%"></div>
+              </div>
+              <span class="text-amber-400">60</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">English Ships</span>
+              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 72%"></div>
+              </div>
+              <span class="text-amber-400">72</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Battle Duration</span>
+              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 85%"></div>
+              </div>
+              <span class="text-amber-400">8.5 hrs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
     <!-- Neural Network Canvas Section -->
     <section class="min-h-[250vh] relative" ref="section4">
       <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
@@ -157,12 +215,13 @@
         </div>
       </div>
     </section>
+    
   </div>
 </template>
 
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -449,6 +508,18 @@ onUnmounted(() => {
   clearInterval(window.nodeInterval)
   ScrollTrigger.getAll().forEach(instance => instance.kill())
   window.removeEventListener('resize', () => {})
+})
+
+
+const contextSection = ref(null)
+const mousePosition = ref({ x: 0, y: 0 })
+const parallaxStyle = computed(() => {
+  const { x, y } = mousePosition.value
+  const moveX = (x - window.innerWidth / 2) * 0.05
+  const moveY = (y - window.innerHeight / 2) * 0.05
+  return {
+    transform: `translate(${moveX}px, ${moveY}px)`
+  }
 })
 </script>
 
