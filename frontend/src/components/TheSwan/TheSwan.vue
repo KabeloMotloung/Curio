@@ -27,7 +27,7 @@
 
     <div class="fixed inset-0 bg-transition" ref="skyBackground">
       <img 
-        src="assets/sky-background.jpg"
+        src="./assets/sky-background.jpg"
         class="h-screen w-full object-cover" 
         ref="background" 
         alt="Background 1"
@@ -40,19 +40,19 @@
         <h1 class="text-7xl font-extralight tracking-[0.25em] uppercase">The Swan</h1>
       </div>
       <img 
-        src="assets/cloud.png"
+        src="./assets/cloud.png"
         class="absolute top-[15%] left-[10%] w-[30%] opacity-0 animate-float-slow" 
         ref="cloud1" 
         alt="Cloud 1"
       />
       <img 
-        src="assets/cloud.png"
+        src="./assets/cloud.png"
         class="absolute top-[25%] right-[20%] w-[40%] opacity-0 animate-float-medium" 
         ref="cloud2" 
         alt="Cloud 2"
       />
       <img 
-        src="assets/cloud.png"
+        src="./assets/cloud.png"
         class="absolute top-[60%] left-[30%] w-[35%] opacity-0 animate-float-fast" 
         ref="cloud3" 
         alt="Cloud 3"
@@ -173,7 +173,7 @@
             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZGVmcz48cGF0dGVybiBpZD0idGV4dHVyZSIgd2lkdGg9IjUiIGhlaWdodD0iNSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA1IDAgTCAwIDAgMCA1IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9InVybCgjdGV4dHVyZSkiLz48L3N2Zz4=')]"></div>
           </div>
           <img 
-            src="assets/TheSwan.png"
+            src="./assets/TheSwan.png"
             alt="The Swan" 
             class="w-full h-full object-contain brightness-90 drop-shadow-[0_0_10px_rgba(0,0,0,0.2)]"
           />

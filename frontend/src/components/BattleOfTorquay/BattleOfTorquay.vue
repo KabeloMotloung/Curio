@@ -5,7 +5,7 @@
       ref="section1"
       class="section h-screen relative flex flex-col justify-center items-center px-8 overflow-hidden"
     >
-      <div class="absolute inset-0 bg-[url('/battleOfTorquay.jpg')] bg-cover opacity-20 z-0"></div>
+      <div class="absolute inset-0 bg-[url('./assets/battleOfTorquay.jpg')] bg-cover opacity-20 z-0"></div>
       <div class="painting-mask absolute inset-0 z-10 bg-black"></div>
 
       <div class="relative z-20 text-center max-w-4xl">
@@ -107,7 +107,7 @@
         <!-- Image Panel -->
         <div class="relative animate-fade-in opacity-0 [animation-delay:0.8s]">
           <img
-            src="/battleOfTorquay.jpg"
+            src="./assets/battleOfTorquay.jpg"
             alt="Battle Tactical Map"
             class="w-full rounded-lg shadow-2xl border-4 border-amber-600/50 parallax-img"
           />
@@ -194,7 +194,7 @@
         <div class="relative w-full max-w-5xl px-4 z-10">
           <div class="relative overflow-hidden rounded-xl border border-amber-400/20 glow-container">
             <img 
-              src="/battleOfTorquay.jpg" 
+              src="./assets/battleOfTorquay.jpg"
               alt="Enhanced battle visualization" 
               class="w-full h-auto painting-img opacity-0"
               ref="painting"
