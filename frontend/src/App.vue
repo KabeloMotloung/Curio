@@ -2,7 +2,7 @@
 import TheDiscovery from './components/TheDiscovery/TheDiscovery.vue';
 // import SidwaneTokozile from './components/SidwaneTokozile/SidwaneTokozile.vue'
 import BattleOfTorquay from "./components/BattleOfTorquay/BattleOfTorquay.vue";
-import TheSwan from './components/custom/TheSwan/TheSwan.vue'
+import TheSwan from './components/TheSwan/TheSwan.vue'
 </script>
 
 <template>
