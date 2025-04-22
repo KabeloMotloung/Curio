@@ -5,7 +5,7 @@
       ref="section1"
       class="section h-screen relative flex flex-col justify-center items-center px-8 overflow-hidden"
     >
-      <div class="absolute inset-0 bg-[url('./assets/battleOfTorquay.jpg')] bg-cover opacity-20 z-0"></div>
+      <div class="absolute inset-0 bg-[url('/battleOfTorquay.jpg')] bg-cover opacity-20 z-0"></div>
       <div class="painting-mask absolute inset-0 z-10 bg-black"></div>
 
       <div class="relative z-20 text-center max-w-4xl">

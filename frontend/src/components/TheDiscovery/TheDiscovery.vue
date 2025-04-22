@@ -45,9 +45,9 @@ gsap.registerPlugin(ScrollTrigger)
 const scrollSection = ref(null)
 
 const images = [
-  new URL('assets/TheDiscovery/row-1-column-1.jpg', import.meta.url).href,
-  new URL('assets/TheDiscovery/row-1-column-2.jpg', import.meta.url).href,
-  new URL('assets/TheDiscovery/row-1-column-3.jpg', import.meta.url).href,
+  new URL('./assets/row-1-column-1.jpg', import.meta.url).href,
+  new URL('./assets/row-1-column-2.jpg', import.meta.url).href,
+  new URL('./assets/row-1-column-3.jpg', import.meta.url).href,
   // Add more images as needed
 ]
 
