@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import imgUrl from '../../assets/LandingPage/ImageOfMuseum.jpeg'
@@ -60,6 +60,13 @@ onMounted(() => {
       end: () => "+=" + scrollContainer.value.offsetWidth,
     }
   })
+})
+
+onBeforeUnmount(() => {
+
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+
+  gsap.globalTimeline.clear()
 })
 </script>
 
