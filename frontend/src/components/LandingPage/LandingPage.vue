@@ -115,7 +115,7 @@ onMounted(() => {
 }
 
 .card {
-  min-width: 75vw;
+  min-width: 50vw;
   height: 100vh;
   flex-shrink: 0;
 }
