@@ -35,7 +35,7 @@
             <!-- Image section -->
             <div class="w-1/2 h-full flex items-center justify-center">
                 <div class="relative group">
-                    <img ref="image" src="../assets/front.png" alt="Sidwane Tokozile" class="max-h-[80vh] hover:scale-105 transition-transform duration-500" />
+                    <img ref="image" :src="frontImage" alt="Sidwane Tokozile" class="max-h-[80vh] hover:scale-105 transition-transform duration-500" />
                 </div>
             </div>
             
@@ -59,7 +59,7 @@
                 <div class="flex flex-row items-center w-full max-w-6xl">
                     <div class="w-1/2">
                         <div class="relative group">
-                            <img src="../assets/artist.jpg" alt="Anton van Wouw" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                            <img :src="artistImage" alt="Anton van Wouw" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
                         </div>
                     </div>
                     <div class="w-1/2 text-left px-8">
@@ -79,7 +79,7 @@
                 <div class="flex flex-row-reverse items-center w-full max-w-6xl">
                     <div class="w-1/2">
                         <div class="relative group">
-                            <img src="../assets/angle.png" alt="Historical Context" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                            <img :src="angleImage" alt="Historical Context" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
                         </div>
                     </div>
                     <div class="w-1/2 text-left px-8">
@@ -99,7 +99,7 @@
                 <div class="flex flex-row items-center w-full max-w-6xl">
                     <div class="w-1/2">
                         <div class="relative group">
-                            <img src="../assets/close.png" alt="Sculpture Details" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
+                            <img :src="closeImage" alt="Sculpture Details" class="max-h-[80vh] mx-auto hover:scale-105 transition-transform duration-500" />
                         </div>
                     </div>
                     <div class="w-1/2 text-left px-8">
@@ -154,6 +154,13 @@
 import { onMounted, ref, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import frontImage from './assets/front.png'
+import artistImage from './assets/artist.jpg'
+import angleImage from './assets/angle.png'
+import closeImage from './assets/close.png'
+import angle2Image from './assets/angle2.png'
+import sideImage from './assets/side.png'
+import side2Image from './assets/side2.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -165,9 +172,9 @@ const currentSection = ref(0)
 const totalSections = ref(7) // Total number of sections including main, additional images title, and additional images
 
 const additionalImages = [
-    { src: '../assets/angle2.png', alt: 'Full View', caption: 'Full View' },
-    { src: '../assets/side.png', alt: 'Face View', caption: 'Face Close Up' },
-    { src: '../assets/side2.png', alt: 'Side View', caption: 'Side view' },
+    { src: angle2Image, alt: 'Full View', caption: 'Full View' },
+    { src: sideImage, alt: 'Face View', caption: 'Face Close Up' },
+    { src: side2Image, alt: 'Side View', caption: 'Side view' },
 ]
 
 // Update current section based on scroll position
