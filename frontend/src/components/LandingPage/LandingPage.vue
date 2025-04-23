@@ -76,11 +76,11 @@ onMounted(() => {
     <!-- Cards Wrapper -->
     <div ref="scrollContainer" class="card-container-wrapper">
       <div ref="cardContainer" class="card-container">
-        <TheDiscoveryCard class="card" />
         <TheSwanCard class="card" />
         <PangolinAndCrocodileCard class="card" />
         <SpindleWhorlCard class="card" />
         <TheKraalCard class="card" />
+        <TheDiscoveryCard class="card" />
         <!-- Add more as needed -->
       </div>
     </div>
