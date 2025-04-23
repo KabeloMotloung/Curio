@@ -7,7 +7,7 @@
 export default {
   methods: {
     onClick() {
-      this.$router.push('/the-kraal');
+      this.$router.push('/sidwane-tokozile');
     }
   }
 }
@@ -15,11 +15,11 @@ export default {
 
 <style scoped>
   .image-button {
-    background-image: url('./assets/TheKraalImage.jpg');
-    background-size: contain; 
+    background-image: url('./assets/SidwaneTokozileImage.png');
+    background-size: contain;
     background-position: center;
-    background-repeat: no-repeat; 
-    background-color: rgba(0, 0, 0, 0.2); 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.2);
     border: none;
     color: white;
     font-size: 16px;

@@ -17,22 +17,24 @@
   <style scoped>
 
     .image-button {
-        background-image: url('../../assets/Cards/TheDiscoverImage.jpg'); /* Use your image URL here */
-        background-size: cover; /* Cover the entire button */
-        background-position: center; /* Center the image */
-        border: none; /* Remove default border */
-        color: white; /* Text color */
-        font-size: 16px; /* Font size */
-        padding: 10px 20px; /* Padding around the text */
-        cursor: pointer; /* Change cursor on hover */
-        width: 350px; /* Set a width if needed */
-        height: 200px; /* Set a height if needed */
-        border-radius: 5px; /* Optional: rounded corners */
-        transition: transform 0.3s; /* Optional: smooth hover effect */
+        background-image: url('./assets/TheDiscoverImage.jpg'); 
+        background-size: contain; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-color: rgba(0, 0, 0, 0.2); 
+        border: none; 
+        color: white;
+        font-size: 16px; 
+        padding: 10px 20px; 
+        cursor: pointer; 
+        width: 100%; 
+        height: 100%; 
+        border-radius: 5px; 
+        transition: transform 0.3s; 
     }
 
     .image-button:hover {
-        transform: scale(1.05); /* Optional: scale effect on hover */
+        transform: scale(1.05); 
     }
 
   </style>
