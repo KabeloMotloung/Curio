@@ -28,7 +28,7 @@ export default {
   font-size: 16px;
   cursor: pointer;
   width: 100px;
-  height: 700px;
+  height: 50%;
   border-radius: 5px;
   transition: transform 0.3s;
   display: flex;

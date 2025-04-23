@@ -1,7 +1,7 @@
 <template>
   <button @click="onClick" class="image-button">
     <div class="card-content">
-      <p class="description">Spindle Whorl</p>
+      <p class="description">description</p>
     </div>
   </button>
 </template>
@@ -27,7 +27,7 @@ export default {
   font-size: 16px;
   cursor: pointer;
   width: 100px;
-  height: 700px;
+  height: 50%;
   border-radius: 5px;
   transition: transform 0.3s;
   display: flex;
