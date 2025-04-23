@@ -35,8 +35,8 @@
         <div class="h-screen w-full flex items-start p-8 relative">
             <!-- Title section -->
             <div class="w-1/2">
-                <h1 ref="title" class="text-[200px] font-serif tracking-tight">
-                    Sidwane Tokozile
+                <h1 ref="title" class="text-[140px] font-serif tracking-tight">
+                    Sidwane Tokozile "The Coffee Drinker"
                 </h1>
                 <p class="text-xl mt-4 text-amber-200/80">Anton van Wouw, 1907</p>
                 <div class="mt-8 flex items-center gap-4">
