@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
 
 <!-- Scroll Hint Message -->
 <div class="scroll-hint" ref="scrollHint">
-  <p>Scroll to explore</p>
+  <p>scroll to explore</p>
 </div>
   
     <!-- Cards Wrapper -->
