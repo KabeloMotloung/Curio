@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/s3/")
 class S3Controller(private val s3: S3Service) : BaseController() {
+    //cached controller to access s3 images
     @Cacheable("s3")
     @GetMapping
     fun get(): ResponseEntity<List<String>> {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/dynamoDB/")
 class DynamoDBController(private val dynamoDB: DynamoDBService) : BaseController() {
-
+    //cached controller to access dynamo resources
     @Cacheable("dynamoDB")
     @GetMapping
     fun get(): ResponseEntity<List<Map<String, String>>> {

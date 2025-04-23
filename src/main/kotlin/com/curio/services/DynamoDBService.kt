@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class DynamoDBService {
-
+    //service for dynamo, note the sdk uses co-routines
     fun getAllRecords(): List<Map<String, String>> = runBlocking {
         val itemsList = mutableListOf<Map<String, String>>()
 
