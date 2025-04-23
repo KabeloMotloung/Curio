@@ -1,10 +1,8 @@
 <script setup lang="ts">
-// import SidwaneTokozile from './components/SidwaneTokozile/SidwaneTokozile.vue'
-import BattleOfTorquay from "./components/BattleOfTorquay/BattleOfTorquay.vue";
-import TheSwan from './components/custom/TheSwan/TheSwan.vue'
 </script>
 
 <template>
+    <router-view />
 </template>
 
 <style scoped>
