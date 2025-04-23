@@ -285,6 +285,13 @@ onBeforeUnmount(() => {
     })
   }
 })
+
+onBeforeUnmount(() => {
+
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+
+  gsap.globalTimeline.clear()
+})
 </script>
 
 
@@ -595,8 +602,8 @@ onBeforeUnmount(() => {
   left: 0;
   top: 0;
   will-change: transform, opacity;
-  visibility: hidden; /* Hide by default */
-  opacity: 0; /* Ensure zero opacity by default */
+  visibility: hidden; 
+  opacity: 0;
 }
 
 .artifact-container {

@@ -1,21 +1,22 @@
 <template>
-    <button @click="onClick" class="image-button">
-    </button>
-  </template>
-  
-  <script>
- 
-  export default {
-    methods: {
-      onClick() {
-        this.$router.push('/the-discovery');
-      }
+  <button @click="onClick" class="image-button">
+    <div class="card-content">
+      <p class="description">description</p>
+    </div>
+  </button>
+</template>
+
+<script>
+export default {
+  methods: {
+    onClick() {
+      this.$router.push('/the-discovery');
     }
   }
-  </script>
-  
-  <style scoped>
+}
+</script>
 
+<style scoped>
     .image-button {
         background-image: url('./assets/TheDiscoverImage.jpg'); 
         background-size: contain; 
@@ -37,4 +38,15 @@
         transform: scale(1.05); 
     }
 
-  </style>
+.card-content {
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
+.description {
+  margin: 0;
+  font-weight: bold;
+}
+</style>
