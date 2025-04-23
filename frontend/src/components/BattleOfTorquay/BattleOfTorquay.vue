@@ -373,6 +373,7 @@ const animateTimeline = () => {
 
 const drawNeuralNetwork = () => {
   const canvas = neuralCanvas.value
+  if(canvas === null) return
   const ctx = canvas.getContext('2d')
   
   const resizeCanvas = () => {
