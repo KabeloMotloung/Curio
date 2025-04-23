@@ -84,11 +84,14 @@ const navigateToSection = (index) => {
   
   const direction = index > currentSection.value ? 1 : -1
   
+  const isRapidScroll = (Date.now() - lastScrollTime < 150);
+  const animDuration = isRapidScroll ? 0.25 : 0.5;
+  
   if (currentSection.value === -1) {
     const welcomeAnim = gsap.to(welcomeMessage.value, {
       opacity: 0,
       scale: 0.95,
-      duration: 0.5,
+      duration: animDuration,
       ease: 'power2.out',
       onComplete: () => {
         welcomeMessage.value.style.display = 'none'
@@ -98,7 +101,7 @@ const navigateToSection = (index) => {
     const promptAnim = gsap.to(scrollPrompt.value, {
       opacity: 0,
       y: 20,
-      duration: 0.5,
+      duration: animDuration,
       ease: 'power2.out'
     })
     
@@ -113,7 +116,7 @@ const navigateToSection = (index) => {
       {
         autoAlpha: 1,
         x: '0%',
-        duration: 0.6,
+        duration: animDuration + 0.1,
         ease: 'power1.out'
       }
     )
@@ -127,7 +130,7 @@ const navigateToSection = (index) => {
       const currentAnim = gsap.to(sections.value[currentSection.value], {
         autoAlpha: 0,
         x: '-100%',
-        duration: 0.5,
+        duration: animDuration,
         ease: 'power1.out',
         onComplete: () => {
           gsap.set(sections.value[currentSection.value], { autoAlpha: 0 })
@@ -139,7 +142,7 @@ const navigateToSection = (index) => {
         {
           autoAlpha: 1,
           x: '0%',
-          duration: 0.5,
+          duration: animDuration,
           ease: 'power1.out'
         }
       )
@@ -152,7 +155,7 @@ const navigateToSection = (index) => {
       const currentAnim = gsap.to(sections.value[currentSection.value], {
         autoAlpha: 0,
         x: '100%',
-        duration: 0.5,
+        duration: animDuration,
         ease: 'power1.out',
         onComplete: () => {
           gsap.set(sections.value[currentSection.value], { autoAlpha: 0 })
@@ -164,7 +167,7 @@ const navigateToSection = (index) => {
         {
           autoAlpha: 1,
           x: '0%',
-          duration: 0.5,
+          duration: animDuration,
           ease: 'power1.out'
         }
       )
@@ -177,9 +180,30 @@ const navigateToSection = (index) => {
 }
 
 const handleWheel = (e) => {
-  if (Math.abs(e.deltaY) < 20) return
+
+  if (Math.abs(e.deltaY) < 5) return
   
   e.preventDefault()
+  
+  const now = Date.now();
+  const isRapidScroll = (now - lastScrollTime < 150);
+  lastScrollTime = now;
+  
+  const animationsActive = animations.value.some(anim => 
+    anim.isActive && anim.isActive() && 
+    anim.vars && anim.vars.onComplete
+  );
+  
+  if (isRapidScroll && animationsActive) {
+    animations.value.forEach(anim => {
+      if (anim.isActive && anim.isActive() && anim.progress) {
+        anim.progress(1);
+      }
+    });
+  } else if (animationsActive && !isRapidScroll) {
+    return;
+  }
+  
   const direction = e.deltaY > 0 ? 1 : -1
   
   if (currentSection.value === -1 && direction > 0) {
@@ -193,19 +217,19 @@ const handleWheel = (e) => {
     
     const welcomeAnim = gsap.fromTo(welcomeMessage.value, 
       { opacity: 0, scale: 0.95 }, 
-      { opacity: 1, scale: 1, duration: 0.5 }
+      { opacity: 1, scale: 1, duration: isRapidScroll ? 0.2 : 0.3 }
     )
     
     const promptAnim = gsap.fromTo(scrollPrompt.value, 
       { opacity: 0, y: 20 }, 
-      { opacity: 1, y: 0, duration: 0.5 }
+      { opacity: 1, y: 0, duration: isRapidScroll ? 0.2 : 0.3 }
     )
     
     const sectionAnim = gsap.to(sections.value[0], {
       autoAlpha: 0,
       x: '100%', 
-      duration: 0.5,
-      ease: 'power1.out'
+      duration: isRapidScroll ? 0.2 : 0.3,
+      ease: 'power2.out'
     })
     
     animations.value.push(welcomeAnim, promptAnim, sectionAnim)
@@ -218,6 +242,8 @@ const handleWheel = (e) => {
     navigateToSection(nextSection)
   }
 }
+
+let lastScrollTime = 0;
 
 const handleKeydown = (e) => {
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
