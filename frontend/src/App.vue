@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import PangolinAndCrocodile from "./components/PangolinAndCrocodile/PangolinAndCrocodile.vue";
+import { RouterView } from 'vue-router';
+
 </script>
 
 <template>
-  <PangolinAndCrocodile/>
+    <RouterView/>
 </template>
 
 <style scoped>
-
 </style>

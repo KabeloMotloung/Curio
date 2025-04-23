@@ -168,6 +168,7 @@ onMounted(() => {
           ease: "slow(0.7,0.7,false)"
       });
       });
+
   }, main.value);
 });
 
@@ -198,6 +199,7 @@ onUnmounted(() => {
     <div id="smooth-content">
       <header class="header h-screen flex flex-col justify-center items-center text-center p-8">
         <video autoplay muted loop playsinline class="background-video">
+
           <source src="./assets/Pangolin.mov" type="video/mp4"/>
           Your browser does not support the video tag.
         </video>
@@ -226,11 +228,12 @@ onUnmounted(() => {
 <!--        </div>-->
 <!--      </div>-->
       <section v-for="(image, index) in images" :key="index" class="h-screen flex flex-col md:flex-row items-center justify-between px-16 py-8 space-y-8 md:space-y-0" :class="{'md:flex-row-reverse': index % 2 !== 0}">
+
         <div class="flex-1 flex justify-center">
           <img
-              :src="image.src"
               :alt="image.alt"
               :class="['pangolin-image', 'rounded-2xl', 'max-w-full', 'max-h-[60vh]', 'object-contain', index === 0 ? 'SpinPango' : '']"
+              :src="image.src"
           />
         </div>
         <div class="text-content flex-1 p-6">
@@ -246,6 +249,12 @@ onUnmounted(() => {
 <style scoped>
 .container{
   overflow: hidden;
+}
+
+.arrow {
+  padding: 0;
+  margin: 0;
+  line-height: 0.89;
 }
 
 .arrow {
