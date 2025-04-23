@@ -1,13 +1,13 @@
 <template>
   <button @click="onClick" class="image-button">
-  </button>
+</button>
 </template>
 
 <script>
 export default {
   methods: {
     onClick() {
-      this.$router.push('/pangolin-and-crocodile');
+      this.$router.push('/sidwane-tokozile');
     }
   }
 }
@@ -15,8 +15,8 @@ export default {
 
 <style scoped>
   .image-button {
-    background-image: url('./assets/PangolinAndCrocodileImage.png');
-    background-size: contain; 
+    background-image: url('./assets/SidwaneTokozileImage.png');
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.2);

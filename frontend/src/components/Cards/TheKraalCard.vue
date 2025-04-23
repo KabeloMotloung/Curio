@@ -1,55 +1,37 @@
-  <template>
-    <button @click="onClick" class="image-button">
-      <div class="card-content">
-        <p class="description">description</p>
-      </div>
-    </button>
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      onClick() {
-        this.$router.push('/the-kraal');
-      }
+<template>
+  <button @click="onClick" class="image-button">
+  </button>
+</template>
+
+<script>
+export default {
+  methods: {
+    onClick() {
+      this.$router.push('/the-kraal');
     }
   }
-  </script>
-  
-  <style scoped>
+}
+</script>
+
+<style scoped>
   .image-button {
-    position: relative;
-    background-image: url('../../assets/Cards/TheKraalImage.jpg');
-    background-size: cover;
+    background-image: url('./assets/TheKraalImage.jpg');
+    background-size: contain; 
     background-position: center;
+    background-repeat: no-repeat; 
+    background-color: rgba(0, 0, 0, 0.2); 
     border: none;
     color: white;
     font-size: 16px;
+    padding: 10px 20px;
     cursor: pointer;
-    width: 100px;
-    height: 50%;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
     transition: transform 0.3s;
-    display: flex;
-    align-items: flex-end; /* Push description to the bottom */
-    justify-content: center;
-    padding: 0;
-    overflow: hidden;
   }
-  
+
   .image-button:hover {
     transform: scale(1.05);
   }
-  
-  .card-content {
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-  }
-  
-  .description {
-    margin: 0;
-    font-weight: bold;
-  }
-  </style>
+</style>
