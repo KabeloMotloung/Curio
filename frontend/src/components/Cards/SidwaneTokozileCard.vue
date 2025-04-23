@@ -1,6 +1,6 @@
 <template>
   <button @click="onClick" class="image-button">
-  </button>
+</button>
 </template>
 
 <script>
