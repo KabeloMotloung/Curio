@@ -106,7 +106,7 @@ onMounted(() => {
 .card-container {
   display: flex;
   flex-wrap: nowrap;
-  gap: 100px;
+  gap: 250px;
   z-index: 1;
   position: relative;
   width: max-content;
@@ -115,7 +115,7 @@ onMounted(() => {
 }
 
 .card {
-  min-width: 100vw;
+  min-width: 75vw;
   height: 100vh;
   flex-shrink: 0;
 }

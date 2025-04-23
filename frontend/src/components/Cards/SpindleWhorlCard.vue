@@ -25,8 +25,8 @@
         font-size: 16px; /* Font size */
         padding: 10px 20px; /* Padding around the text */
         cursor: pointer; /* Change cursor on hover */
-        width: 350px; /* Set a width if needed */
-        height: 200px; /* Set a height if needed */
+        width: 150px; /* Set a width if needed */
+        height: 400px; /* Set a height if needed */
         border-radius: 5px; /* Optional: rounded corners */
         transition: transform 0.3s; /* Optional: smooth hover effect */
     }
