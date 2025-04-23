@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @CrossOrigin
 abstract class BaseController() {
+    //to handle errors
     @ExceptionHandler(Throwable::class)
     fun errorHandler(throwable: Throwable): ResponseEntity<String> {
         when (throwable) {
