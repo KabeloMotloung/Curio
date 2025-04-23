@@ -14,12 +14,13 @@ gsap.registerPlugin(ScrollTrigger)
 const scrollContainer = ref(null)
 const cardContainer = ref(null)
 const welcomeMessage = ref(null)
+const scrollHint = ref(null)
 
 onMounted(() => {
   const sections = cardContainer.value.querySelectorAll('.card')
 
-  // Fade out welcome message
-  gsap.to(welcomeMessage.value, {
+  // Fade out welcome message and scroll hint
+  gsap.to([welcomeMessage.value, scrollHint.value], {
     opacity: 0,
     scale: 0.95,
     duration: 1,
@@ -76,9 +77,14 @@ onBeforeUnmount(() => {
     <div class="background-blur"></div>
   
     <!-- Welcome Message -->
-    <div class="welcome-message" ref="welcomeMessage">
-      <h1>Welcome to the UP Museum</h1>
-    </div>
+<div class="welcome-message" ref="welcomeMessage">
+  <h1>Welcome to the UP Museum</h1>
+</div>
+
+<!-- Scroll Hint Message -->
+<div class="scroll-hint" ref="scrollHint">
+  <p>Scroll to explore</p>
+</div>
   
     <!-- Cards Wrapper -->
     <div ref="scrollContainer" class="card-container-wrapper">
@@ -146,6 +152,18 @@ body {
   background-repeat: no-repeat;
   filter: blur(10px);
   z-index: 0;
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 </style>
