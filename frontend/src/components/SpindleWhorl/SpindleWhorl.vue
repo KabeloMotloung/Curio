@@ -53,7 +53,7 @@
       <div class="info-wrapper">
         <div class="info-container">
           <div class="spindle-image-container">
-            <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle.png"/>
+            <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
             <div class="image-overlay">
               <div class="overlay-content">
                 <span>Circa 1200 AD</span>
@@ -99,16 +99,16 @@
   <div class="parallax-container">
     <div class="spindle-track">
       <div v-for="i in 5" :key="`top-${i}`" class="spindle-item top">
-        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png"/>
+        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
       </div>
       <div v-for="i in 5" :key="`bottom-${i}`" class="spindle-item bottom">
-        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png"/>
+        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
       </div>
     </div>
 
     <div class="impact-visualization">
       <div class="central-spindle">
-        <img alt="Central Spindle Whorl" src="./assets/spindle.png"/>
+        <img alt="Central Spindle Whorl" src="./assets/spindle.png" />
       </div>
       <div class="ripple-circles">
         <div class="ripple-circle" data-category="trade"></div>
@@ -148,42 +148,45 @@
 
   <div class="image-transition-section">
     <div class="slide-view base-slide" data-index="1">
-      <div class="background-layer" style="background-image: url('./assets/exhibit.png')"></div>
+      <div class="background-layer" style="background-image: url('./assets/decorated.png')"></div>
       <div class="sidebar-content">
         <div class="project-number">[01]</div>
-        <h2 class="project-title">Early Spindle Designs</h2>
+        <h2 class="project-title">Decorated Spindle Whorls</h2>
         <div class="project-tags">
-          <span>900-1000 AD</span>
-          <span>CRAFTSMANSHIP ORIGINS</span>
-          <span>SIMPLE DESIGNS</span>
+          <span>CULTURAL SYMBOLISM</span>
+          <span>FEMALE IDENTITY</span>
+          <span>ARTISTIC EXPRESSION</span>
         </div>
-        <p class="slide-description">The earliest spindle whorls found in Mapungubwe show the beginnings of a craft that
-          would transform the region's economy.</p>
+        <p class="slide-description">Beyond their practical function, decorated spindle whorls carried symbolic
+          significance tied to female identity and status. The careful selection of materials and decorative patterns
+          featuring parallel lines and triangular motifs created visually dynamic effects during spinning.</p>
         <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
       </div>
       <div class="image-frame-container">
-        <img alt="Early Designs" src="./assets/exhibit.png">
+        <img alt="Early Designs" src="./assets/decorated.png">
         <div class="image-caption">Early Designs (900-1000 AD)</div>
       </div>
     </div>
 
     <div class="wipe-container" data-index="2">
       <div class="slide-view" data-index="2">
-        <div class="background-layer" style="background-image: url('./assets/spindle.png')"></div>
+        <div class="background-layer" style="background-image: url('./assets/stones.png')"></div>
         <div class="sidebar-content">
           <div class="project-number">[02]</div>
-          <h2 class="project-title">Regional Variations</h2>
+          <h2 class="project-title">Blank Spindles</h2>
           <div class="project-tags">
-            <span>1100 AD</span>
-            <span>CULTURAL INFLUENCE</span>
-            <span>ARTISTIC ELEMENTS</span>
+            <span>PRODUCTION PROCESS</span>
+            <span>CRAFTING TECHNIQUES</span>
+            <span>MATERIAL TRANSFORMATION</span>
           </div>
-          <p class="slide-description">As trade expanded through Southern Africa, distinct regional styles emerged,
-            reflecting cultural exchanges across territories.</p>
+          <p class="slide-description">Blank spindles represent the early manufacturing stage where clay fragments or
+            potsherds were shaped into rough circles. Craftspeople would grind and reshape these discs on stone
+            surfaces, with some receiving fine smoothing before the crucial central perforation was added to complete
+            the functional spindle whorl.</p>
           <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img alt="Regional Variations" src="./assets/spindle.png">
+          <img alt="Regional Variations" src="./assets/stones.png">
           <div class="image-caption">Regional Variations (1100 AD)</div>
         </div>
       </div>
@@ -191,21 +194,24 @@
 
     <div class="wipe-container" data-index="3">
       <div class="slide-view" data-index="3">
-        <div class="background-layer" style="background-image: url('./assets/spindle-cotton.png')"></div>
+        <div class="background-layer" style="background-image: url('./assets/spindles.png')"></div>
         <div class="sidebar-content">
           <div class="project-number">[03]</div>
-          <h2 class="project-title">Advanced Designs</h2>
+          <h2 class="project-title">The Mechanics of Spinning</h2>
           <div class="project-tags">
-            <span>1200 AD</span>
-            <span>TECHNICAL INNOVATION</span>
-            <span>PEAK CRAFTSMANSHIP</span>
+            <span>FUNCTIONAL DESIGN</span>
+            <span>TECHNOLOGICAL INNOVATION</span>
+            <span>MATERIAL SCIENCE</span>
           </div>
-          <p class="slide-description">By the height of Mapungubwe's prosperity, spindle whorls showed remarkable
-            sophistication in their weight distribution and decorative elements.</p>
+          <p class="slide-description">The spindle whorl functions as a flywheel, maintaining spin momentum and twisting
+            fibers into yarn. Its effectiveness depends on precise engineering attributes—size, weight, diameter, and
+            shape working in harmony. Smaller whorls create finer threads by spinning faster, while heavier ones produce
+            thicker materials by rotating more slowly, demonstrating how these tools were precisely calibrated for
+            different textile applications.</p>
           <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img alt="Advanced Designs" src="./assets/spindle-cotton.png">
+          <img alt="Advanced Designs" src="./assets/spindles.png">
           <div class="image-caption">Advanced Designs (1200 AD)</div>
         </div>
       </div>
@@ -213,21 +219,24 @@
 
     <div class="wipe-container" data-index="4">
       <div class="slide-view" data-index="4">
-        <div class="background-layer" style="background-image: url('./assets/spindle2.jpg')"></div>
+        <div class="background-layer" style="background-image: url('./assets/exhibit.png')"></div>
         <div class="sidebar-content">
           <div class="project-number">[04]</div>
-          <h2 class="project-title">Legacy Designs</h2>
+          <h2 class="project-title">Stone Spindle Whorls</h2>
           <div class="project-tags">
-            <span>1300 AD</span>
-            <span>CULTURAL HERITAGE</span>
-            <span>HISTORICAL IMPORTANCE</span>
+            <span>RARE ARTIFACTS</span>
+            <span>SPECIALIZED CRAFTSMANSHIP</span>
+            <span>RITUAL SIGNIFICANCE</span>
           </div>
-          <p class="slide-description">The final era of spindle whorl production shows influences from neighboring
-            regions and created a lasting legacy for future generations.</p>
+          <p class="slide-description">Stone whorls are relatively uncommon in the archaeological record of southern
+            Africa compared to clay versions. They were difficult to break as well as to manufacture, using materials
+            like siltstone, sandstone and mudstone. These disc-shaped, flat artifacts were carefully carved or chipped
+            and perforated by hand. The laborious process of drilling holes through stone suggests these specialized
+            tools may have been produced in limited quantities for specific needs or ritual purposes.</p>
           <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img alt="Legacy Designs" src="./assets/spindle2.jpg">
+          <img alt="Legacy Designs" src="./assets/exhibit.png">
           <div class="image-caption">Legacy Designs (1300 AD)</div>
         </div>
       </div>
@@ -247,9 +256,9 @@
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
-import {gsap} from "gsap";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
+import { onMounted, ref } from "vue";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -301,35 +310,35 @@ export default {
       panels.forEach((panel, i) => {
         // Create a pulse animation for the date when it's in view
         gsap.fromTo(panel.querySelector('.timeline-date'),
-            {scale: 0.95},
-            {
-              scale: 1,
-              ease: "power1.out",
-              duration: 0.8,
-              scrollTrigger: {
-                trigger: panel,
-                containerAnimation: ScrollTrigger.getById("horizontalScroll"),
-                start: "left center",
-                toggleActions: "play none none reverse"
-              }
+          { scale: 0.95 },
+          {
+            scale: 1,
+            ease: "power1.out",
+            duration: 0.8,
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: ScrollTrigger.getById("horizontalScroll"),
+              start: "left center",
+              toggleActions: "play none none reverse"
             }
+          }
         );
 
         // Animate the fact tag with a slight delay
         gsap.fromTo(panel.querySelector('.timeline-fact'),
-            {opacity: 0, y: 20},
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              delay: 0.3,
-              scrollTrigger: {
-                trigger: panel,
-                containerAnimation: ScrollTrigger.getById("horizontalScroll"),
-                start: "left center",
-                toggleActions: "play none none reverse"
-              }
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: 0.3,
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: ScrollTrigger.getById("horizontalScroll"),
+              start: "left center",
+              toggleActions: "play none none reverse"
             }
+          }
         );
       });
     }
@@ -344,10 +353,10 @@ export default {
       const impactVisualization = document.querySelector('.impact-visualization');
       const centralSpindle = document.querySelector('.central-spindle');
 
-      gsap.set(topSpindles, {autoAlpha: 0, rotation: -180});
-      gsap.set(bottomSpindles, {autoAlpha: 0, rotation: 180});
-      gsap.set(impactVisualization, {autoAlpha: 0});
-      gsap.set(centralSpindle, {scale: 0, opacity: 0});
+      gsap.set(topSpindles, { autoAlpha: 0, rotation: -180 });
+      gsap.set(bottomSpindles, { autoAlpha: 0, rotation: 180 });
+      gsap.set(impactVisualization, { autoAlpha: 0 });
+      gsap.set(centralSpindle, { scale: 0, opacity: 0 });
 
       const masterTimeline = gsap.timeline({
         scrollTrigger: {
@@ -387,108 +396,108 @@ export default {
       const convergenceTl = gsap.timeline();
 
       convergenceTl
-          .to([topSpindles, bottomSpindles], {
-            left: "50%",
-            x: "-50%",
-            duration: 3,
-            stagger: 0.05,
-            ease: "power3.inOut"
-          })
+        .to([topSpindles, bottomSpindles], {
+          left: "50%",
+          x: "-50%",
+          duration: 3,
+          stagger: 0.05,
+          ease: "power3.inOut"
+        })
 
-          .to([topSpindles, bottomSpindles], {
-            rotation: 360,
-            duration: 2,
-            stagger: 0.05,
-            ease: "power2.inOut"
-          })
-          .to([topSpindles, bottomSpindles], {
-            scale: 0.3,
-            duration: 1.5,
-            stagger: 0.03,
-            ease: "power2.in"
-          })
-          // Show impact visualization container
-          .to(impactVisualization, {
-            autoAlpha: 1,
-            duration: 0.5
-          })
-          // Make the spindles fade away
-          .to([topSpindles, bottomSpindles], {
-            opacity: 0,
-            scale: 0,
-            duration: 1,
-            stagger: 0.02
-          })
-          .to(centralSpindle, {
-            scale: 1,
-            opacity: 1,
-            rotation: 360,
-            duration: 1.5,
-            ease: "back.out(2)"
-          });
+        .to([topSpindles, bottomSpindles], {
+          rotation: 360,
+          duration: 2,
+          stagger: 0.05,
+          ease: "power2.inOut"
+        })
+        .to([topSpindles, bottomSpindles], {
+          scale: 0.3,
+          duration: 1.5,
+          stagger: 0.03,
+          ease: "power2.in"
+        })
+        // Show impact visualization container
+        .to(impactVisualization, {
+          autoAlpha: 1,
+          duration: 0.5
+        })
+        // Make the spindles fade away
+        .to([topSpindles, bottomSpindles], {
+          opacity: 0,
+          scale: 0,
+          duration: 1,
+          stagger: 0.02
+        })
+        .to(centralSpindle, {
+          scale: 1,
+          opacity: 1,
+          rotation: 360,
+          duration: 1.5,
+          ease: "back.out(2)"
+        });
 
       // PART 3: Ripple effect - circles and cards appear
       const rippleTl = gsap.timeline();
 
-      gsap.set(".ripple-circle", {scale: 0, opacity: 0});
+      gsap.set(".ripple-circle", { scale: 0, opacity: 0 });
 
       rippleTl
-          // Expand ripple circles in sequence
-          .to(".ripple-circle[data-category='trade']", {
-            scale: 1,
-            opacity: 0.9, // Increased opacity for better visibility
-            duration: 1,
-            ease: "power2.out"
-          })
-          .to(".ripple-circle[data-category='technology']", {
-            scale: 1,
-            opacity: 0.9, // Increased opacity for better visibility
-            duration: 1,
-            ease: "power2.out"
-          }, "-=0.7")
-          .to(".ripple-circle[data-category='society']", {
-            scale: 1,
-            opacity: 0.9, // Increased opacity for better visibility
-            duration: 1,
-            ease: "power2.out"
-          }, "-=0.7")
-          .to(".ripple-circle[data-category='art']", {
-            scale: 1,
-            opacity: 0.9, // Increased opacity for better visibility
-            duration: 1,
-            ease: "power2.out"
-          }, "-=0.7")
-          // Reveal impact cards
-          .to(".impact-card[data-category='trade']", {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: "back.out(1.5)"
-          }, "-=0.4")
-          .to(".impact-card[data-category='technology']", {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: "back.out(1.5)"
-          }, "-=0.6")
-          .to(".impact-card[data-category='society']", {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: "back.out(1.5)"
-          }, "-=0.6")
-          .to(".impact-card[data-category='art']", {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: "back.out(1.5)"
-          }, "-=0.6")
+        // Expand ripple circles in sequence
+        .to(".ripple-circle[data-category='trade']", {
+          scale: 1,
+          opacity: 0.9, // Increased opacity for better visibility
+          duration: 1,
+          ease: "power2.out"
+        })
+        .to(".ripple-circle[data-category='technology']", {
+          scale: 1,
+          opacity: 0.9, // Increased opacity for better visibility
+          duration: 1,
+          ease: "power2.out"
+        }, "-=0.7")
+        .to(".ripple-circle[data-category='society']", {
+          scale: 1,
+          opacity: 0.9, // Increased opacity for better visibility
+          duration: 1,
+          ease: "power2.out"
+        }, "-=0.7")
+        .to(".ripple-circle[data-category='art']", {
+          scale: 1,
+          opacity: 0.9, // Increased opacity for better visibility
+          duration: 1,
+          ease: "power2.out"
+        }, "-=0.7")
+        // Reveal impact cards
+        .to(".impact-card[data-category='trade']", {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.5)"
+        }, "-=0.4")
+        .to(".impact-card[data-category='technology']", {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.5)"
+        }, "-=0.6")
+        .to(".impact-card[data-category='society']", {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.5)"
+        }, "-=0.6")
+        .to(".impact-card[data-category='art']", {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.5)"
+        }, "-=0.6")
 
       // Add all timelines to the master timeline
       masterTimeline
-          .add(alignmentTl)
-          .add(convergenceTl)
-          .add(rippleTl);
+        .add(alignmentTl)
+        .add(convergenceTl)
+        .add(rippleTl);
 
 
       // Add subtle perpetual animation to the ripple circles
@@ -574,21 +583,21 @@ export default {
           tradeCard.classList.add('glow-effect');
           setTimeout(() => tradeCard.classList.remove('glow-effect'), 1200);
         })
-            .call(() => {
-              const techCard = document.querySelector('.impact-card[data-category="technology"]');
-              techCard.classList.add('glow-effect');
-              setTimeout(() => techCard.classList.remove('glow-effect'), 1200);
-            }, [], "+=1.5") // Wait 1.5s after previous glow
-            .call(() => {
-              const societyCard = document.querySelector('.impact-card[data-category="society"]');
-              societyCard.classList.add('glow-effect');
-              setTimeout(() => societyCard.classList.remove('glow-effect'), 1200);
-            }, [], "+=1.5")
-            .call(() => {
-              const artCard = document.querySelector('.impact-card[data-category="art"]');
-              artCard.classList.add('glow-effect');
-              setTimeout(() => artCard.classList.remove('glow-effect'), 1200);
-            }, [], "+=1.5");
+          .call(() => {
+            const techCard = document.querySelector('.impact-card[data-category="technology"]');
+            techCard.classList.add('glow-effect');
+            setTimeout(() => techCard.classList.remove('glow-effect'), 1200);
+          }, [], "+=1.5") // Wait 1.5s after previous glow
+          .call(() => {
+            const societyCard = document.querySelector('.impact-card[data-category="society"]');
+            societyCard.classList.add('glow-effect');
+            setTimeout(() => societyCard.classList.remove('glow-effect'), 1200);
+          }, [], "+=1.5")
+          .call(() => {
+            const artCard = document.querySelector('.impact-card[data-category="art"]');
+            artCard.classList.add('glow-effect');
+            setTimeout(() => artCard.classList.remove('glow-effect'), 1200);
+          }, [], "+=1.5");
       }
     }
 
@@ -597,37 +606,37 @@ export default {
       const timeline = gsap.timeline();
 
       timeline.fromTo(
-          title.value,
-          {
-            opacity: 0,
-            y: 50,
-            scale: 0.8,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.5,
-            ease: "power2.out",
-            textShadow: "0px 0px 60px rgba(255, 215, 0, 0.9), 0px 0px 20px rgba(255, 165, 0, 0.5)",
-            color: "#FFD700",
-          }
+        title.value,
+        {
+          opacity: 0,
+          y: 50,
+          scale: 0.8,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.5,
+          ease: "power2.out",
+          textShadow: "0px 0px 60px rgba(255, 215, 0, 0.9), 0px 0px 20px rgba(255, 165, 0, 0.5)",
+          color: "#FFD700",
+        }
       );
 
       timeline.fromTo(
-          ".intro-description",
-          {
-            opacity: 0,
-            y: 30, // Start slightly below
-          },
-          {
-            opacity: 1,
-            y: 0, // Move to its final position
-            duration: 1.2,
-            ease: "power2.out", // Smooth easing
-            color: "#fff",
-          },
-          "-=1" // Overlap with the title animation
+        ".intro-description",
+        {
+          opacity: 0,
+          y: 30, // Start slightly below
+        },
+        {
+          opacity: 1,
+          y: 0, // Move to its final position
+          duration: 1.2,
+          ease: "power2.out", // Smooth easing
+          color: "#fff",
+        },
+        "-=1" // Overlap with the title animation
       );
 
       // Horizontal scrolling logic
@@ -694,14 +703,14 @@ export default {
           scrub: true,
         },
       })
-          .to(".content", {
-            clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
-            duration: 1,
-          })
-          .to(".content", {
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-            duration: 1,
-          });
+        .to(".content", {
+          clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
+          duration: 1,
+        })
+        .to(".content", {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          duration: 1,
+        });
 
       const infoTimeline = gsap.timeline({
         scrollTrigger: {
@@ -712,42 +721,42 @@ export default {
       });
 
       infoTimeline
-          .to(".info-wrapper", {
-            opacity: 1,
-            duration: 0.8,
-            delay: 0.5,
-            ease: "power2.out"
-          })
-          .from(".spindle-image-container", {
-            x: -100,
-            opacity: 0,
-            duration: 0.8,
-            ease: "back.out(1.7)"
-          }, "-=0.3")
-          .from(".section-title", {
-            y: 30,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.out"
-          }, "-=0.4")
-          .from(".divider", {
-            width: 0,
-            duration: 0.6,
-            ease: "power1.out"
-          }, "-=0.2")
-          .from(".main-description", {
-            y: 20,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.out"
-          }, "-=0.3")
-          .from(".feature-list li", {
-            x: -20,
-            opacity: 0,
-            stagger: 0.1,
-            duration: 0.4,
-            ease: "power1.out"
-          }, "-=0.2");
+        .to(".info-wrapper", {
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.5,
+          ease: "power2.out"
+        })
+        .from(".spindle-image-container", {
+          x: -100,
+          opacity: 0,
+          duration: 0.8,
+          ease: "back.out(1.7)"
+        }, "-=0.3")
+        .from(".section-title", {
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out"
+        }, "-=0.4")
+        .from(".divider", {
+          width: 0,
+          duration: 0.6,
+          ease: "power1.out"
+        }, "-=0.2")
+        .from(".main-description", {
+          y: 20,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out"
+        }, "-=0.3")
+        .from(".feature-list li", {
+          x: -20,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.4,
+          ease: "power1.out"
+        }, "-=0.2");
 
       gsap.from(".spindle-image-container", {
         y: 20,
@@ -769,14 +778,14 @@ export default {
 
       function resetAnimation() {
         // Reset info wrapper opacity
-        gsap.set(".info-wrapper", {opacity: 0});
+        gsap.set(".info-wrapper", { opacity: 0 });
 
         // Reset all animated elements to their starting positions
-        gsap.set(".spindle-image-container", {x: -100, opacity: 0});
-        gsap.set(".section-title", {y: 30, opacity: 0});
-        gsap.set(".divider", {width: 0});
-        gsap.set(".main-description", {y: 20, opacity: 0});
-        gsap.set(".feature-list li", {x: -20, opacity: 0});
+        gsap.set(".spindle-image-container", { x: -100, opacity: 0 });
+        gsap.set(".section-title", { y: 30, opacity: 0 });
+        gsap.set(".divider", { width: 0 });
+        gsap.set(".main-description", { y: 20, opacity: 0 });
+        gsap.set(".feature-list li", { x: -20, opacity: 0 });
       }
 
       setupParallaxEffect();
@@ -818,8 +827,8 @@ export default {
 
         // Hide all wipe containers' content initially except for active
         wipeContainers.forEach((wipe) => {
-          gsap.set(wipe.querySelector('.sidebar-content'), {opacity: 0});
-          gsap.set(wipe.querySelector('.image-frame-container'), {opacity: 0});
+          gsap.set(wipe.querySelector('.sidebar-content'), { opacity: 0 });
+          gsap.set(wipe.querySelector('.image-frame-container'), { opacity: 0 });
         });
 
         // Animate each wipe container from bottom to top
@@ -830,23 +839,23 @@ export default {
 
           // Animate the clip-path to reveal content from bottom to top
           revealTl.fromTo(wipe,
-              {clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)"},
-              {
-                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                ease: "none",
-                duration: 1 / wipeContainers.length,
-                onStart: () => {
-                  // Fade in current slide content
-                  gsap.to(wipe.querySelector('.sidebar-content'), {opacity: 1, duration: 0.5, delay: 0.2});
-                  gsap.to(wipe.querySelector('.image-frame-container'), {opacity: 1, duration: 0.5, delay: 0.2});
-                },
-                onReverseComplete: () => {
-                  // Fade out when reversing
-                  gsap.to(wipe.querySelector('.sidebar-content'), {opacity: 0, duration: 0.3});
-                  gsap.to(wipe.querySelector('.image-frame-container'), {opacity: 0, duration: 0.3});
-                }
+            { clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" },
+            {
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+              ease: "none",
+              duration: 1 / wipeContainers.length,
+              onStart: () => {
+                // Fade in current slide content
+                gsap.to(wipe.querySelector('.sidebar-content'), { opacity: 1, duration: 0.5, delay: 0.2 });
+                gsap.to(wipe.querySelector('.image-frame-container'), { opacity: 1, duration: 0.5, delay: 0.2 });
               },
-              startPosition
+              onReverseComplete: () => {
+                // Fade out when reversing
+                gsap.to(wipe.querySelector('.sidebar-content'), { opacity: 0, duration: 0.3 });
+                gsap.to(wipe.querySelector('.image-frame-container'), { opacity: 0, duration: 0.3 });
+              }
+            },
+            startPosition
           );
         });
 
@@ -858,7 +867,7 @@ export default {
 
     });
 
-    return {title, timelineEvents};
+    return { title, timelineEvents };
   },
 };
 
@@ -1272,7 +1281,7 @@ body {
   backdrop-filter: blur(5px);
   background: rgba(29, 19, 9, 0.7);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
-  inset 0 0 20px rgba(255, 215, 0, 0.05);
+    inset 0 0 20px rgba(255, 215, 0, 0.05);
   border-left: 3px solid #ffd700;
 }
 
@@ -1326,9 +1335,12 @@ body {
 }
 
 @keyframes dividerGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     left: -100%;
   }
+
   50% {
     left: 100%;
   }
