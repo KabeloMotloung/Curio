@@ -9,8 +9,10 @@ import Base from "./components/TheKraal/components/Base.vue";
 import TheDiscovery from "./components/TheDiscovery/TheDiscovery.vue";
 import SpindleWhorl from "./components/SpindleWhorl/SpindleWhorl.vue";
 import BattleOfTorquay from "./components/BattleOfTorquay/BattleOfTorquay.vue";
+import LandingPage from "./components/LandingPage/LandingPage.vue";
 
 const routes = [
+    {path: '/', component: LandingPage},
     {path: '/the-swan', component: TheSwan},
     {path: '/pangolin-and-crocodile', component: PangolinAndCrocodile},
     {path: '/sidwane-tokozile', component: SidwaneTokozile},
