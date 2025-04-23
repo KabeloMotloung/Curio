@@ -2,6 +2,20 @@
     <div class="min-h-screen w-full bg-gradient-to-br from-amber-900 via-zinc-800 to-gray-800 text-white overflow-x-hidden">
         <!-- Decorative Elements -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none">
+            <!-- Coffee Beans with Parallax -->
+            <div v-for="(bean, index) in coffeeBeans" 
+                :key="index"
+                :class="`coffee-bean-${index}`"
+                class="absolute opacity-20 will-change-transform"
+                :style="{
+                    left: `${bean.x}%`,
+                    top: `${bean.y}%`,
+                    transform: `rotate(${bean.rotation}deg) scale(${bean.scale})`
+                }"
+            >
+                <img src="./assets/coffee-bean.png" alt="Coffee Bean" class="w-16 h-16" />
+            </div>
+
             <div class="absolute top-0 left-0 w-1 h-32 bg-gradient-to-b from-amber-500/20 to-transparent"></div>
             <div class="absolute top-0 right-0 w-1 h-32 bg-gradient-to-b from-amber-500/20 to-transparent"></div>
             <div class="absolute bottom-0 left-0 w-1 h-32 bg-gradient-to-t from-amber-500/20 to-transparent"></div>
@@ -21,8 +35,8 @@
         <div class="h-screen w-full flex items-start p-8 relative">
             <!-- Title section -->
             <div class="w-1/2">
-                <h1 ref="title" class="text-[200px] font-serif tracking-tight">
-                    Sidwane Tokozile
+                <h1 ref="title" class="text-[140px] font-serif tracking-tight">
+                    Sidwane Tokozile "The Coffee Drinker"
                 </h1>
                 <p class="text-xl mt-4 text-amber-200/80">Anton van Wouw, 1907</p>
                 <div class="mt-8 flex items-center gap-4">
@@ -172,10 +186,24 @@ const currentSection = ref(0)
 const totalSections = ref(7) // Total number of sections including main, additional images title, and additional images
 
 const additionalImages = [
-    { src: angle2Image, alt: 'Full View', caption: 'Full View' },
-    { src: sideImage, alt: 'Face View', caption: 'Face Close Up' },
-    { src: side2Image, alt: 'Side View', caption: 'Side view' },
+    { src: angle2Image, alt: 'Full View'},
+    { src: sideImage, alt: 'Face View'},
+    { src: side2Image, alt: 'Side View'},
 ]
+
+// Coffee beans data
+const coffeeBeans = ref([
+    { x: 5, y: 10, rotation: 45, scale: 1.5, speed: 0.3 },
+    { x: 25, y: 30, rotation: -30, scale: 1.2, speed: 0.4 },
+    { x: 65, y: 20, rotation: 60, scale: 1.8, speed: 0.5 },
+    { x: 80, y: 50, rotation: -15, scale: 1.3, speed: 0.35 },
+    { x: 35, y: 70, rotation: 90, scale: 1.6, speed: 0.45 },
+    { x: 15, y: 40, rotation: 120, scale: 1.4, speed: 0.25 },
+    { x: 55, y: 15, rotation: -60, scale: 1.7, speed: 0.55 },
+    { x: 75, y: 80, rotation: 30, scale: 1.1, speed: 0.4 },
+    { x: 45, y: 60, rotation: -90, scale: 1.9, speed: 0.3 },
+    { x: 90, y: 25, rotation: 15, scale: 1.5, speed: 0.45 }
+])
 
 // Update current section based on scroll position
 const updateCurrentSection = () => {
@@ -195,10 +223,11 @@ const updateCurrentSection = () => {
 onMounted(() => {
     // Initial animation for title and image
     gsap.from(title.value, {
-        duration: 1,
+        duration: 1.5,
         x: -100,
         opacity: 0,
-        ease: 'power3.out'
+        ease: 'power3.out',
+        delay: 0.5
     })
 
     gsap.from(image.value, {
@@ -206,19 +235,32 @@ onMounted(() => {
         x: 100,
         opacity: 0,
         ease: 'power3.out',
-        delay: 0.3
     })
 
-    // Scroll indicator animation
     gsap.to(arrow.value, {
         duration: 1,
-        y: 10,
         repeat: -1,
         yoyo: true,
         ease: 'power1.inOut'
     })
 
-    // Scroll-triggered animations for each section
+    coffeeBeans.value.forEach((bean, index) => {
+        const element = document.querySelector(`.coffee-bean-${index}`)
+        if (element) {
+            gsap.to(element, {
+                scrollTrigger: {
+                    trigger: document.documentElement,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 0.5,
+                    invalidateOnRefresh: true
+                },
+                y: `${bean.speed * 500}px`,
+                ease: 'none'
+            })
+        }
+    })
+
     document.querySelectorAll('section').forEach((section, index) => {
         const direction = index % 2 === 0 ? -100 : 100
         
@@ -228,10 +270,10 @@ onMounted(() => {
                 start: 'top 80%',
                 end: 'bottom 60%',
                 toggleActions: 'play reverse play reverse',
+                scrub: 1
             },
             x: direction,
             opacity: 0,
-            duration: 1.2,
             ease: 'power2.out'
         })
     })
@@ -250,5 +292,19 @@ onUnmounted(() => {
 
 .font-serif {
     font-family: 'Playfair Display', serif;
+}
+
+/* Enhanced transitions */
+img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
 }
 </style>
