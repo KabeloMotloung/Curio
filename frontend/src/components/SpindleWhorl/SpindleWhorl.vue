@@ -1,15 +1,9 @@
 <template>
   <div class="fixed top-8 left-8 z-50">
-    <button 
-      @click="$router.back()" 
-      class="text-white/40 hover:text-white/80 transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30"
-    >
-      <svg 
-        class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300" 
-        fill="none" 
-        stroke="currentColor" 
-        viewBox="0 0 24 24"
-      >
+    <button @click="$router.back()"
+      class="text-white/40 hover:text-white/80 transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30">
+      <svg class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none"
+        stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
       </svg>
       <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway'] leading-none">Back</span>
@@ -52,7 +46,7 @@
     <div class="content gradient-yellow">
       <div class="info-wrapper">
         <div class="info-container">
-          <div class="spindle-image-container">
+          <div class="spindle-image-container left">
             <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
             <div class="image-overlay">
               <div class="overlay-content">
@@ -74,11 +68,6 @@
                 <span class="feature-text"><strong>Cultural Significance:</strong> Found among royal artifacts,
                   suggesting textile production was connected to status and power</span>
               </li>
-              <!-- <li>
-                <span class="feature-icon">✦</span>
-                <span class="feature-text"><strong>Trade Networks:</strong> Enabled Mapungubwe to participate in Indian
-                  Ocean trade networks, exchanging textiles for glass beads and porcelain</span>
-              </li> -->
               <li>
                 <span class="feature-icon">✦</span>
                 <span class="feature-text"><strong>Technical Innovation:</strong> Designs evolved to optimize thread
@@ -89,6 +78,15 @@
               <span class="fact-label">FASCINATING FACT</span>
               <p>Mapungubwe's spindle whorls were sometimes decorated with geometric patterns that matched those found
                 on pottery and gold artifacts, suggesting a unified cultural aesthetic across their crafts.</p>
+            </div>
+          </div>
+
+          <div class="spindle-image-container right">
+            <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <span>Circa 1200 AD</span>
+              </div>
             </div>
           </div>
         </div>
@@ -727,12 +725,18 @@ export default {
           delay: 0.5,
           ease: "power2.out"
         })
-        .from(".spindle-image-container", {
-          x: -100,
+        .from(".spindle-image-container.left", {
+          x: -80,
           opacity: 0,
           duration: 0.8,
           ease: "back.out(1.7)"
         }, "-=0.3")
+        .from(".spindle-image-container.right", {
+          x: 80,
+          opacity: 0,
+          duration: 0.8,
+          ease: "back.out(1.7)"
+        }, "-=0.6")
         .from(".section-title", {
           y: 30,
           opacity: 0,
@@ -1150,33 +1154,45 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin: 0 auto;
 }
 
 .info-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 4rem;
+  justify-content: space-between;
+  gap: 2rem;
   padding: 0 2rem;
   text-align: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .spindle-image-container {
   position: relative;
-  width: 40%;
-  max-width: 350px;
+  width: 25%;
+  max-width: 250px;
   flex-shrink: 0;
   overflow: hidden;
   box-shadow: none;
-  transform: perspective(1000px) rotateY(5deg);
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   background: transparent;
   border-radius: 0;
 }
+
+.spindle-image-container.left {
+  transform: perspective(1000px) rotateY(5deg);
+}
+
+.spindle-image-container.right {
+  transform: perspective(1000px) rotateY(-5deg);
+}
+
+.spindle-image-container:hover {
+  transform: perspective(1000px) rotateY(0);
+}
+
 
 .spindle-image {
   width: 100%;
@@ -1274,7 +1290,7 @@ body {
 .info-text {
   flex: 1;
   text-align: left;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
   padding: 30px;
   border-radius: 8px;
@@ -1283,6 +1299,50 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
     inset 0 0 20px rgba(255, 215, 0, 0.05);
   border-left: 3px solid #ffd700;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  .info-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .spindle-image-container {
+    width: 20%;
+    min-width: 150px;
+  }
+  
+  .info-text {
+    order: 0; /* Keep text in middle position */
+    width: 100%;
+    margin: 0 auto 1rem auto;
+  }
+
+  .spindle-image-container.left {
+    order: -1; /* Move left image first */
+  }
+  
+  .spindle-image-container.right {
+    order: 1; /* Move right image last */
+  }
+}
+
+@media (max-width: 768px) {
+  .spindle-image-container.right {
+    display: none; /* Hide right image on mobile */
+  }
+  
+  .spindle-image-container.left {
+    width: 40%;
+    max-width: 180px;
+    margin: 0 auto 1rem auto;
+  }
+  
+  .info-container {
+    flex-direction: column;
+  }
 }
 
 .section-title {
