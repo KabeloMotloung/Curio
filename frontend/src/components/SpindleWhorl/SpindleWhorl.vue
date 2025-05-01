@@ -1,14 +1,6 @@
 <template>
-  <div class="fixed top-8 left-8 z-50">
-    <button @click="$router.back()"
-      class="text-white/40 hover:text-white/80 transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30">
-      <svg class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none"
-        stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-      </svg>
-      <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway'] leading-none">Back</span>
-    </button>
-  </div>
+  <BackButton />
+  <ScrollProgress :totalSections="4" />
   <div class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
@@ -263,10 +255,13 @@
 import { onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import BackButton from "../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
+  components: {ScrollProgress, BackButton},
   setup() {
     const bg = ref(null);
     const title = ref(null);
