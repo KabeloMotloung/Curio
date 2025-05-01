@@ -9,6 +9,7 @@ import imgUrl from '../../assets/TheDiscovery/TheDiscoveryPaintingImage.jpg'
 
 <template>
   <BackButton />
+  <ScrollProgress :totalSections="4" />
   <div class="scroll-container">
     <div class="content-wrapper">
       <div class="text-section">
@@ -41,6 +42,7 @@ import {onMounted, ref} from 'vue'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import BackButton from "../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 
 gsap.registerPlugin(ScrollTrigger)
 

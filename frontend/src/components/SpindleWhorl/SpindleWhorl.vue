@@ -1,5 +1,6 @@
 <template>
   <BackButton />
+  <ScrollProgress :totalSections="4" />
   <div class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
@@ -245,11 +246,12 @@ import { onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import BackButton from "../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
-  components: {BackButton},
+  components: {ScrollProgress, BackButton},
   setup() {
     const bg = ref(null);
     const title = ref(null);

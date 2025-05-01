@@ -1,7 +1,7 @@
 <template>
   <div class="scroll-container">
     <BackButton />
-
+    <ScrollProgress :totalSections="4" />
     <RopeAnimation />
 
     <Needle />
@@ -69,12 +69,14 @@ import Thread from "./Thread.vue";
 import Needle from "./Needle.vue";
 import Clock from "./Clock.vue";
 import BackButton from "../../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: "ScrollPanels",
   components: {
+    ScrollProgress,
     BackButton,
     Clock,
     RopeAnimation,

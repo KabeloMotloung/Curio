@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import {onMounted, onUnmounted, ref} from 'vue'
 
-// Destructure props into a variable
-const props = defineProps<{
-  totalSections: number
-}>()
+interface ScrollProgressProps {
+  totalSections: number;
+  activeColor?: string;
+  inactiveColor?: string;
+}
+
+// Define props with defaults
+const props = withDefaults(defineProps<ScrollProgressProps>(), {
+  activeColor: 'bg-blue-500',
+  inactiveColor: 'bg-blue-200'
+})
 
 const currentSection = ref(0)
 
@@ -14,12 +21,10 @@ const updateCurrentSection = () => {
   const scrollPercentage = scrollPosition / scrollHeight
 
   const sectionHeight = 1 / props.totalSections
-  const sectionIndex = Math.min(
+  currentSection.value = Math.min(
       Math.floor(scrollPercentage / sectionHeight),
       props.totalSections - 1
   )
-
-  currentSection.value = sectionIndex
 }
 
 onMounted(() => {
@@ -38,7 +43,7 @@ onUnmounted(() => {
         v-for="(_, index) in totalSections"
         :key="index"
         class="w-2 h-2 rounded-full transition-all duration-300"
-        :class="currentSection === index ? 'bg-amber-500 scale-150' : 'bg-amber-500/30'"
+        :class="currentSection === index ? `${activeColor} scale-150` : inactiveColor"
     ></div>
   </div>
 </template>

@@ -1,6 +1,8 @@
 <template>
   <div class="w-full min-h-screen bg-gray-900 text-white overflow-x-hidden font-serif">
     <BackButton />
+
+    <ScrollProgress :totalSections="4" />
     <!-- Hero Section -->
     <section
       ref="section1"
@@ -20,14 +22,7 @@
         <h2 class="text-xl md:text-2xl text-amber-300 opacity-0 font-light tracking-widest">
           June 27, 1673: When the Sea Turned to Fire
         </h2>
-        <div class="mt-12 opacity-0">
-          <button
-            @click="startExperience"
-            class="px-8 py-3 bg-amber-600 hover:bg-amber-700 rounded-full font-medium transition-all transform hover:scale-105"
-          >
-            Begin the Story ↓
-          </button>
-        </div>
+        <ScrollArrow />
       </div>
 
       <div class="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-400 opacity-0">
@@ -227,6 +222,8 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BackButton from "../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
+import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
 
 gsap.registerPlugin(ScrollTrigger)
 
