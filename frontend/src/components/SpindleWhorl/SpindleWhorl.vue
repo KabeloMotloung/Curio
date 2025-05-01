@@ -65,19 +65,25 @@
             <ul class="feature-list">
               <li>
                 <span class="feature-icon">✦</span>
-                <span class="feature-text"><strong>Cultural Significance:</strong> Found among royal artifacts,
-                  suggesting textile production was connected to status and power</span>
-              </li>
-              <li>
-                <span class="feature-icon">✦</span>
                 <span class="feature-text"><strong>Technical Innovation:</strong> Designs evolved to optimize thread
                   quality with perfect weight distribution and balance</span>
               </li>
             </ul>
             <div class="fun-fact">
-              <span class="fact-label">FASCINATING FACT</span>
-              <p>Mapungubwe's spindle whorls were sometimes decorated with geometric patterns that matched those found
-                on pottery and gold artifacts, suggesting a unified cultural aesthetic across their crafts.</p>
+              <span class="fact-label">ARCHAEOLOGICAL INSIGHT</span>
+              <p>Chemical analysis of residue found on spindle whorls from Mapungubwe has identified traces of
+                indigenous cotton, baobab fiber, and even wild silk, suggesting a sophisticated understanding of
+                different fiber properties.</p>
+            </div>
+            <div class="museum-info">
+              <span class="museum-label">EXHIBITION DETAILS</span>
+              <div class="museum-content">
+                <p class="location-text"><strong>Location:</strong> Mapungubwe Ceramics Gallery, Old Arts
+                  2-5</p>
+                <p class="artifact-id"><strong>Artist/Collection:</strong> Archaeological ceramic, Mapungubwe Collection
+                </p>
+                <p class="period-text"><strong>Dating:</strong> 1200 - 1290 AD (Radiocarbon dated)</p>
+              </div>
             </div>
           </div>
 
@@ -1308,38 +1314,42 @@ body {
     justify-content: center;
     gap: 1rem;
   }
-  
+
   .spindle-image-container {
     width: 20%;
     min-width: 150px;
   }
-  
+
   .info-text {
-    order: 0; /* Keep text in middle position */
+    order: 0;
+    /* Keep text in middle position */
     width: 100%;
     margin: 0 auto 1rem auto;
   }
 
   .spindle-image-container.left {
-    order: -1; /* Move left image first */
+    order: -1;
+    /* Move left image first */
   }
-  
+
   .spindle-image-container.right {
-    order: 1; /* Move right image last */
+    order: 1;
+    /* Move right image last */
   }
 }
 
 @media (max-width: 768px) {
   .spindle-image-container.right {
-    display: none; /* Hide right image on mobile */
+    display: none;
+    /* Hide right image on mobile */
   }
-  
+
   .spindle-image-container.left {
     width: 40%;
     max-width: 180px;
     margin: 0 auto 1rem auto;
   }
-  
+
   .info-container {
     flex-direction: column;
   }
@@ -2208,5 +2218,87 @@ h2 {
   align-items: center;
   z-index: 101;
   /* Above all wipe effects */
+}
+
+.museum-info {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(45, 30, 15, 0.6);
+  border-radius: 8px;
+  position: relative;
+  border-left: 3px solid #FFEF00;
+}
+
+.museum-label {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: #FFEF00;
+  color: #2d1e0f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.museum-content {
+  color: white;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.location-text {
+  position: relative;
+  padding-left: 20px;
+}
+
+.location-text::before {
+  content: "📍";
+  position: absolute;
+  left: 0;
+  color: #FFEF00;
+}
+
+.artifact-id {
+  position: relative;
+  padding-left: 20px;
+}
+
+.artifact-id::before {
+  content: "🏺";
+  position: absolute;
+  left: 0;
+  color: #FFEF00;
+}
+
+.period-text {
+  position: relative;
+  padding-left: 20px;
+}
+
+.period-text::before {
+  content: "📅";
+  position: absolute;
+  left: 0;
+  color: #FFEF00;
+}
+
+/* Add a subtle hover effect to the museum info */
+.museum-info:hover {
+  box-shadow: 0 0 15px rgba(255, 239, 0, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Enhance the main description to highlight the dating information */
+.main-description strong {
+  color: #FFEF00;
+  font-weight: 600;
 }
 </style>
