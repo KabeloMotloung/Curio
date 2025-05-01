@@ -1,25 +1,7 @@
 <template>
   <div class="scroll-container">
-    <div 
-      class="fixed top-8 left-8 z-50 backButton" 
-      v-show="showBackButton" 
-      style="transition: opacity 0.3s ease;">
-      <button 
-        @click="$router.back()" 
-        class="text-black/30 hover:text-black/80 transition-all duration-300 flex items-center gap-2 group  bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30"
-      >
-        <svg 
-          class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-        </svg>
-        <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway'] leading-none">Back</span>
-      </button>
-    </div>
-
+    <BackButton />
+    <ScrollProgress :totalSections="4" />
     <RopeAnimation />
 
     <Needle />
@@ -86,12 +68,16 @@ import RopeAnimation from "./Rope.vue";
 import Thread from "./Thread.vue";
 import Needle from "./Needle.vue";
 import Clock from "./Clock.vue";
+import BackButton from "../../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
   name: "ScrollPanels",
   components: {
+    ScrollProgress,
+    BackButton,
     Clock,
     RopeAnimation,
     Thread,
