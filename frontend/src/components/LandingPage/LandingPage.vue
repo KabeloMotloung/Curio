@@ -80,122 +80,136 @@ const artifactInfo = {
 }
 
 const navigateToSection = (index) => {
-  if (index === currentSection.value || index < 0 || index >= sections.value.length) return
-  
-  const direction = index > currentSection.value ? 1 : -1
-  
-  const isRapidScroll = (Date.now() - lastScrollTime < 150);
+  if (index === currentSection.value || index < -1 || index >= sections.value.length) return;
+
+  const direction = index > currentSection.value ? 1 : -1;
+
+  const isRapidScroll = Date.now() - lastScrollTime < 150;
   const animDuration = isRapidScroll ? 0.25 : 0.5;
-  
-  if (currentSection.value === -1) {
-    const welcomeAnim = gsap.to(welcomeMessage.value, {
-      opacity: 0,
-      scale: 0.95,
+
+  if (index === -1) {
+    // Navigate back to the welcome message
+    welcomeMessage.value.style.display = "flex";
+
+    const welcomeAnim = gsap.fromTo(
+      welcomeMessage.value,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: animDuration, ease: "power2.out" }
+    );
+
+    const promptAnim = gsap.fromTo(
+      scrollPrompt.value,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: animDuration, ease: "power2.out" }
+    );
+
+    const sectionAnim = gsap.to(sections.value[currentSection.value], {
+      autoAlpha: 0,
+      x: "100%",
       duration: animDuration,
-      ease: 'power2.out',
-      onComplete: () => {
-        welcomeMessage.value.style.display = 'none'
-      }
-    })
-    
-    const promptAnim = gsap.to(scrollPrompt.value, {
-      opacity: 0,
-      y: 20,
-      duration: animDuration,
-      ease: 'power2.out'
-    })
-    
-    sections.value.forEach((section, idx) => {
-      if (idx !== index) {
-        gsap.set(section, { autoAlpha: 0, x: '100%', zIndex: 1 })
-      }
-    })
-    
-    const sectionAnim = gsap.fromTo(sections.value[index], 
-      { autoAlpha: 0, x: '100%', zIndex: 2 }, 
-      {
-        autoAlpha: 1,
-        x: '0%',
-        duration: animDuration + 0.1,
-        ease: 'power1.out'
-      }
-    )
-    
-    animations.value.push(welcomeAnim, promptAnim, sectionAnim)
+      ease: "power2.out",
+    });
+
+    animations.value.push(welcomeAnim, promptAnim, sectionAnim);
   } else {
-    if (direction > 0) {
-      gsap.set(sections.value[currentSection.value], { zIndex: 1 })
-      gsap.set(sections.value[index], { zIndex: 2 })
-      
-      const currentAnim = gsap.to(sections.value[currentSection.value], {
-        autoAlpha: 0,
-        x: '-100%',
+    if (currentSection.value === -1) {
+      // Hide the welcome message
+      const welcomeAnim = gsap.to(welcomeMessage.value, {
+        opacity: 0,
+        scale: 0.95,
         duration: animDuration,
-        ease: 'power1.out',
+        ease: "power2.out",
         onComplete: () => {
-          gsap.set(sections.value[currentSection.value], { autoAlpha: 0 })
+          welcomeMessage.value.style.display = "none";
+        },
+      });
+
+      const promptAnim = gsap.to(scrollPrompt.value, {
+        opacity: 0,
+        y: 20,
+        duration: animDuration,
+        ease: "power2.out",
+      });
+
+      sections.value.forEach((section, idx) => {
+        if (idx !== index) {
+          gsap.set(section, { autoAlpha: 0, x: "100%", zIndex: 1 });
         }
-      })
-      
-      const newAnim = gsap.fromTo(sections.value[index], 
-        { autoAlpha: 0, x: '100%' }, 
-        {
-          autoAlpha: 1,
-          x: '0%',
-          duration: animDuration,
-          ease: 'power1.out'
-        }
-      )
-      
-      animations.value.push(currentAnim, newAnim)
+      });
+
+      const sectionAnim = gsap.fromTo(
+        sections.value[index],
+        { autoAlpha: 0, x: "100%", zIndex: 2 },
+        { autoAlpha: 1, x: "0%", duration: animDuration + 0.1, ease: "power1.out" }
+      );
+
+      animations.value.push(welcomeAnim, promptAnim, sectionAnim);
     } else {
-      gsap.set(sections.value[currentSection.value], { zIndex: 1 })
-      gsap.set(sections.value[index], { zIndex: 2 })
-      
-      const currentAnim = gsap.to(sections.value[currentSection.value], {
-        autoAlpha: 0,
-        x: '100%',
-        duration: animDuration,
-        ease: 'power1.out',
-        onComplete: () => {
-          gsap.set(sections.value[currentSection.value], { autoAlpha: 0 })
-        }
-      })
-      
-      const newAnim = gsap.fromTo(sections.value[index], 
-        { autoAlpha: 0, x: '-100%' }, 
-        {
-          autoAlpha: 1,
-          x: '0%',
+      // Navigate between sections
+      if (direction > 0) {
+        gsap.set(sections.value[currentSection.value], { zIndex: 1 });
+        gsap.set(sections.value[index], { zIndex: 2 });
+
+        const currentAnim = gsap.to(sections.value[currentSection.value], {
+          autoAlpha: 0,
+          x: "-100%",
           duration: animDuration,
-          ease: 'power1.out'
-        }
-      )
-      
-      animations.value.push(currentAnim, newAnim)
+          ease: "power1.out",
+          onComplete: () => {
+            gsap.set(sections.value[currentSection.value], { autoAlpha: 0 });
+          },
+        });
+
+        const newAnim = gsap.fromTo(
+          sections.value[index],
+          { autoAlpha: 0, x: "100%" },
+          { autoAlpha: 1, x: "0%", duration: animDuration, ease: "power1.out" }
+        );
+
+        animations.value.push(currentAnim, newAnim);
+      } else {
+        gsap.set(sections.value[currentSection.value], { zIndex: 1 });
+        gsap.set(sections.value[index], { zIndex: 2 });
+
+        const currentAnim = gsap.to(sections.value[currentSection.value], {
+          autoAlpha: 0,
+          x: "100%",
+          duration: animDuration,
+          ease: "power1.out",
+          onComplete: () => {
+            gsap.set(sections.value[currentSection.value], { autoAlpha: 0 });
+          },
+        });
+
+        const newAnim = gsap.fromTo(
+          sections.value[index],
+          { autoAlpha: 0, x: "-100%" },
+          { autoAlpha: 1, x: "0%", duration: animDuration, ease: "power1.out" }
+        );
+
+        animations.value.push(currentAnim, newAnim);
+      }
     }
   }
-  
-  currentSection.value = index
-}
+
+  currentSection.value = index;
+};
 
 const handleWheel = (e) => {
+  if (Math.abs(e.deltaY) < 5) return;
 
-  if (Math.abs(e.deltaY) < 5) return
-  
-  e.preventDefault()
-  
+  e.preventDefault();
+
   const now = Date.now();
-  const isRapidScroll = (now - lastScrollTime < 150);
+  const isRapidScroll = now - lastScrollTime < 150;
   lastScrollTime = now;
-  
-  const animationsActive = animations.value.some(anim => 
-    anim.isActive && anim.isActive() && 
-    anim.vars && anim.vars.onComplete
+
+  const animationsActive = animations.value.some(
+    (anim) => anim.isActive && anim.isActive() && anim.vars && anim.vars.onComplete
   );
-  
+
   if (isRapidScroll && animationsActive) {
-    animations.value.forEach(anim => {
+    animations.value.forEach((anim) => {
       if (anim.isActive && anim.isActive() && anim.progress) {
         anim.progress(1);
       }
@@ -203,45 +217,26 @@ const handleWheel = (e) => {
   } else if (animationsActive && !isRapidScroll) {
     return;
   }
-  
-  const direction = e.deltaY > 0 ? 1 : -1
-  
+
+  const direction = e.deltaY > 0 ? 1 : -1;
+
   if (currentSection.value === -1 && direction > 0) {
-    navigateToSection(0)
-    return
+    navigateToSection(0);
+    return;
   }
-  
+
   if (currentSection.value === 0 && direction < 0) {
-    currentSection.value = -1
-    welcomeMessage.value.style.display = 'flex'
-    
-    const welcomeAnim = gsap.fromTo(welcomeMessage.value, 
-      { opacity: 0, scale: 0.95 }, 
-      { opacity: 1, scale: 1, duration: isRapidScroll ? 0.2 : 0.3 }
-    )
-    
-    const promptAnim = gsap.fromTo(scrollPrompt.value, 
-      { opacity: 0, y: 20 }, 
-      { opacity: 1, y: 0, duration: isRapidScroll ? 0.2 : 0.3 }
-    )
-    
-    const sectionAnim = gsap.to(sections.value[0], {
-      autoAlpha: 0,
-      x: '100%', 
-      duration: isRapidScroll ? 0.2 : 0.3,
-      ease: 'power2.out'
-    })
-    
-    animations.value.push(welcomeAnim, promptAnim, sectionAnim)
-    return
+    navigateToSection(-1);
+    return;
   }
-  
-  const nextSection = currentSection.value + direction
-  
-  if (nextSection >= 0 && nextSection < sections.value.length) {
-    navigateToSection(nextSection)
+
+  const nextSection = currentSection.value + direction;
+
+  if (nextSection >= -1 && nextSection < sections.value.length) {
+    navigateToSection(nextSection);
   }
-}
+};
+
 
 let lastScrollTime = 0;
 
