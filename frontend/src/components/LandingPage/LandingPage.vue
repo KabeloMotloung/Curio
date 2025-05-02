@@ -19,6 +19,8 @@ const scrollPrompt = ref(null)
 const sections = ref([])
 const currentSection = ref(-1)
 const animations = ref([])
+const glassRing = ref(null);
+const glassHandle = ref(null);
 
 const artifactInfo = {
   theDiscovery: {
@@ -110,7 +112,46 @@ const navigateToSection = (index) => {
       ease: "power2.out",
     });
 
-    animations.value.push(welcomeAnim, promptAnim, sectionAnim);
+    const glassHandleAnim = gsap.fromTo(
+      glassHandle.value,
+      { strokeDasharray: "100", strokeDashoffset: "100" }, // Start hidden
+      {
+        strokeDashoffset: "0", // Draw the handle
+        duration: 1.5,
+        ease: "power2.out",
+        delay: 0.5, // Start after the ring animation
+        onComplete: () => {
+          // Add glowing effect after drawing
+          gsap.to(glassHandle.value, {
+            filter: "drop-shadow(0 0 10px white)",
+            duration: 0.5,
+            repeat: 0,
+            yoyo: true,
+          });
+        },
+      }
+    );
+
+    const glassRingAnim  =  gsap.fromTo(
+      glassRing.value,
+      { strokeDasharray: "94.25", strokeDashoffset: "94.25" }, // Start hidden
+      {
+        strokeDashoffset: "0", // Draw the ring
+        duration: 2,
+        ease: "power2.out",
+        onComplete: () => {
+          // Add glowing effect after drawing
+          gsap.to(glassRing.value, {
+            filter: "drop-shadow(0 0 10px white)",
+            duration: 0.5,
+            repeat: 0,
+            yoyo: true,
+          });
+        },
+      }
+    );
+
+    animations.value.push(welcomeAnim, promptAnim, sectionAnim, glassHandleAnim, glassRingAnim);
   } else {
     if (currentSection.value === -1) {
       // Hide the welcome message
@@ -270,6 +311,52 @@ const handleKeydown = (e) => {
 }
 
 onMounted(() => {
+
+  const welcomeAnim = gsap.fromTo(
+      welcomeMessage.value,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+    );
+
+  const glassHandleAnim = gsap.fromTo(
+      glassHandle.value,
+      { strokeDasharray: "100", strokeDashoffset: "100" }, // Start hidden
+      {
+        strokeDashoffset: "0", // Draw the handle
+        duration: 1.5,
+        ease: "power2.out",
+        delay: 0.5, // Start after the ring animation
+        onComplete: () => {
+          // Add glowing effect after drawing
+          gsap.to(glassHandle.value, {
+            filter: "drop-shadow(0 0 10px white)",
+            duration: 0.5,
+            repeat: 0,
+            yoyo: true,
+          });
+        },
+      }
+    );
+
+    const glassRingAnim  =  gsap.fromTo(
+      glassRing.value,
+      { strokeDasharray: "94.25", strokeDashoffset: "94.25" }, // Start hidden
+      {
+        strokeDashoffset: "0", // Draw the ring
+        duration: 2,
+        ease: "power2.out",
+        onComplete: () => {
+          // Add glowing effect after drawing
+          gsap.to(glassRing.value, {
+            filter: "drop-shadow(0 0 10px white)",
+            duration: 0.5,
+            repeat: 0,
+            yoyo: true,
+          });
+        },
+      }
+    );
+
   sections.value = Array.from(cardContainer.value.querySelectorAll('.card-pair'))
   
   sections.value.forEach(section => {
@@ -284,7 +371,7 @@ onMounted(() => {
     ease: 'power1.inOut'
   })
   
-  animations.value.push(arrowAnim)
+  animations.value.push(arrowAnim, welcomeAnim, glassHandleAnim, glassRingAnim)
   
   window.addEventListener('wheel', handleWheel, { passive: false })
   window.addEventListener('keydown', handleKeydown)
@@ -321,10 +408,34 @@ onBeforeUnmount(() => {
   
     <div class="welcome-message" ref="welcomeMessage">
       <div class="logo-container">
-        <div class="modern-magnifying-glass">
-          <div class="glass-ring"></div>
-          <div class="glass-handle"></div>
-        </div>
+        <svg
+          class="modern-magnifying-glass"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 100"
+        >
+          <!-- Glass Ring -->
+          <circle
+            ref="glassRing"
+            cx="50"
+            cy="50"
+            r="15"
+            stroke="white"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <!-- Glass Handle -->
+          <line
+            ref="glassHandle"
+            x1="65"
+            y1="65"
+            x2="80"
+            y2="80"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
         <div class="modern-logo-text">Curio</div>
       </div>
       <h1>A Virtual Tour of The University of Pretoria's Museum</h1>
@@ -523,22 +634,16 @@ onBeforeUnmount(() => {
 }
 
 .modern-logo-text {
-  font-size: 3.2rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  margin-left: 15px;
-  background: linear-gradient(135deg, #f0f0f0, #a0a0a0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: none;
-  font-family: 'Arial', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .modern-magnifying-glass {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
 }
 
 .glass-ring {
