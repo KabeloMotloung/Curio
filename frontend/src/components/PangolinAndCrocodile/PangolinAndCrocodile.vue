@@ -148,7 +148,7 @@ onUnmounted(() => {
       <div>
         <Background/>
         <HorizontalTimeline :events="pangolinTimelineItems"/>
-        <div style="border: 5px solid blue;">
+        <div>
           <ImageTextSection/>
         </div>
       </div>

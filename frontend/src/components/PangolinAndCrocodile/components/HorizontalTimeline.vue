@@ -131,9 +131,10 @@ export default {
     height: 100vh;
     display: flex;
     flex-wrap: nowrap;
-    isolation: isolate; /* Add this for CSS isolation */
+    isolation: isolate;
     position: relative;
     z-index: 1;
+    background-color: #f8f5f0; /* Match card background */
 }
 
 .timeline-item {
@@ -143,12 +144,13 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(145deg, #2d1e0f, #111);
-    color: white;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8)); /* Match card gradient */
+    color: #333; /* Darker text to match cards */
     text-align: center;
     position: relative;
     overflow: hidden;
     padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.3); /* Match card border */
 }
 
 .timeline-item::before {
@@ -167,23 +169,28 @@ export default {
     transform: rotate(-5deg) scale(1.2);
 }
 
-/* Rest of the CSS remains unchanged */
+/* New styling to match cards */
 .timeline-item:nth-child(odd) {
-    background: linear-gradient(135deg, #2d1e0f 40%, #1a130a);
+    background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.85));
 }
 
 .timeline-item:nth-child(even) {
-    background: linear-gradient(135deg, #111 40%, #1e1e1e);
+    background: linear-gradient(135deg, rgba(250,250,250,0.95), rgba(245,245,245,0.8));
 }
 
 .timeline-content {
     position: relative;
     z-index: 2;
     max-width: 800px;
-    border-left: 3px solid #ffd700;
-    padding-left: 2rem;
+    border-left: 3px solid #2a3f5f; /* Match card heading gradient start color */
+    padding: 2rem 2rem 2rem 3rem;
     transform: translateY(0);
     opacity: 1;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px); /* Match card backdrop filter */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 1px 8px rgba(0,0,0,0.05); /* Match card shadow */
+    will-change: transform, opacity;
 }
 
 .panel.active .timeline-content {
@@ -194,11 +201,15 @@ export default {
 .timeline-date {
     font-size: 3.2rem;
     font-weight: bold;
-    color: #ffd700;
+    background: linear-gradient(45deg, #2a3f5f, #2e7d32); /* Match card heading gradient */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: 1.5rem;
     position: relative;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: inline-block;
+    letter-spacing: -0.5px; /* Match card heading */
 }
 
 .timeline-date::after {
@@ -208,22 +219,25 @@ export default {
     left: 0;
     width: 60px;
     height: 3px;
-    background: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    background: linear-gradient(90deg, #2a3f5f, #2e7d32); /* Match heading gradient */
+    border-radius: 2px;
+    transform-origin: left;
+    transition: width 0.6s ease;
 }
 
 .timeline-description {
     font-size: 1.4rem;
     line-height: 1.6;
-    color: white;
+    color: #333; /* Match card text color */
     margin-bottom: 1.5rem;
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.8); /* Match card paragraph */
 }
 
 .timeline-details {
-    color: #ccc;
+    color: #666; /* Lighter but still readable */
     font-size: 1.1rem;
     line-height: 1.5;
     margin-top: 1.5rem;
@@ -232,27 +246,66 @@ export default {
 
 .timeline-fact {
     display: inline-block;
-    background: rgba(45, 30, 15, 0.7);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(42, 63, 95, 0.3); /* Match card heading gradient start */
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
     margin-top: 1.5rem;
-    /* Start visible but with small offset */
     transform: translateY(10px);
     opacity: 0.7;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    color: #2a3f5f; /* Match card heading gradient start */
 }
 
 .timeline-item:hover .timeline-fact {
     transform: translateY(0);
     opacity: 1;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* Add shine effect on hover like cards */
+.timeline-content:after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.3) 50%,
+        rgba(255,255,255,0) 100%
+    );
+    transform: rotate(30deg);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+}
+
+.timeline-content:hover:after {
+    animation: shine 1.5s ease;
+}
+
+@keyframes shine {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%) rotate(30deg);
+    }
+    20% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%) rotate(30deg);
+    }
 }
 
 /* Add this to create a highlight effect when hovering over timeline items */
 .timeline-item:hover .timeline-date {
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+    text-shadow: 0 0 10px rgba(46, 125, 50, 0.4);
 }
 
 .panel.active .timeline-fact {
@@ -260,11 +313,25 @@ export default {
     opacity: 1;
 }
 
-.timeline-icon {
-    font-size: 2rem;
-    color: #ffd700;
-    margin-bottom: 1rem;
-    display: block;
+/* Floating animation for subtle movement */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-5px) rotate(0.5deg); }
+    75% { transform: translateY(5px) rotate(-0.5deg); }
+}
+
+/* Background patterns matching card style */
+.timeline-item:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(42, 63, 95, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(46, 125, 50, 0.05) 0%, transparent 40%);
+    z-index: -1;
 }
 
 /* Responsive styles */
