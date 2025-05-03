@@ -11,6 +11,9 @@
     <!-- Back button -->
     <BackButton />
 
+    <!-- Scroll Progress Indicator -->
+    <ScrollProgress :totalSections="4" activeColor="bg-white" inactiveColor="bg-white/30" />
+
     <!-- Background component -->
     <SwanBackground ref="swanBackground" />
     
@@ -41,6 +44,8 @@ import WelcomeView from './components/WelcomeView.vue';
 import FramedArtifact from './components/FramedArtifact.vue';
 import ParchmentScroll from './components/ParchmentScroll.vue';
 import BackButton from "../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
+
 
 import cloudImage from './assets/cloud.png';
 import skyBackgroundImage from './assets/sky-background.jpg';
@@ -132,14 +137,13 @@ const animateOnScroll = () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
       const titleText = welcomeView.value?.titleText;
-      const scrollIndicator = welcomeView.value?.scrollIndicator;
       const cloud1 = welcomeView.value?.cloud1;
       const cloud2 = welcomeView.value?.cloud2;
       const cloud3 = welcomeView.value?.cloud3;
       const paintingContainer = framedArtifact.value?.paintingContainer;
       const parchmentContainer = parchmentScroll.value?.parchmentContainer;
       
-      if (titleText && scrollIndicator) {
+      if (titleText) {
         const fadeProgress = Math.min(1, (scrollPosition.value - PAINTING_REVEAL_START) / 
                            (PAINTING_REVEAL_END - PAINTING_REVEAL_START));
         
