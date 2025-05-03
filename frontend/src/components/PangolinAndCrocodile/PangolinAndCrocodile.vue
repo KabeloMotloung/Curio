@@ -92,18 +92,6 @@ onMounted(() => {
           ease: "power3.inOut",
         }
     );
-    // const tl=gsap.timeline();
-    // tl.from(".PangoChowing",{xPercent:-100}).from("PangoGettingCarried",{xPercent:100}).from("PangoCrocInspiration",{yPercent:-100})
-    // ScrollTrigger.create({
-    //   animation:tl,
-    //   trigger:".container",
-    //   start:"top top",
-    //   end: "+=4000",
-    //   scrub: true,
-    //   pin:true,
-    //   anticipatePin:1
-    // })
-
   }, main.value);
 });
 
@@ -114,66 +102,90 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <BackButton />
-    <ScrollProgress :totalSections="4" />
-    <div id="smooth-content">
-      <header class="header h-screen flex flex-col justify-center items-center text-center p-8">
-        <video autoplay muted loop playsinline class="background-video">
-
-          <source src="./assets/Pangolin.mov" type="video/mp4"/>
-          Your browser does not support the video tag.
-        </video>
-        <div class="behind-video">
-
-          <h2 class="text-white text-6xl font-bold opacity-0" id="backgroundTitle">
-            Wildlife in Focus
-          </h2>
-        </div>
-        <div class="header-content">
-          <h1 class="text-5xl font-bold text-amber-100 mb-4 drop-shadow-lg">Pangolin and Crocodile Gallery</h1>
-          <ScrollArrow />
-        </div>
-      </header>
-<!--      <div class="relative w-screen h-screen container">-->
-<!--        <div class="absolute inset-0">-->
-<!--          <img :src="PangoCrocInspiration" alt="Pangolin Eating" class="absolute inset-0 w-full h-full object-cover" />-->
-<!--        </div>-->
-<!--        <div class="absolute inset-0">-->
-<!--          <img :src="PangoCrocInspiration" alt="Pangolin and Crocodile" class="absolute inset-0 w-full h-full object-cover" />-->
-<!--        </div>-->
-<!--        <div class="absolute inset-0">-->
-<!--          <img :src="PangoGettingCarried" alt="Pangolin Being Carried" class="absolute inset-0 w-full h-full object-cover" />-->
-<!--        </div>-->
-<!--      </div>-->
+  <BackButton />
+  <ScrollProgress :totalSections="4" />
+  <div id="smooth-content">
+    <header class="header h-screen flex flex-col justify-center items-center text-center p-8 relative">
+      <video autoplay muted loop playsinline class="background-video w-full h-full object-cover absolute top-0 left-0">
+        <source src="./assets/Pangolin.mov" type="video/mp4"/>
+        Your browser does not support the video tag.
+      </video>
+      
+      <!-- Gradient overlay similar to card styling -->
+      <div class="header-overlay absolute top-0 left-0 w-full h-full"></div>
+      
+      <div class="behind-video absolute top-0 left-0 w-full h-full bg-black z-[-1]">
+        <h2 class="text-white text-6xl font-bold opacity-0" id="backgroundTitle">
+          Wildlife in Focus
+        </h2>
+      </div>
+      
+      <!-- Header content with card-like styling -->
+      <div class="header-content relative z-10 w-full max-w-4xl bg-white/40 rounded-xl shadow-2xl p-12 backdrop-blur-md transform transition-all duration-500">
+        <h1 class="styled-heading text-5xl md:text-6xl font-bold mb-8">Pangolin and Crocodile Gallery</h1>
+        <p class="text-xl text-gray-600 leading-relaxed mb-8">Explore the extraordinary world of these unique reptiles and mammals, their habitats, behaviors, and conservation challenges.</p>
+        <ScrollArrow />
+      </div>
+    </header>
+    <div>
+      <HorizontalTimeline :events="pangolinTimelineItems"/>
+      <Background/>
       <div>
-        <Background/>
-        <HorizontalTimeline :events="pangolinTimelineItems"/>
-        <div>
-          <ImageTextSection/>
-        </div>
+        <ImageTextSection/>
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
 .background-video {
-  z-index: 0;
-  position: absolute;
-  object-fit: cover;
+z-index: 0;
+}
+
+.header {
+overflow: hidden;
+position: relative;
+}
+
+.header-overlay {
+background: 
+  radial-gradient(circle at 20% 30%, rgba(255,215,0,0.15) 0%, transparent 50%),
+  radial-gradient(circle at 80% 70%, rgba(46,125,50,0.15) 0%, transparent 50%);
+z-index: 1;
 }
 
 .header-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
+box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 1px 8px rgba(0,0,0,0.08);
+background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.3));
+border: 1px solid rgba(255,255,255,0.3);
 }
 
-.behind-video {
-  position: absolute;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-color: #000;
+.styled-heading {
+background: linear-gradient(45deg, #2a3f5f, #2e7d32);
+-webkit-background-clip: text;
+background-clip: text;
+color: transparent;
+font-weight: 700;
+letter-spacing: -0.5px;
+position: relative;
+}
+
+.styled-heading::after {
+content: '';
+position: absolute;
+bottom: -5px;
+left: 0;
+width: 100%;
+height: 3px;
+background: linear-gradient(45deg, #2a3f5f, #2e7d32);
+transform: scaleX(1);
+transform-origin: left;
+transition: transform 0.5s ease;
+}
+
+/* Animation for the header content */
+@keyframes float {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-10px); }
 }
 </style>

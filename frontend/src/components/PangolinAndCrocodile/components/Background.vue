@@ -4,7 +4,7 @@
             <div class="info-wrapper">
                 <div class="info-container">
                     <div class="spindle-image-container left">
-                        <img alt="Pangolin" class="spindle-image" src="./assets/pangolin.png" />
+                        <img alt="Pangolin" class="spindle-image" src="../assets/DeWatermark.ai_1746301546207.png" />
                         <div class="image-overlay">
                             <div class="overlay-content">
                                 <span>Critically Endangered</span>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="spindle-image-container right">
-                        <img alt="Pangolin" class="spindle-image" src="./assets/pangolin.png" />
+                        <img alt="Pangolin" class="spindle-image" src="../assets/Untitled design.png" />
                         <div class="image-overlay">
                             <div class="overlay-content">
                                 <span>Critically Endangered</span>
@@ -66,13 +66,12 @@ export default {
     name: 'Background',
     setup() {
         onMounted(() => {
-            // Eye opening animation effect
+            // Eye opening animation effect without pinning
             gsap.timeline({
                 scrollTrigger: {
                     trigger: ".last-container",
-                    start: "top top",
-                    end: "+=100%",
-                    pin: true,
+                    start: "top bottom",
+                    end: "top top",
                     scrub: true,
                 },
             })
@@ -89,7 +88,7 @@ export default {
             const infoTimeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".last-container",
-                    start: "top top",
+                    start: "top 70%",
                     toggleActions: "restart none none reset"
                 }
             });
