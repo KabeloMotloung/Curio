@@ -16,6 +16,7 @@ const scrollContainer = ref(null)
 const cardContainer = ref(null)
 const welcomeMessage = ref(null)
 const scrollPrompt = ref(null)
+const navArrows = ref(null)
 const sections = ref([])
 const currentSection = ref(-1)
 const animations = ref([])
@@ -80,122 +81,136 @@ const artifactInfo = {
 }
 
 const navigateToSection = (index) => {
-  if (index === currentSection.value || index < 0 || index >= sections.value.length) return
-  
-  const direction = index > currentSection.value ? 1 : -1
-  
-  const isRapidScroll = (Date.now() - lastScrollTime < 150);
+  if (index === currentSection.value || index < -1 || index >= sections.value.length) return;
+
+  const direction = index > currentSection.value ? 1 : -1;
+
+  const isRapidScroll = Date.now() - lastScrollTime < 150;
   const animDuration = isRapidScroll ? 0.25 : 0.5;
-  
-  if (currentSection.value === -1) {
-    const welcomeAnim = gsap.to(welcomeMessage.value, {
-      opacity: 0,
-      scale: 0.95,
+
+  if (index === -1) {
+    // Navigate back to the welcome message
+    welcomeMessage.value.style.display = "flex";
+
+    const welcomeAnim = gsap.fromTo(
+      welcomeMessage.value,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: animDuration, ease: "power2.out" }
+    );
+
+    const promptAnim = gsap.fromTo(
+      scrollPrompt.value,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: animDuration, ease: "power2.out" }
+    );
+
+    const sectionAnim = gsap.to(sections.value[currentSection.value], {
+      autoAlpha: 0,
+      x: "100%",
       duration: animDuration,
-      ease: 'power2.out',
-      onComplete: () => {
-        welcomeMessage.value.style.display = 'none'
-      }
-    })
-    
-    const promptAnim = gsap.to(scrollPrompt.value, {
-      opacity: 0,
-      y: 20,
-      duration: animDuration,
-      ease: 'power2.out'
-    })
-    
-    sections.value.forEach((section, idx) => {
-      if (idx !== index) {
-        gsap.set(section, { autoAlpha: 0, x: '100%', zIndex: 1 })
-      }
-    })
-    
-    const sectionAnim = gsap.fromTo(sections.value[index], 
-      { autoAlpha: 0, x: '100%', zIndex: 2 }, 
-      {
-        autoAlpha: 1,
-        x: '0%',
-        duration: animDuration + 0.1,
-        ease: 'power1.out'
-      }
-    )
-    
-    animations.value.push(welcomeAnim, promptAnim, sectionAnim)
+      ease: "power2.out",
+    });
+
+    animations.value.push(welcomeAnim, promptAnim, sectionAnim);
   } else {
-    if (direction > 0) {
-      gsap.set(sections.value[currentSection.value], { zIndex: 1 })
-      gsap.set(sections.value[index], { zIndex: 2 })
-      
-      const currentAnim = gsap.to(sections.value[currentSection.value], {
-        autoAlpha: 0,
-        x: '-100%',
+    if (currentSection.value === -1) {
+      // Hide the welcome message
+      const welcomeAnim = gsap.to(welcomeMessage.value, {
+        opacity: 0,
+        scale: 0.95,
         duration: animDuration,
-        ease: 'power1.out',
+        ease: "power2.out",
         onComplete: () => {
-          gsap.set(sections.value[currentSection.value], { autoAlpha: 0 })
+          welcomeMessage.value.style.display = "none";
+        },
+      });
+
+      const promptAnim = gsap.to(scrollPrompt.value, {
+        opacity: 0,
+        y: 20,
+        duration: animDuration,
+        ease: "power2.out",
+      });
+
+      sections.value.forEach((section, idx) => {
+        if (idx !== index) {
+          gsap.set(section, { autoAlpha: 0, x: "100%", zIndex: 1 });
         }
-      })
-      
-      const newAnim = gsap.fromTo(sections.value[index], 
-        { autoAlpha: 0, x: '100%' }, 
-        {
-          autoAlpha: 1,
-          x: '0%',
-          duration: animDuration,
-          ease: 'power1.out'
-        }
-      )
-      
-      animations.value.push(currentAnim, newAnim)
+      });
+
+      const sectionAnim = gsap.fromTo(
+        sections.value[index],
+        { autoAlpha: 0, x: "100%", zIndex: 2 },
+        { autoAlpha: 1, x: "0%", duration: animDuration + 0.1, ease: "power1.out" }
+      );
+
+      animations.value.push(welcomeAnim, promptAnim, sectionAnim);
     } else {
-      gsap.set(sections.value[currentSection.value], { zIndex: 1 })
-      gsap.set(sections.value[index], { zIndex: 2 })
-      
-      const currentAnim = gsap.to(sections.value[currentSection.value], {
-        autoAlpha: 0,
-        x: '100%',
-        duration: animDuration,
-        ease: 'power1.out',
-        onComplete: () => {
-          gsap.set(sections.value[currentSection.value], { autoAlpha: 0 })
-        }
-      })
-      
-      const newAnim = gsap.fromTo(sections.value[index], 
-        { autoAlpha: 0, x: '-100%' }, 
-        {
-          autoAlpha: 1,
-          x: '0%',
+      // Navigate between sections
+      if (direction > 0) {
+        gsap.set(sections.value[currentSection.value], { zIndex: 1 });
+        gsap.set(sections.value[index], { zIndex: 2 });
+
+        const currentAnim = gsap.to(sections.value[currentSection.value], {
+          autoAlpha: 0,
+          x: "-100%",
           duration: animDuration,
-          ease: 'power1.out'
-        }
-      )
-      
-      animations.value.push(currentAnim, newAnim)
+          ease: "power1.out",
+          onComplete: () => {
+            gsap.set(sections.value[currentSection.value], { autoAlpha: 0 });
+          },
+        });
+
+        const newAnim = gsap.fromTo(
+          sections.value[index],
+          { autoAlpha: 0, x: "100%" },
+          { autoAlpha: 1, x: "0%", duration: animDuration, ease: "power1.out" }
+        );
+
+        animations.value.push(currentAnim, newAnim);
+      } else {
+        gsap.set(sections.value[currentSection.value], { zIndex: 1 });
+        gsap.set(sections.value[index], { zIndex: 2 });
+
+        const currentAnim = gsap.to(sections.value[currentSection.value], {
+          autoAlpha: 0,
+          x: "100%",
+          duration: animDuration,
+          ease: "power1.out",
+          onComplete: () => {
+            gsap.set(sections.value[currentSection.value], { autoAlpha: 0 });
+          },
+        });
+
+        const newAnim = gsap.fromTo(
+          sections.value[index],
+          { autoAlpha: 0, x: "-100%" },
+          { autoAlpha: 1, x: "0%", duration: animDuration, ease: "power1.out" }
+        );
+
+        animations.value.push(currentAnim, newAnim);
+      }
     }
   }
-  
-  currentSection.value = index
-}
+
+  currentSection.value = index;
+};
 
 const handleWheel = (e) => {
+  if (Math.abs(e.deltaY) < 5) return;
 
-  if (Math.abs(e.deltaY) < 5) return
-  
-  e.preventDefault()
-  
+  e.preventDefault();
+
   const now = Date.now();
-  const isRapidScroll = (now - lastScrollTime < 150);
+  const isRapidScroll = now - lastScrollTime < 150;
   lastScrollTime = now;
-  
-  const animationsActive = animations.value.some(anim => 
-    anim.isActive && anim.isActive() && 
-    anim.vars && anim.vars.onComplete
+
+  const animationsActive = animations.value.some(
+    (anim) => anim.isActive && anim.isActive() && anim.vars && anim.vars.onComplete
   );
-  
+
   if (isRapidScroll && animationsActive) {
-    animations.value.forEach(anim => {
+    animations.value.forEach((anim) => {
       if (anim.isActive && anim.isActive() && anim.progress) {
         anim.progress(1);
       }
@@ -203,45 +218,26 @@ const handleWheel = (e) => {
   } else if (animationsActive && !isRapidScroll) {
     return;
   }
-  
-  const direction = e.deltaY > 0 ? 1 : -1
-  
+
+  const direction = e.deltaY > 0 ? 1 : -1;
+
   if (currentSection.value === -1 && direction > 0) {
-    navigateToSection(0)
-    return
+    navigateToSection(0);
+    return;
   }
-  
+
   if (currentSection.value === 0 && direction < 0) {
-    currentSection.value = -1
-    welcomeMessage.value.style.display = 'flex'
-    
-    const welcomeAnim = gsap.fromTo(welcomeMessage.value, 
-      { opacity: 0, scale: 0.95 }, 
-      { opacity: 1, scale: 1, duration: isRapidScroll ? 0.2 : 0.3 }
-    )
-    
-    const promptAnim = gsap.fromTo(scrollPrompt.value, 
-      { opacity: 0, y: 20 }, 
-      { opacity: 1, y: 0, duration: isRapidScroll ? 0.2 : 0.3 }
-    )
-    
-    const sectionAnim = gsap.to(sections.value[0], {
-      autoAlpha: 0,
-      x: '100%', 
-      duration: isRapidScroll ? 0.2 : 0.3,
-      ease: 'power2.out'
-    })
-    
-    animations.value.push(welcomeAnim, promptAnim, sectionAnim)
-    return
+    navigateToSection(-1);
+    return;
   }
-  
-  const nextSection = currentSection.value + direction
-  
-  if (nextSection >= 0 && nextSection < sections.value.length) {
-    navigateToSection(nextSection)
+
+  const nextSection = currentSection.value + direction;
+
+  if (nextSection >= -1 && nextSection < sections.value.length) {
+    navigateToSection(nextSection);
   }
-}
+};
+
 
 let lastScrollTime = 0;
 
@@ -275,6 +271,13 @@ const handleKeydown = (e) => {
 }
 
 onMounted(() => {
+
+  const welcomeAnim = gsap.fromTo(
+      welcomeMessage.value,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+    );
+
   sections.value = Array.from(cardContainer.value.querySelectorAll('.card-pair'))
   
   sections.value.forEach(section => {
@@ -288,8 +291,14 @@ onMounted(() => {
     duration: 1,
     ease: 'power1.inOut'
   })
+
+  const navAnim = gsap.fromTo(
+    navArrows.value,
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+  );
   
-  animations.value.push(arrowAnim)
+  animations.value.push(arrowAnim, welcomeAnim, navAnim)
   
   window.addEventListener('wheel', handleWheel, { passive: false })
   window.addEventListener('keydown', handleKeydown)
@@ -322,22 +331,32 @@ onBeforeUnmount(() => {
 
 
 <template>
-    <div class="background-blur"></div>
+    <div class="background-blur">
+      <div class="background-color"></div>
+    </div>
+
+    <nav class="top-navigation">
+      <div class="nav-container">
+        <div 
+          v-for="(info, index) in Object.values(artifactInfo)" 
+          :key="info.title"
+          class="nav-item"
+          @click="navigateToSection(index)"
+          :class="{ active: currentSection === index }"
+        >
+          {{ info.title }}
+        </div>
+      </div>
+    </nav>
   
     <div class="welcome-message" ref="welcomeMessage">
-      <div class="logo-container">
-        <div class="modern-magnifying-glass">
-          <div class="glass-ring"></div>
-          <div class="glass-handle"></div>
-        </div>
-        <div class="modern-logo-text">Curio</div>
-      </div>
-      <h1>A Virtual Tour of The University of Pretoria's Museum</h1>
+      <h2>A Virtual Tour of:</h2>
+      <h1>The University of Pretoria Museum</h1>
     </div>
 
     <div class="scroll-prompt" ref="scrollPrompt">
-      <p>Scroll to Begin Tour</p>
-      <div class="scroll-arrow">→</div>
+      <p>Click to Begin Tour</p>
+      <!-- <div class="scroll-arrow">→</div> -->
     </div>
   
     <div ref="scrollContainer" class="card-container-wrapper">
@@ -470,7 +489,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
     
-    <div class="navigation-controls">
+    <div class="navigation-controls" ref="navArrows">
       <button 
         class="nav-button prev" 
         @click="navigateToSection(currentSection <= 0 ? -1 : currentSection - 1)"
@@ -482,6 +501,7 @@ onBeforeUnmount(() => {
         class="nav-button next" 
         @click="navigateToSection(currentSection === -1 ? 0 : currentSection + 1)"
         :disabled="currentSection >= sections.length - 1"
+        :class="{ 'glow-pulse': currentSection === -1 }"
       >
         <span>→</span>
       </button>
@@ -492,7 +512,7 @@ onBeforeUnmount(() => {
 <style>
 .welcome-message {
   position: fixed;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -500,11 +520,8 @@ onBeforeUnmount(() => {
   text-align: center;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.5);
   padding: 2rem 3rem;
   border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   max-width: 80%;
   display: flex;
   flex-direction: column;
@@ -513,73 +530,26 @@ onBeforeUnmount(() => {
 
 .welcome-message h1 {
   margin: 0;
+  margin-top:1rem;
   font-size: 2.4rem;
   font-weight: 600;
   letter-spacing: 1px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 50px rgb(255, 255, 255);
   line-height: 1.2;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.modern-logo-text {
-  font-size: 3.2rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  margin-left: 15px;
-  background: linear-gradient(135deg, #f0f0f0, #a0a0a0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: none;
-  font-family: 'Arial', sans-serif;
-}
-
-.modern-magnifying-glass {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
-}
-
-.glass-ring {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  background: linear-gradient(135deg, #f0f0f0, #a0a0a0) border-box;
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) padding-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  box-shadow: 
-    0 0 10px rgba(255, 255, 255, 0.5),
-    0 0 20px rgba(200, 200, 200, 0.3);
-}
-
-.glass-handle {
-  position: absolute;
-  width: 4px;
-  height: 22px;
-  background: linear-gradient(135deg, #f0f0f0, #a0a0a0);
-  border-radius: 4px;
-  transform: rotate(-45deg);
-  bottom: 10px;
-  right: 15px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+.welcome-message h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  /* font-weight: 600; */
+  letter-spacing: 1px;
+  text-shadow: 0 2px 50px rgb(255, 255, 255);
+  line-height: 1.2;
 }
 
 .scroll-prompt {
   position: fixed;
-  bottom: 30px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
@@ -634,17 +604,19 @@ onBeforeUnmount(() => {
 
 .artifact-container {
   display: flex;
-  width: 80%;
-  max-width: 1400px;
+  width: 60%;
+  max-width: 1000px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 30px;
   border-radius: 15px;
   backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
 }
 
 .artifact-image-container {
   flex: 1;
-  height: 500px;
+  height: 400px;
 }
 
 .artifact-card {
@@ -659,6 +631,7 @@ onBeforeUnmount(() => {
   flex: 1;
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 30px;
   border-radius: 10px;
   backdrop-filter: blur(5px);
@@ -715,15 +688,24 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(25px);
-  opacity: 0.7;
   z-index: 0;
+}
+
+.background-color{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.8;
+  z-index:1;
 }
 
 .navigation-controls {
   position: fixed;
   bottom: 40px;
-  right: 40px;
+  left: 47%;
   z-index: 10;
   display: flex;
   gap: 15px;
@@ -765,5 +747,67 @@ body {
 .nav-button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+  }
+}
+
+.nav-button.glow-pulse {
+  animation: glow-pulse 2.5s infinite ease-in-out;
+}
+
+.top-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 0;
+  padding-top:0px;
+}
+
+.nav-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.nav-item {
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 </style>
