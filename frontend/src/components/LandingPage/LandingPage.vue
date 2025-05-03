@@ -16,6 +16,7 @@ const scrollContainer = ref(null)
 const cardContainer = ref(null)
 const welcomeMessage = ref(null)
 const scrollPrompt = ref(null)
+const navArrows = ref(null)
 const sections = ref([])
 const currentSection = ref(-1)
 const animations = ref([])
@@ -370,8 +371,14 @@ onMounted(() => {
     duration: 1,
     ease: 'power1.inOut'
   })
+
+  const navAnim = gsap.fromTo(
+    navArrows.value,
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+  );
   
-  animations.value.push(arrowAnim, welcomeAnim, glassHandleAnim, glassRingAnim)
+  animations.value.push(arrowAnim, welcomeAnim, glassHandleAnim, glassRingAnim, navAnim)
   
   window.addEventListener('wheel', handleWheel, { passive: false })
   window.addEventListener('keydown', handleKeydown)
@@ -404,7 +411,23 @@ onBeforeUnmount(() => {
 
 
 <template>
-    <div class="background-blur"></div>
+    <div class="background-blur">
+      <div class="background-color"></div>
+    </div>
+
+    <nav class="top-navigation">
+      <div class="nav-container">
+        <div 
+          v-for="(info, index) in Object.values(artifactInfo)" 
+          :key="info.title"
+          class="nav-item"
+          @click="navigateToSection(index)"
+          :class="{ active: currentSection === index }"
+        >
+          {{ info.title }}
+        </div>
+      </div>
+    </nav>
   
     <div class="welcome-message" ref="welcomeMessage">
       <div class="logo-container">
@@ -442,8 +465,8 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="scroll-prompt" ref="scrollPrompt">
-      <p>Scroll to Begin Tour</p>
-      <div class="scroll-arrow">→</div>
+      <p>Click to Begin Tour</p>
+      <!-- <div class="scroll-arrow">→</div> -->
     </div>
   
     <div ref="scrollContainer" class="card-container-wrapper">
@@ -576,7 +599,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
     
-    <div class="navigation-controls">
+    <div class="navigation-controls" ref="navArrows">
       <button 
         class="nav-button prev" 
         @click="navigateToSection(currentSection <= 0 ? -1 : currentSection - 1)"
@@ -588,6 +611,7 @@ onBeforeUnmount(() => {
         class="nav-button next" 
         @click="navigateToSection(currentSection === -1 ? 0 : currentSection + 1)"
         :disabled="currentSection >= sections.length - 1"
+        :class="{ 'glow-pulse': currentSection === -1 }"
       >
         <span>→</span>
       </button>
@@ -598,7 +622,7 @@ onBeforeUnmount(() => {
 <style>
 .welcome-message {
   position: fixed;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -606,11 +630,8 @@ onBeforeUnmount(() => {
   text-align: center;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.5);
   padding: 2rem 3rem;
   border-radius: 15px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   max-width: 80%;
   display: flex;
   flex-direction: column;
@@ -622,7 +643,7 @@ onBeforeUnmount(() => {
   font-size: 2.4rem;
   font-weight: 600;
   letter-spacing: 1px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 50px rgb(255, 255, 255);
   line-height: 1.2;
 }
 
@@ -679,7 +700,7 @@ onBeforeUnmount(() => {
 
 .scroll-prompt {
   position: fixed;
-  bottom: 30px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
@@ -734,17 +755,19 @@ onBeforeUnmount(() => {
 
 .artifact-container {
   display: flex;
-  width: 80%;
-  max-width: 1400px;
+  width: 60%;
+  max-width: 1000px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 30px;
   border-radius: 15px;
   backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
 }
 
 .artifact-image-container {
   flex: 1;
-  height: 500px;
+  height: 400px;
 }
 
 .artifact-card {
@@ -759,6 +782,7 @@ onBeforeUnmount(() => {
   flex: 1;
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 30px;
   border-radius: 10px;
   backdrop-filter: blur(5px);
@@ -815,15 +839,24 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(25px);
-  opacity: 0.7;
   z-index: 0;
+}
+
+.background-color{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.8;
+  z-index:1;
 }
 
 .navigation-controls {
   position: fixed;
   bottom: 40px;
-  right: 40px;
+  left: 47%;
   z-index: 10;
   display: flex;
   gap: 15px;
@@ -865,5 +898,67 @@ body {
 .nav-button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1);
+  }
+}
+
+.nav-button.glow-pulse {
+  animation: glow-pulse 2.5s infinite ease-in-out;
+}
+
+.top-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1rem 0;
+  padding-top:0px;
+}
+
+.nav-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.nav-item {
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 </style>
