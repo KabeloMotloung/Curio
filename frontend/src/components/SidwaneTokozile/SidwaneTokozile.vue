@@ -1,4 +1,5 @@
 <template>
+  <BackButton />
     <div class="min-h-screen w-full bg-gradient-to-br from-amber-900 via-zinc-800 to-gray-800 text-white overflow-x-hidden">
         <!-- Decorative Elements -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none">
@@ -175,6 +176,7 @@ import closeImage from './assets/close.png'
 import angle2Image from './assets/angle2.png'
 import sideImage from './assets/side.png'
 import side2Image from './assets/side2.png'
+import BackButton from "../UniversalComponents/BackButton.vue";
 
 gsap.registerPlugin(ScrollTrigger)
 

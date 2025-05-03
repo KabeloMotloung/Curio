@@ -1,20 +1,6 @@
 <template>
-  <div class="fixed top-8 left-8 z-50">
-    <button 
-      @click="$router.back()" 
-      class="text-white/40 hover:text-white/80 transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30"
-    >
-      <svg 
-        class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300" 
-        fill="none" 
-        stroke="currentColor" 
-        viewBox="0 0 24 24"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-      </svg>
-      <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway'] leading-none">Back</span>
-    </button>
-  </div>
+  <BackButton />
+  <ScrollProgress :totalSections="4" />
   <div class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
@@ -52,7 +38,7 @@
     <div class="content gradient-yellow">
       <div class="info-wrapper">
         <div class="info-container">
-          <div class="spindle-image-container">
+          <div class="spindle-image-container left">
             <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
             <div class="image-overlay">
               <div class="overlay-content">
@@ -71,24 +57,34 @@
             <ul class="feature-list">
               <li>
                 <span class="feature-icon">✦</span>
-                <span class="feature-text"><strong>Cultural Significance:</strong> Found among royal artifacts,
-                  suggesting textile production was connected to status and power</span>
-              </li>
-              <!-- <li>
-                <span class="feature-icon">✦</span>
-                <span class="feature-text"><strong>Trade Networks:</strong> Enabled Mapungubwe to participate in Indian
-                  Ocean trade networks, exchanging textiles for glass beads and porcelain</span>
-              </li> -->
-              <li>
-                <span class="feature-icon">✦</span>
                 <span class="feature-text"><strong>Technical Innovation:</strong> Designs evolved to optimize thread
                   quality with perfect weight distribution and balance</span>
               </li>
             </ul>
             <div class="fun-fact">
-              <span class="fact-label">FASCINATING FACT</span>
-              <p>Mapungubwe's spindle whorls were sometimes decorated with geometric patterns that matched those found
-                on pottery and gold artifacts, suggesting a unified cultural aesthetic across their crafts.</p>
+              <span class="fact-label">ARCHAEOLOGICAL INSIGHT</span>
+              <p>Chemical analysis of residue found on spindle whorls from Mapungubwe has identified traces of
+                indigenous cotton, baobab fiber, and even wild silk, suggesting a sophisticated understanding of
+                different fiber properties.</p>
+            </div>
+            <div class="museum-info">
+              <span class="museum-label">EXHIBITION DETAILS</span>
+              <div class="museum-content">
+                <p class="location-text"><strong>Location:</strong> Mapungubwe Ceramics Gallery, Old Arts
+                  2-5</p>
+                <p class="artifact-id"><strong>Artist/Collection:</strong> Archaeological ceramic, Mapungubwe Collection
+                </p>
+                <p class="period-text"><strong>Dating:</strong> 1200 - 1290 AD (Radiocarbon dated)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="spindle-image-container right">
+            <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
+            <div class="image-overlay">
+              <div class="overlay-content">
+                <span>Circa 1200 AD</span>
+              </div>
             </div>
           </div>
         </div>
@@ -259,10 +255,13 @@
 import { onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import BackButton from "../UniversalComponents/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
+  components: {ScrollProgress, BackButton},
   setup() {
     const bg = ref(null);
     const title = ref(null);
@@ -727,12 +726,18 @@ export default {
           delay: 0.5,
           ease: "power2.out"
         })
-        .from(".spindle-image-container", {
-          x: -100,
+        .from(".spindle-image-container.left", {
+          x: -80,
           opacity: 0,
           duration: 0.8,
           ease: "back.out(1.7)"
         }, "-=0.3")
+        .from(".spindle-image-container.right", {
+          x: 80,
+          opacity: 0,
+          duration: 0.8,
+          ease: "back.out(1.7)"
+        }, "-=0.6")
         .from(".section-title", {
           y: 30,
           opacity: 0,
@@ -1150,33 +1155,45 @@ body {
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin: 0 auto;
 }
 
 .info-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 4rem;
+  justify-content: space-between;
+  gap: 2rem;
   padding: 0 2rem;
   text-align: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .spindle-image-container {
   position: relative;
-  width: 40%;
-  max-width: 350px;
+  width: 25%;
+  max-width: 250px;
   flex-shrink: 0;
   overflow: hidden;
   box-shadow: none;
-  transform: perspective(1000px) rotateY(5deg);
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
   background: transparent;
   border-radius: 0;
 }
+
+.spindle-image-container.left {
+  transform: perspective(1000px) rotateY(5deg);
+}
+
+.spindle-image-container.right {
+  transform: perspective(1000px) rotateY(-5deg);
+}
+
+.spindle-image-container:hover {
+  transform: perspective(1000px) rotateY(0);
+}
+
 
 .spindle-image {
   width: 100%;
@@ -1274,7 +1291,7 @@ body {
 .info-text {
   flex: 1;
   text-align: left;
-  max-width: 500px;
+  max-width: 600px;
   position: relative;
   padding: 30px;
   border-radius: 8px;
@@ -1283,6 +1300,54 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
     inset 0 0 20px rgba(255, 215, 0, 0.05);
   border-left: 3px solid #ffd700;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  .info-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .spindle-image-container {
+    width: 20%;
+    min-width: 150px;
+  }
+
+  .info-text {
+    order: 0;
+    /* Keep text in middle position */
+    width: 100%;
+    margin: 0 auto 1rem auto;
+  }
+
+  .spindle-image-container.left {
+    order: -1;
+    /* Move left image first */
+  }
+
+  .spindle-image-container.right {
+    order: 1;
+    /* Move right image last */
+  }
+}
+
+@media (max-width: 768px) {
+  .spindle-image-container.right {
+    display: none;
+    /* Hide right image on mobile */
+  }
+
+  .spindle-image-container.left {
+    width: 40%;
+    max-width: 180px;
+    margin: 0 auto 1rem auto;
+  }
+
+  .info-container {
+    flex-direction: column;
+  }
 }
 
 .section-title {
@@ -2148,5 +2213,87 @@ h2 {
   align-items: center;
   z-index: 101;
   /* Above all wipe effects */
+}
+
+.museum-info {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(45, 30, 15, 0.6);
+  border-radius: 8px;
+  position: relative;
+  border-left: 3px solid #FFEF00;
+}
+
+.museum-label {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background: #FFEF00;
+  color: #2d1e0f;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.museum-content {
+  color: white;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.location-text {
+  position: relative;
+  padding-left: 20px;
+}
+
+.location-text::before {
+  content: "📍";
+  position: absolute;
+  left: 0;
+  color: #FFEF00;
+}
+
+.artifact-id {
+  position: relative;
+  padding-left: 20px;
+}
+
+.artifact-id::before {
+  content: "🏺";
+  position: absolute;
+  left: 0;
+  color: #FFEF00;
+}
+
+.period-text {
+  position: relative;
+  padding-left: 20px;
+}
+
+.period-text::before {
+  content: "📅";
+  position: absolute;
+  left: 0;
+  color: #FFEF00;
+}
+
+/* Add a subtle hover effect to the museum info */
+.museum-info:hover {
+  box-shadow: 0 0 15px rgba(255, 239, 0, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Enhance the main description to highlight the dating information */
+.main-description strong {
+  color: #FFEF00;
+  font-weight: 600;
 }
 </style>

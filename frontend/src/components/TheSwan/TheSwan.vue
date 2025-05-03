@@ -55,6 +55,7 @@ import SwanBackground from './components/SwanBackground.vue';
 import WelcomeView from './components/WelcomeView.vue';
 import FramedArtifact from './components/FramedArtifact.vue';
 import ParchmentScroll from './components/ParchmentScroll.vue';
+import BackButton from "../UniversalComponents/BackButton.vue";
 
 import cloudImage from './assets/cloud.png';
 import skyBackgroundImage from './assets/sky-background.jpg';
