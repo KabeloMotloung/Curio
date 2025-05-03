@@ -9,8 +9,8 @@ interface ScrollProgressProps {
 
 // Define props with defaults
 const props = withDefaults(defineProps<ScrollProgressProps>(), {
-  activeColor: 'bg-blue-500',
-  inactiveColor: 'bg-blue-200'
+  activeColor: 'bg-white',
+  inactiveColor: 'bg-white/30'
 })
 
 const currentSection = ref(0)
@@ -39,11 +39,22 @@ onUnmounted(() => {
 
 <template>
   <div class="fixed right-8 top-1/2 transform -translate-y-1/2 flex flex-col gap-4 z-50">
-    <div
-        v-for="(_, index) in totalSections"
-        :key="index"
-        class="w-2 h-2 rounded-full transition-all duration-300"
-        :class="currentSection === index ? `${activeColor} scale-150` : inactiveColor"
-    ></div>
+    <div 
+      class="py-3 px-2 rounded-lg backdrop-blur-sm bg-black/40 flex flex-col items-center gap-3 
+      shadow-[0_0_10px_rgba(255,255,255,0.2)] border border-white/20 transition-all duration-300"
+    >
+      <div
+          v-for="(_, index) in totalSections"
+          :key="index"
+          class="w-2.5 h-2.5 rounded-full transition-all duration-500 relative"
+          :class="currentSection === index ? `${activeColor} scale-125 shadow-[0_0_8px_rgba(255,255,255,0.6)]` : inactiveColor"
+      >
+        <div 
+          v-if="currentSection === index"
+          class="absolute inset-0 rounded-full animate-ping opacity-50"
+          :class="activeColor"
+        ></div>
+      </div>
+    </div>
   </div>
 </template>
