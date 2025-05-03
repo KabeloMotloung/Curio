@@ -23,26 +23,20 @@
     />
   </div>
 
-  <div class="fixed bottom-12 left-1/2 -translate-x-1/2 text-[#1F2937] flex flex-col items-center gap-3 transition-opacity duration-500" ref="scrollIndicator">
-    <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway']">Scroll to explore</span>
-    <svg class="w-5 h-5 animate-bounce opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 13l-7 7-7-7"></path>
-    </svg>
-  </div>
+  <ScrollArrow />
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import gsap from 'gsap';
 import cloudImage from '../assets/cloud.png';
+import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
 
 const cloudContainer = ref(null);
 const cloud1 = ref(null);
 const cloud2 = ref(null);
 const cloud3 = ref(null);
 const titleText = ref(null);
-const scrollIndicator = ref(null);
-
 
 const cloudImageUrl = computed(() => {
   return cloudImage;
@@ -79,8 +73,7 @@ defineExpose({
   cloud1,
   cloud2,
   cloud3,
-  titleText,
-  scrollIndicator
+  titleText
 });
 </script>
 
