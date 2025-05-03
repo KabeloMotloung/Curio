@@ -111,45 +111,6 @@ const navigateToSection = (index) => {
       ease: "power2.out",
     });
 
-    // const glassHandleAnim = gsap.fromTo(
-    //   glassHandle.value,
-    //   { strokeDasharray: "100", strokeDashoffset: "100" }, // Start hidden
-    //   {
-    //     strokeDashoffset: "0", // Draw the handle
-    //     duration: 1.5,
-    //     ease: "power2.out",
-    //     delay: 0.5, // Start after the ring animation
-    //     onComplete: () => {
-    //       // Add glowing effect after drawing
-    //       gsap.to(glassHandle.value, {
-    //         filter: "drop-shadow(0 0 10px white)",
-    //         duration: 0.5,
-    //         repeat: 0,
-    //         yoyo: true,
-    //       });
-    //     },
-    //   }
-    // );
-
-    // const glassRingAnim  =  gsap.fromTo(
-    //   glassRing.value,
-    //   { strokeDasharray: "94.25", strokeDashoffset: "94.25" }, // Start hidden
-    //   {
-    //     strokeDashoffset: "0", // Draw the ring
-    //     duration: 2,
-    //     ease: "power2.out",
-    //     onComplete: () => {
-    //       // Add glowing effect after drawing
-    //       gsap.to(glassRing.value, {
-    //         filter: "drop-shadow(0 0 10px white)",
-    //         duration: 0.5,
-    //         repeat: 0,
-    //         yoyo: true,
-    //       });
-    //     },
-    //   }
-    // );
-
     animations.value.push(welcomeAnim, promptAnim, sectionAnim);
   } else {
     if (currentSection.value === -1) {
@@ -317,45 +278,6 @@ onMounted(() => {
       { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
     );
 
-  // const glassHandleAnim = gsap.fromTo(
-  //     glassHandle.value,
-  //     { strokeDasharray: "100", strokeDashoffset: "100" }, // Start hidden
-  //     {
-  //       strokeDashoffset: "0", // Draw the handle
-  //       duration: 1.5,
-  //       ease: "power2.out",
-  //       delay: 0.5, // Start after the ring animation
-  //       onComplete: () => {
-  //         // Add glowing effect after drawing
-  //         gsap.to(glassHandle.value, {
-  //           filter: "drop-shadow(0 0 10px white)",
-  //           duration: 0.5,
-  //           repeat: 0,
-  //           yoyo: true,
-  //         });
-  //       },
-  //     }
-  //   );
-
-    // const glassRingAnim  =  gsap.fromTo(
-    //   glassRing.value,
-    //   { strokeDasharray: "94.25", strokeDashoffset: "94.25" }, // Start hidden
-    //   {
-    //     strokeDashoffset: "0", // Draw the ring
-    //     duration: 2,
-    //     ease: "power2.out",
-    //     onComplete: () => {
-    //       // Add glowing effect after drawing
-    //       gsap.to(glassRing.value, {
-    //         filter: "drop-shadow(0 0 10px white)",
-    //         duration: 0.5,
-    //         repeat: 0,
-    //         yoyo: true,
-    //       });
-    //     },
-    //   }
-    // );
-
   sections.value = Array.from(cardContainer.value.querySelectorAll('.card-pair'))
   
   sections.value.forEach(section => {
@@ -428,36 +350,6 @@ onBeforeUnmount(() => {
     </nav>
   
     <div class="welcome-message" ref="welcomeMessage">
-      <!-- <div class="logo-container">
-        <svg
-          class="modern-magnifying-glass"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100 100"
-        >
-      
-          <circle
-            ref="glassRing"
-            cx="50"
-            cy="50"
-            r="15"
-            stroke="white"
-            stroke-width="3"
-            fill="none"
-            stroke-linecap="round"
-          />
-          <line
-            ref="glassHandle"
-            x1="65"
-            y1="65"
-            x2="80"
-            y2="80"
-            stroke="white"
-            stroke-width="3"
-            stroke-linecap="round"
-          />
-        </svg>
-        <div class="modern-logo-text">Curio</div>
-      </div> -->
       <h2>A Virtual Tour of:</h2>
       <h1>The University of Pretoria Museum</h1>
     </div>
@@ -653,58 +545,6 @@ onBeforeUnmount(() => {
   letter-spacing: 1px;
   text-shadow: 0 2px 50px rgb(255, 255, 255);
   line-height: 1.2;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-  margin-right:0.5rem;
-}
-
-.modern-logo-text {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-.modern-magnifying-glass {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 1rem;
-}
-
-.glass-ring {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  background: linear-gradient(135deg, #f0f0f0, #a0a0a0) border-box;
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) padding-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  box-shadow: 
-    0 0 10px rgba(255, 255, 255, 0.5),
-    0 0 20px rgba(200, 200, 200, 0.3);
-}
-
-.glass-handle {
-  position: absolute;
-  width: 4px;
-  height: 22px;
-  background: linear-gradient(135deg, #f0f0f0, #a0a0a0);
-  border-radius: 4px;
-  transform: rotate(-45deg);
-  bottom: 10px;
-  right: 15px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .scroll-prompt {
