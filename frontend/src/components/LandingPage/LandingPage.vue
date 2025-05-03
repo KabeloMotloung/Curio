@@ -461,7 +461,8 @@ onBeforeUnmount(() => {
         </svg>
         <div class="modern-logo-text">Curio</div>
       </div>
-      <h1>A Virtual Tour of The University of Pretoria's Museum</h1>
+      <h2>A Virtual Tour of:</h2>
+      <h1>The University of Pretoria Museum</h1>
     </div>
 
     <div class="scroll-prompt" ref="scrollPrompt">
@@ -640,8 +641,18 @@ onBeforeUnmount(() => {
 
 .welcome-message h1 {
   margin: 0;
+  margin-top:1rem;
   font-size: 2.4rem;
   font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 50px rgb(255, 255, 255);
+  line-height: 1.2;
+}
+
+.welcome-message h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  /* font-weight: 600; */
   letter-spacing: 1px;
   text-shadow: 0 2px 50px rgb(255, 255, 255);
   line-height: 1.2;
@@ -651,11 +662,12 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+  margin-right:0.5rem;
 }
 
 .modern-logo-text {
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: white;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
