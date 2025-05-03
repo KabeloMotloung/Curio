@@ -1008,7 +1008,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./assets/spindle.png');
+  background-image: url('./assets/TheSwan.png');
   background-size: 300px;
   background-position: center;
   opacity: 0.05;
