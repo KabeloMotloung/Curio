@@ -56,6 +56,17 @@ import WelcomeView from './components/WelcomeView.vue';
 import FramedArtifact from './components/FramedArtifact.vue';
 import ParchmentScroll from './components/ParchmentScroll.vue';
 
+import cloudImage from './assets/cloud.png';
+import skyBackgroundImage from './assets/sky-background.jpg';
+import swanPainting from './assets/TheSwan.png';
+import parchment1 from './assets/parchments/parchment-1.png';
+import parchment2 from './assets/parchments/parchment-2.png';
+import parchment3 from './assets/parchments/parchment-3.png';
+import parchment4 from './assets/parchments/parchment-4.png';
+import parchment5 from './assets/parchments/parchment-5.png';
+import parchment6 from './assets/parchments/parchment-6.png';
+import parchment7 from './assets/parchments/parchment-7.png';
+
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -82,10 +93,16 @@ const parchmentScroll = ref(null);
 
 const loadAssets = () => {
   const assets = [
-    './assets/sky-background.jpg',
-    './assets/cloud.png',
-    './assets/TheSwan.png',
-    ...Array.from({ length: 7 }, (_, i) => `./assets/parchments/parchment-${i + 1}.png`)
+    skyBackgroundImage,
+    cloudImage,
+    swanPainting,
+    parchment1,
+    parchment2,
+    parchment3,
+    parchment4,
+    parchment5,
+    parchment6,
+    parchment7
   ];
   
   totalAssets.value = assets.length;
@@ -275,6 +292,24 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Playfair Display'),
+       url('/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Playfair Display'),
+       url('/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'Montserrat';
   font-style: normal;

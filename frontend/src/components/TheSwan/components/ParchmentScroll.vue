@@ -71,9 +71,26 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import parchment1 from '../assets/parchments/parchment-1.png';
+import parchment2 from '../assets/parchments/parchment-2.png';
+import parchment3 from '../assets/parchments/parchment-3.png';
+import parchment4 from '../assets/parchments/parchment-4.png';
+import parchment5 from '../assets/parchments/parchment-5.png';
+import parchment6 from '../assets/parchments/parchment-6.png';
+import parchment7 from '../assets/parchments/parchment-7.png';
 
 const parchmentContainer = ref(null);
 const currentParchmentIndex = ref(1);
+
+const parchmentImages = {
+  1: parchment1,
+  2: parchment2,
+  3: parchment3,
+  4: parchment4,
+  5: parchment5,
+  6: parchment6,
+  7: parchment7
+};
 
 defineProps({
   parchmentStage: {
@@ -87,7 +104,7 @@ const updateParchmentStage = (newStage) => {
 };
 
 const currentParchmentImage = computed(() => {
-  return new URL(`../assets/parchments/parchment-${currentParchmentIndex.value}.png`, import.meta.url).href;
+  return parchmentImages[currentParchmentIndex.value];
 });
 
 defineExpose({

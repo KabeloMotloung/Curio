@@ -1,4 +1,3 @@
-// Components for the clouds and welcome screen
 <template>
   <div class="fixed inset-0 pointer-events-none" ref="cloudContainer">      
     <div class="absolute top-[10%] left-0 w-full flex items-center justify-center text-white/90 transition-opacity duration-500" ref="titleText">
@@ -35,6 +34,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import gsap from 'gsap';
+import cloudImage from '../assets/cloud.png';
 
 const cloudContainer = ref(null);
 const cloud1 = ref(null);
@@ -45,7 +45,7 @@ const scrollIndicator = ref(null);
 
 
 const cloudImageUrl = computed(() => {
-  return new URL('../assets/cloud.png', import.meta.url).href;
+  return cloudImage;
 });
 
 defineProps({

@@ -11,12 +11,13 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import skyBackgroundImage from '../assets/sky-background.jpg';
 
 const skyBackground = ref(null);
 const background = ref(null);
 
 const backgroundImageUrl = computed(() => {
-  return new URL('../assets/sky-background.jpg', import.meta.url).href;
+  return skyBackgroundImage;
 });
 
 defineExpose({
