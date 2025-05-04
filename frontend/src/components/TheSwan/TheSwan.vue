@@ -338,41 +338,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Playfair Display'),
-       url('/fonts/Playfair_Display/static/PlayfairDisplay-Regular.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Playfair Display'),
-       url('/fonts/Playfair_Display/static/PlayfairDisplay-Bold.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Montserrat'),
-       url('/fonts/Montserrat/static/Montserrat-SemiBold.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 200;
-  src: local('Raleway'),
-       url('/fonts/Raleway/static/Raleway-ExtraLight.ttf') format('truetype');
-  font-display: swap;
-}
 
 :root {
   scrollbar-width: none;

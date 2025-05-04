@@ -77,23 +77,6 @@ defineExpose({
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 200;
-  src: local('Raleway'),
-       url('/fonts/Raleway/static/Raleway-ExtraLight.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Raleway'),
-       url('/fonts/Raleway/static/Raleway-Regular.ttf') format('truetype');
-  font-display: swap;
-}
 
 h1 {
   font-family: 'Raleway', sans-serif !important;

@@ -203,32 +203,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 200;
-  src: local('Raleway'),
-       url('/fonts/Raleway/static/Raleway-ExtraLight.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Raleway'),
-       url('/fonts/Raleway/static/Raleway-Regular.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Raleway'),
-       url('/fonts/Raleway/static/Raleway-SemiBold.ttf') format('truetype');
-  font-display: swap;
-}
 
 .last-container {
     position: relative;
