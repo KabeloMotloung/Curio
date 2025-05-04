@@ -1,16 +1,13 @@
 <template>
   <div class="min-h-screen w-full flex justify-center items-center bg-gradient-to-br from-[#2d1e0f] to-[#1a1209] text-white relative overflow-hidden">
-    <!-- Background overlay with coffee texture -->
     <div class="absolute inset-0 bg-[url('../assets/background-texture.jpg')] bg-cover opacity-20 mix-blend-overlay"></div>
     
-    <!-- Coffee stain overlays -->
     <div class="absolute inset-0 opacity-15">
       <div class="coffee-stain stain-1"></div>
       <div class="coffee-stain stain-2"></div>
       <div class="coffee-stain stain-3"></div>
     </div>
     
-    <!-- Coffee beans background with parallax -->
     <div class="absolute inset-0 overflow-hidden">
       <div class="coffee-bean bean-1" ref="bean1"></div>
       <div class="coffee-bean bean-2" ref="bean2"></div>
@@ -21,7 +18,6 @@
       <div class="coffee-bean bean-7" ref="bean7"></div>
     </div>
     
-    <!-- Coffee steam effect -->
     <div class="absolute top-[10%] left-1/2 transform -translate-x-1/2 opacity-10">
       <div class="coffee-steam steam-1"></div>
       <div class="coffee-steam steam-2"></div>
@@ -54,7 +50,6 @@ import { onMounted, ref, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
 
-// Refs for coffee beans
 const bean1 = ref(null);
 const bean2 = ref(null);
 const bean3 = ref(null);
@@ -63,37 +58,31 @@ const bean5 = ref(null);
 const bean6 = ref(null);
 const bean7 = ref(null);
 
-// Collect all bean refs in an array for easier handling
 const beanRefs = [bean1, bean2, bean3, bean4, bean5, bean6, bean7];
 
-// Track mouse position for parallax effect
 let mouseX = 0;
 let mouseY = 0;
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
 
-// Handle mouse movement for parallax
 const handleMouseMove = (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
   
-  // Apply parallax effect to coffee beans
   animateBeans();
 };
 
-// Handle window resize
 const handleResize = () => {
   windowWidth = window.innerWidth;
   windowHeight = window.innerHeight;
 };
 
-// Animate beans based on mouse position
 const animateBeans = () => {
   const moveX = (mouseX - windowWidth / 2) / 50;
   const moveY = (mouseY - windowHeight / 2) / 50;
   
   beanRefs.forEach((bean, index) => {
-    const depth = (index + 1) * 0.4; // Different depth for each bean
+    const depth = (index + 1) * 0.4;
     if (bean.value) {
       gsap.to(bean.value, {
         x: moveX * depth,
@@ -107,11 +96,9 @@ const animateBeans = () => {
 };
 
 onMounted(() => {
-  // Add event listeners
   window.addEventListener('mousemove', handleMouseMove);
   window.addEventListener('resize', handleResize);
   
-  // Initial positions for beans with random rotation
   beanRefs.forEach((bean, index) => {
     if (bean.value) {
       gsap.set(bean.value, {
@@ -120,7 +107,6 @@ onMounted(() => {
     }
   });
   
-  // Title reveal animation
   const tl = gsap.timeline();
   
   tl.fromTo(
@@ -170,7 +156,6 @@ onMounted(() => {
     '-=0.4'
   );
 
-  // Arrow bounce animation
   gsap.to('.arrow', {
     y: 10,
     repeat: -1,
@@ -179,7 +164,6 @@ onMounted(() => {
     ease: 'sine.inOut'
   });
   
-  // Add text glow pulse animation without using box-shadow
   gsap.to('.coffee-text', {
     textShadow: '0 0 8px rgba(166, 124, 82, 0.8)',
     repeat: -1,
@@ -187,7 +171,6 @@ onMounted(() => {
     duration: 2,
   });
   
-  // Add highlight underline animation
   gsap.fromTo('.coffee-text::after', 
     { 
       width: '0%',
@@ -201,7 +184,6 @@ onMounted(() => {
     }
   );
   
-  // Floating animation for coffee beans
   beanRefs.forEach((bean, index) => {
     if (bean.value) {
       gsap.to(bean.value, {
@@ -218,7 +200,6 @@ onMounted(() => {
   });
 });
 
-// Clean up event listeners
 onUnmounted(() => {
   window.removeEventListener('mousemove', handleMouseMove);
   window.removeEventListener('resize', handleResize);
@@ -258,12 +239,10 @@ onUnmounted(() => {
   }
 }
 
-/* Add an initial text shadow for coffee text */
 .coffee-text {
   text-shadow: 0 0 4px rgba(166, 124, 82, 0.4);
 }
 
-/* Coffee beans styling */
 .coffee-bean {
   position: absolute;
   background-image: url('../assets/coffee-bean.png');
@@ -276,7 +255,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* Coffee stain styling */
 .coffee-stain {
   position: absolute;
   background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cGF0aCBmaWxsPSIjQTY3QzUyIiBkPSJNMTAwIDEwYzQ5LjcgMCA5MCA0MC4zIDkwIDkwYzAgNDkuNy00MC4zIDkwLTkwIDkwYy00OS43IDAtOTAtNDAuMy05MC05MEMxMCA1MC4zIDUwLjMgMTAgMTAwIDEwWiIgc3R5bGU9Im9wYWNpdHk6MC44OyBmaWx0ZXI6Ymx1cig4cHgpOyIvPjwvc3ZnPg==');
@@ -313,7 +291,6 @@ onUnmounted(() => {
   transform: rotate(45deg) scale(1.5, 0.8);
 }
 
-/* Coffee steam styling */
 .coffee-steam {
   position: absolute;
   width: 8px;
@@ -411,7 +388,6 @@ onUnmounted(() => {
   left: 35%;
 }
 
-/* Subtle coffee grain texture overlay */
 .min-h-screen::after {
   content: '';
   position: absolute;

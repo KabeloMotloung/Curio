@@ -39,7 +39,6 @@ export default {
                     return;
                 }
 
-                // Create animations for timeline dates when panels come into view
                 panels.forEach((panel, i) => {
                     const dateElement = panel.querySelector('.timeline-date');
                     const factElement = panel.querySelector('.timeline-fact');
@@ -49,7 +48,6 @@ export default {
                         return;
                     }
 
-                    // Create a pulse animation for the date when it's in view
                     gsap.fromTo(dateElement,
                         { scale: 0.95 },
                         {
@@ -65,7 +63,6 @@ export default {
                         }
                     );
 
-                    // Animate the fact tag with a slight delay
                     gsap.fromTo(factElement,
                         { opacity: 0, y: 20 },
                         {
@@ -82,18 +79,16 @@ export default {
                         }
                     );
                 });
-            }, 500); // Small delay to ensure DOM elements are ready
+            }, 500); 
         }
 
         onMounted(() => {
-            // Clear any existing ScrollTriggers with this ID
             ScrollTrigger.getAll().forEach(st => {
                 if (st.vars.id === "timelineScroll") {
                     st.kill();
                 }
             });
             
-            // Create a fresh ScrollTrigger
             setTimeout(() => {
                 const sections = gsap.utils.toArray(".panel");
                 
@@ -102,19 +97,18 @@ export default {
                     return;
                 }
                 
-                // Horizontal scrolling logic with unique ID
                 const horizontalScrollTL = gsap.to(sections, {
                     xPercent: -100 * (sections.length - 1),
                     ease: "none",
                     scrollTrigger: {
-                        id: "timelineScroll", // Unique ID
+                        id: "timelineScroll",
                         trigger: ".container",
                         pin: true,
-                        anticipatePin: 1, // This helps with smoother pinning
+                        anticipatePin: 1, 
                         scrub: 1,
                         snap: 1 / (sections.length - 1),
                         end: () => "+=" + document.querySelector(".container")?.offsetWidth || 1000,
-                        invalidateOnRefresh: true, // Recalculate on window resize
+                        invalidateOnRefresh: true,
                     },
                 });
 
@@ -158,7 +152,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(20, 12, 8, 0.65); /* Darkened background overlay */
+    background-color: rgba(20, 12, 8, 0.65);
     z-index: 1;
 }
 
@@ -179,7 +173,7 @@ export default {
     padding-left: 2.5rem;
     transform: translateY(0);
     opacity: 1;
-    background-color: rgba(242, 235, 225, 0.9); /* Softer latte color */
+    background-color: rgba(242, 235, 225, 0.9);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(30, 20, 10, 0.4);
     backdrop-filter: blur(5px);
@@ -193,7 +187,7 @@ export default {
 .timeline-date {
     font-size: 3.2rem;
     font-weight: bold;
-    color: #6b4226; /* Coffee brown */
+    color: #6b4226; 
     margin-bottom: 1.5rem;
     position: relative;
     text-shadow: 0 2px 4px rgba(107, 66, 38, 0.2);
@@ -207,14 +201,14 @@ export default {
     left: 0;
     width: 60px;
     height: 3px;
-    background: #6b4226; /* Coffee brown */
+    background: #6b4226;
     box-shadow: 0 0 10px rgba(107, 66, 38, 0.5);
 }
 
 .timeline-description {
     font-size: 1.4rem;
     line-height: 1.6;
-    color: #3a2718; /* Darker coffee */
+    color: #3a2718;
     margin-bottom: 1.5rem;
     max-width: 80%;
     margin-left: auto;
@@ -223,7 +217,7 @@ export default {
 }
 
 .timeline-details {
-    color: #5a483a; /* Medium coffee */
+    color: #5a483a; 
     font-size: 1.1rem;
     line-height: 1.5;
     margin-top: 1.5rem;
@@ -232,7 +226,7 @@ export default {
 
 .timeline-fact {
     display: inline-block;
-    background: #e0d2c0; /* Light coffee cream */
+    background: #e0d2c0;
     border: 1px solid #6b4226;
     padding: 0.5rem 1rem;
     border-radius: 4px;
@@ -250,7 +244,7 @@ export default {
 }
 
 .timeline-item:hover .timeline-date {
-    color: #3a2718; /* Darker coffee when hovered */
+    color: #3a2718;
     text-shadow: 0 0 10px rgba(248, 240, 229, 0.6);
 }
 
@@ -259,7 +253,6 @@ export default {
     opacity: 1;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
     .timeline-date {
         font-size: 2.5rem;

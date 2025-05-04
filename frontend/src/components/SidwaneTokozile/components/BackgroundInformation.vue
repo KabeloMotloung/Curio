@@ -50,7 +50,7 @@
 
 <script>
 import { onMounted } from 'vue';
-import { gsap } from 'gsap';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -59,7 +59,8 @@ export default {
     name: 'BackgroundInformation',
     setup() {
         onMounted(() => {
-            // Set initial state - fully closed eye
+            gsap.registerPlugin(ScrollTrigger);
+            
             gsap.set(".content", {
                 clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)"
             });
@@ -78,53 +79,44 @@ export default {
                 opacity: 0
             });
             
-            // Create main timeline for all animations
             const mainTl = gsap.timeline({
                 paused: true
             });
             
-            // Eye opening sequence
             mainTl
-                // First phase - horizontal eye opening
                 .to(".content", {
                     clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
                     duration: 0.3,
                     ease: "power2.out"
                 }, 0)
-                // Second phase - vertical eye opening
                 .to(".content", {
                     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
                     duration: 0.3,
                     ease: "power2.out"
                 }, 0.3)
-                // Fade in the info wrapper
                 .to(".info-wrapper", {
                     opacity: 1,
                     duration: 0.2,
                     ease: "power1.out"
                 }, 0.5)
-                // Animate in right image - now just using class sculpture-image-container
                 .to(".sculpture-image-container", {
                     x: 0,
                     opacity: 1,
                     duration: 0.3,
                     ease: "back.out(1.7)"
                 }, 0.6)
-                // Animate in title
                 .to(".section-title", {
                     y: 0,
                     opacity: 1,
                     duration: 0.3,
                     ease: "power2.out"
                 }, 0.7)
-                // Animate in description
                 .to(".main-description", {
                     y: 0,
                     opacity: 1,
                     duration: 0.3,
                     ease: "power2.out"
                 }, 0.8)
-                // Animate in feature list
                 .to(".feature-list li", {
                     y: 0,
                     opacity: 1,
@@ -132,14 +124,12 @@ export default {
                     stagger: 0.05,
                     ease: "power2.out"
                 }, 0.9)
-                // Animate in fun fact
                 .to(".fun-fact", {
                     y: 0,
                     opacity: 1,
                     duration: 0.3,
                     ease: "power2.out"
                 }, 1.0)
-                // Animate in museum info
                 .to(".museum-info", {
                     y: 0,
                     opacity: 1,
@@ -147,28 +137,33 @@ export default {
                     ease: "power2.out"
                 }, 1.1);
                 
-            // Create ScrollTrigger that controls the timeline based on scroll position
             ScrollTrigger.create({
                 trigger: ".last-container",
-                start: "top 80%", // Start animation when the top of the container hits 80% from the top of viewport
-                end: "center center", // End animation when the center of the container hits the center of viewport
-                scrub: 0.5, // Smooth scrubbing effect with 0.5 second lag
+                start: "top 80%", 
+                end: "center center", 
+                scrub: 0.5, 
                 animation: mainTl,
-                toggleActions: "restart none none reverse",
-                markers: false, // Set to true for debugging
-                onUpdate: (self) => {
-                    // Log progress for debugging
-                    // console.log("Progress:", self.progress.toFixed(2));
+                toggleActions: "play none none reverse",
+                markers: false, 
+                onEnter: () => {
+                    console.log("ScrollTrigger entered");
+                    mainTl.play();
+                },
+                onLeaveBack: () => {
+                    console.log("ScrollTrigger left");
+                    mainTl.reverse();
                 }
             });
 
-            // Clean up on component unmount
             return () => {
                 ScrollTrigger.getAll().forEach(trigger => {
                     trigger.kill();
                 });
+                mainTl.kill();
             };
         });
+
+        return {};
     }
 };
 </script>
@@ -178,12 +173,12 @@ export default {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-color: #f5e9d9; /* Lighter latte background for the container */
+    background-color: #f5e9d9;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    color: #33261e; /* Darker coffee text color */
+    color: #33261e;
     text-align: center;
 }
 
@@ -198,7 +193,7 @@ export default {
 }
 
 .gradient-coffee {
-    background: linear-gradient(to bottom, #e6d7c3, #d1bea0); /* Latte gradient background */
+    background: linear-gradient(to bottom, #e6d7c3, #d1bea0);
 }
 
 .info-wrapper {
@@ -280,12 +275,12 @@ export default {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #33261e; /* Darker coffee text color */
+    color: #33261e; 
     letter-spacing: 1px;
 }
 
 .highlight {
-    color: #5d3a22; /* Darker coffee accent color */
+    color: #5d3a22; 
     position: relative;
     display: inline-block;
     text-shadow: 0 0 15px rgba(93, 58, 34, 0.3);
@@ -299,7 +294,7 @@ export default {
     left: 0;
     width: 100%;
     height: 3px;
-    background: #5d3a22; /* Darker coffee accent color */
+    background: #5d3a22;
     transform: scaleX(1);
     transform-origin: left;
     transition: transform 0.5s ease;
@@ -326,7 +321,7 @@ export default {
 .divider {
     width: 80px;
     height: 3px;
-    background: #5d3a22; /* Darker coffee accent color */
+    background: #5d3a22;
     margin: 1.5rem 0;
     position: relative;
     overflow: hidden;
@@ -339,7 +334,7 @@ export default {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: #8c5e40; /* Lighter coffee accent for animation */
+    background: #8c5e40; 
     animation: dividerGlow 3s infinite;
 }
 
@@ -361,17 +356,17 @@ export default {
     padding: 30px;
     border-radius: 8px;
     backdrop-filter: blur(5px);
-    background: rgba(245, 233, 217, 0.8); /* Latte background with transparency */
+    background: rgba(245, 233, 217, 0.8); 
     box-shadow: 0 10px 30px rgba(51, 38, 30, 0.25),
         inset 0 0 20px rgba(93, 58, 34, 0.05);
-    border-left: 3px solid #5d3a22; /* Darker coffee accent color */
+    border-left: 3px solid #5d3a22; 
     margin: 0 auto;
 }
 
 .main-description {
     font-size: 1.2rem;
     line-height: 1.8;
-    color: #33261e; /* Darker coffee text color */
+    color: #33261e; 
     margin-bottom: 2rem;
 }
 
@@ -398,36 +393,36 @@ export default {
 
 .feature-icon {
     display: inline-block;
-    color: #5d3a22; /* Darker coffee accent color */
+    color: #5d3a22;
     margin-right: 15px;
     font-size: 1.2rem;
 }
 
 .feature-text {
-    color: #33261e; /* Darker coffee text color */
+    color: #33261e;
     line-height: 1.5;
 }
 
 .feature-text strong {
-    color: #412a1d; /* Even darker coffee text for emphasis */
+    color: #412a1d;
     font-weight: 600;
 }
 
 .fun-fact {
     margin-top: 2rem;
     padding: 1rem;
-    background: rgba(93, 58, 34, 0.1); /* Darker coffee accent with transparency */
+    background: rgba(93, 58, 34, 0.1); 
     border-radius: 8px;
     position: relative;
-    border-left: 3px solid #5d3a22; /* Darker coffee accent color */
+    border-left: 3px solid #5d3a22; 
 }
 
 .fact-label {
     position: absolute;
     top: -10px;
     left: 15px;
-    background: #5d3a22; /* Darker coffee accent color */
-    color: #f5e9d9; /* Latte text color for contrast */
+    background: #5d3a22; 
+    color: #f5e9d9; 
     font-size: 0.7rem;
     font-weight: 700;
     padding: 4px 10px;
@@ -436,7 +431,7 @@ export default {
 }
 
 .fun-fact p {
-    color: #33261e; /* Darker coffee text color */
+    color: #33261e;
     font-size: 1rem;
     line-height: 1.6;
     margin: 0;
@@ -446,18 +441,18 @@ export default {
 .museum-info {
     margin-top: 2rem;
     padding: 1rem;
-    background: rgba(76, 48, 27, 0.1); /* Darker coffee accent with transparency */
+    background: rgba(76, 48, 27, 0.1); 
     border-radius: 8px;
     position: relative;
-    border-left: 3px solid #8c5e40; /* Lighter coffee accent color */
+    border-left: 3px solid #8c5e40;
 }
 
 .museum-label {
     position: absolute;
     top: -10px;
     left: 15px;
-    background: #8c5e40; /* Lighter coffee accent color */
-    color: #f5e9d9; /* Latte text color for contrast */
+    background: #8c5e40; 
+    color: #f5e9d9;
     font-size: 0.7rem;
     font-weight: 700;
     padding: 4px 10px;
@@ -466,7 +461,7 @@ export default {
 }
 
 .museum-content {
-    color: #33261e; /* Darker coffee text color */
+    color: #33261e;
     font-size: 1rem;
     line-height: 1.6;
     margin: 0;
@@ -485,7 +480,7 @@ export default {
     content: "📍";
     position: absolute;
     left: 0;
-    color: #8c5e40; /* Lighter coffee accent color */
+    color: #8c5e40;
 }
 
 .artifact-id {
@@ -497,7 +492,7 @@ export default {
     content: "👨‍🎨";
     position: absolute;
     left: 0;
-    color: #8c5e40; /* Lighter coffee accent color */
+    color: #8c5e40;
 }
 
 .period-text {
@@ -509,7 +504,7 @@ export default {
     content: "📅";
     position: absolute;
     left: 0;
-    color: #8c5e40; /* Lighter coffee accent color */
+    color: #8c5e40; 
 }
 
 .museum-info:hover {
@@ -519,11 +514,10 @@ export default {
 }
 
 .main-description strong {
-    color: #5d3a22; /* Darker coffee accent color */
+    color: #5d3a22;
     font-weight: 600;
 }
 
-/* Media queries for responsive design */
 @media (max-width: 1200px) {
     .info-container {
         flex-wrap: wrap;

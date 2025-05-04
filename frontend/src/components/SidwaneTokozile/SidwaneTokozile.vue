@@ -36,7 +36,6 @@ import ImageShowcase from './components/ImageShowcase.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Timeline events for Sidwane Tokozile sculpture and Anton van Wouw
 const timelineEvents = [
   {
     date: "1862",
