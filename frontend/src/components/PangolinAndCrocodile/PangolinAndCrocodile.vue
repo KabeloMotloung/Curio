@@ -5,10 +5,13 @@ import PangolinAndCrocodileBottomView from "./assets/PangolinAndCrocodileBottomV
 import PangolinAndCrocodileBottomZoomedOut from "./assets/PangolinAndCrocodileBottomZoomedOutView.png";
 import PangolinAndCrocodileLeftView from "./assets/PangolinAndCrocodileLeftView.png";
 import PangolinAndCrocodileRightView from "./assets/PangolinAndCrocodileRightView.png";
+import BackButton from '../UniversalComponents/BackButton.vue';
+import ScrollProgress from '../UniversalComponents/ScrollProgress.vue';
 
 import {gsap, ScrollTrigger} from "gsap/all";
 import {onMounted, onUnmounted, ref} from "vue";
-
+import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
+import Timeline from "../UniversalComponents/Timeline.vue";
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -20,7 +23,50 @@ const images = [
   {src: PangolinAndCrocodileRightView, alt: "Right View", title: "Right Profile", description: "From the right side, the crocodile's powerful form becomes more prominent, illustrating the strength and resilience of this ancient predator."},
   {src: PangolinAndCrocodile, alt: "Full White Background", title: "Complete Composition", description: "The final view presents the entire sculpture in its intended form, a testament to the beauty of wildlife and artistic expression."}
 ];
-
+const pangolinTimelineItems = ref([
+  {
+    date: '1970s',
+    title: 'Initial Conservation Concerns',
+    description: 'Scientists begin documenting declining pangolin populations across Asia and Africa due to hunting and habitat loss.',
+    color: 'bg-blue-600'
+  },
+  {
+    date: '2000',
+    title: 'CITES Protection',
+    description: 'All eight pangolin species are listed on CITES Appendix II, regulating international trade of pangolins and their products.',
+    color: 'bg-green-500'
+  },
+  {
+    date: '2007',
+    title: 'Zero Export Quotas',
+    description: 'CITES establishes zero export quotas for wild-caught Asian pangolins traded for commercial purposes.',
+    color: 'bg-amber-500'
+  },
+  {
+    date: '2016',
+    title: 'CITES Appendix I Listing',
+    description: 'All eight pangolin species are transferred to CITES Appendix I, prohibiting all international commercial trade.',
+    color: 'bg-red-500'
+  },
+  {
+    date: '2017-2019',
+    title: 'Record Seizures',
+    description: 'Record-breaking seizures of pangolin scales occur globally, highlighting the severity of the illegal wildlife trade.',
+    color: 'bg-purple-500'
+  },
+  {
+    date: '2020',
+    title: 'COVID-19 Connection',
+    description: 'Increased awareness about pangolins as potential intermediate hosts in zoonotic disease transmission leads to greater conservation focus.',
+    color: 'bg-blue-500'
+  },
+  {
+    date: '2021-Present',
+    title: 'Conservation Intensification',
+    description: 'Global efforts to protect remaining pangolin populations intensify with increased funding, research, and anti-poaching initiatives.',
+    color: 'bg-teal-500'
+  }
+]);
 const main = ref();
 let ctx: gsap.Context;
 
@@ -180,22 +226,8 @@ onUnmounted(() => {
 
 <template>
   <div class="bg-gradient-to-tl from-slate-200 to-slate-50 h-full w-full" style="overflow-x: hidden;">
-    <div class="fixed top-8 left-8 z-50">
-      <button
-          @click="$router.back()"
-          class="text-white/40 hover:text-white/80 transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm bg-white/5 px-4 py-2 rounded-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:border hover:border-white/30"
-      >
-        <svg
-            class="w-6 h-6 transform group-hover:-translate-x-1 transition-transform duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-        </svg>
-        <span class="text-sm font-light tracking-[0.25em] uppercase font-['Raleway'] leading-none">Back</span>
-      </button>
-    </div>
+    <BackButton />
+    <ScrollProgress :totalSections="4" />
     <div id="smooth-content">
       <header class="header h-screen flex flex-col justify-center items-center text-center p-8">
         <video autoplay muted loop playsinline class="background-video">
@@ -211,9 +243,7 @@ onUnmounted(() => {
         </div>
         <div class="header-content">
           <h1 class="text-5xl font-bold text-amber-100 mb-4 drop-shadow-lg">Pangolin and Crocodile Gallery</h1>
-          <p class="text-xl text-amber-200/90 drop-shadow-lg">Scroll to explore</p>
-          <p class="arrow text-amber-200/90">|</p>
-          <p class="arrow text-amber-200/90">&#8595;</p>
+          <ScrollArrow />
         </div>
       </header>
 <!--      <div class="relative w-screen h-screen container">-->
@@ -227,6 +257,13 @@ onUnmounted(() => {
 <!--          <img :src="PangoGettingCarried" alt="Pangolin Being Carried" class="absolute inset-0 w-full h-full object-cover" />-->
 <!--        </div>-->
 <!--      </div>-->
+      <Timeline
+        :items="pangolinTimelineItems"
+        :vertical="ref(true)"
+        :alternating="ref(true)"
+        :lineColor="ref('bg-blue-500')"
+        defaultIconColor="bg-blue-500"
+    />
       <section v-for="(image, index) in images" :key="index" class="h-screen flex flex-col md:flex-row items-center justify-between px-16 py-8 space-y-8 md:space-y-0" :class="{'md:flex-row-reverse': index % 2 !== 0}">
 
         <div class="flex-1 flex justify-center">
@@ -249,18 +286,6 @@ onUnmounted(() => {
 <style scoped>
 .container{
   overflow: hidden;
-}
-
-.arrow {
-  padding: 0;
-  margin: 0;
-  line-height: 0.89;
-}
-
-.arrow {
-  padding: 0;
-  margin: 0;
-  line-height: 0.89;
 }
 
 .background-video {
