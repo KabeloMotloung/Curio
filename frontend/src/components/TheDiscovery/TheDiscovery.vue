@@ -163,7 +163,7 @@
 
     <div class="wipe-container" data-index="2">
       <div class="slide-view" data-index="2">
-        <div class="background-layer" style="background-image: url('./assets/stones.png')"></div>
+        <div class="background-layer"></div>
         <div class="sidebar-content">
           <div class="project-number">[02]</div>
           <h2 class="project-title">Blank Spindles</h2>
@@ -179,7 +179,6 @@
           <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img alt="Regional Variations" src="./assets/stones.png">
           <div class="image-caption">Regional Variations (1100 AD)</div>
         </div>
       </div>
@@ -187,7 +186,7 @@
 
     <div class="wipe-container" data-index="3">
       <div class="slide-view" data-index="3">
-        <div class="background-layer" style="background-image: url('./assets/spindles.png')"></div>
+        <div class="background-layer"></div>
         <div class="sidebar-content">
           <div class="project-number">[03]</div>
           <h2 class="project-title">The Mechanics of Spinning</h2>
@@ -204,7 +203,6 @@
           <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img alt="Advanced Designs" src="./assets/spindles.png">
           <div class="image-caption">Advanced Designs (1200 AD)</div>
         </div>
       </div>
@@ -212,7 +210,7 @@
 
     <div class="wipe-container" data-index="4">
       <div class="slide-view" data-index="4">
-        <div class="background-layer" style="background-image: url('./assets/exhibit.png')"></div>
+        <div class="background-layer"></div>
         <div class="sidebar-content">
           <div class="project-number">[04]</div>
           <h2 class="project-title">Stone Spindle Whorls</h2>
@@ -229,7 +227,6 @@
           <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <img alt="Legacy Designs" src="./assets/exhibit.png">
           <div class="image-caption">Legacy Designs (1300 AD)</div>
         </div>
       </div>

@@ -4,7 +4,6 @@
             <div class="info-wrapper">
                 <div class="info-container">
                     <div class="spindle-image-container left">
-                        <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
                         <div class="image-overlay">
                             <div class="overlay-content">
                                 <span>Circa 1200 AD</span>
@@ -47,7 +46,6 @@
                     </div>
 
                     <div class="spindle-image-container right">
-                        <img alt="Spindle Whorl" class="spindle-image" src="./assets/spindle-og.png" />
                         <div class="image-overlay">
                             <div class="overlay-content">
                                 <span>Circa 1200 AD</span>
