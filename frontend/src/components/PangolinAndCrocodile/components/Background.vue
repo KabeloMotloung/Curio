@@ -13,34 +13,33 @@
                     </div>
 
                     <div class="info-text">
-                        <h2 class="section-title"><span class="highlight">The Pangolin</span></h2>
+                      <h2 class="section-title"><span class="highlight">Pangolin & Crocodile Sculpture</span></h2>
                         <p class="main-description">
-                            Pangolins are unique, scale-covered mammals found across Africa and Asia. Revered for their
-                            distinctive appearance and behavior, they play a crucial role in controlling insect populations.
-                            Sadly, they are among the most trafficked animals in the world today.
+                          Created at KwaZulu-Natal's famed Ardmore studio, this circular piece intertwines the pangolin and crocodile in symbolic unity. Sculpted by <strong>Thulani Mntungwa</strong> and painted by <strong>Jabu Nene</strong>, it reflects African wildlife through bold form and earthy tones.
                         </p>
                         <ul class="feature-list">
-                            <li>
-                                <span class="feature-icon">✦</span>
-                                <span class="feature-text"><strong>Natural Defense:</strong> Pangolins curl into a tight ball
-                                    when threatened, using their armored scales as protection from predators.</span>
-                            </li>
+                          <li>
+                            <span class="feature-icon">✦</span>
+                            <span class="feature-text"><strong>Collaborative Artistry:</strong> Thulani’s form meets Jabu’s geometric detail in a balanced creative dialogue.</span>
+                          </li>
+                          <li>
+                            <span class="feature-icon">✦</span>
+                            <span class="feature-text"><strong>Sgraffito Technique:</strong> Jabu scratches fine lines into painted layers, adding depth and texture.</span>
+                          </li>
                         </ul>
                         <div class="fun-fact">
-                            <span class="fact-label">ECOLOGICAL INSIGHT</span>
-                            <p>One pangolin can consume up to 70 million ants and termites per year, making them essential
-                                for maintaining ecological balance in their habitats.</p>
+                          <span class="fact-label">ARTISTIC INSIGHT</span>
+                          <p>Jabu draws from imagination—mixing zigzags, chevrons, and earth tones to craft vivid, culturally rich patterns.</p>
                         </div>
                         <div class="museum-info">
-                            <span class="museum-label">EXHIBITION DETAILS</span>
-                            <div class="museum-content">
-                                <p class="location-text"><strong>Location:</strong> Biodiversity Hall, Natural World Exhibit</p>
-                                <p class="artifact-id"><strong>Species:</strong> Ground Pangolin (Smutsia temminckii)</p>
-                                <p class="period-text"><strong>Status:</strong> Critically Endangered (IUCN Red List)</p>
-                            </div>
+                          <span class="museum-label">EXHIBITION DETAILS</span>
+                          <div class="museum-content">
+                            <p class="location-text"><strong>Location:</strong> Ardmore Gallery, KwaZulu-Natal, South Africa</p>
+                            <p class="artifact-id"><strong>Title:</strong> Pangolin and Crocodile Circular Sculpture</p>
+                            <p class="period-text"><strong>Year:</strong> 2022</p>
+                          </div>
                         </div>
-                    </div>
-
+                      </div>
                     <div class="spindle-image-container right">
                         <img alt="Pangolin" class="spindle-image" src="../assets/Untitled design.png" />
                         <div class="image-overlay">
@@ -200,7 +199,7 @@ export default {
   overflow: hidden;
   color: #333;
   text-align: center;
-  background-color: #f8f5f0;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
 }
 
 .content {
@@ -303,7 +302,7 @@ export default {
 }
 
 .section-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: #2a3f5f;
@@ -338,7 +337,7 @@ export default {
   text-align: left;
   max-width: 600px;
   position: relative;
-  padding: 30px;
+  padding: 20px;
   border-radius: 16px;
   background: white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
@@ -355,7 +354,7 @@ export default {
 
 .main-description {
   font-size: 1.2rem;
-  line-height: 1.8;
+  line-height: 1.6;
   color: #4a4a4a;
   margin-bottom: 2rem;
 }
@@ -373,7 +372,7 @@ export default {
   display: flex;
   align-items: flex-start;
   margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: transform 0.3s ease;
 }
 
@@ -384,17 +383,6 @@ export default {
 .feature-icon {
   display: inline-block;
   color: #2e7d32;
-  margin-right: 15px;
-  font-size: 1.2rem;
-}
-
-.feature-text {
-  color: #4a4a4a;
-  line-height: 1.5;
-}
-
-.feature-text strong {
-  color: #2a3f5f;
   font-weight: 600;
 }
 
@@ -556,7 +544,16 @@ export default {
   }
 
   .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
+}
+
+.feature-text {
+  color: #4a4a4a;
+  line-height: 1.5;
+}
+
+.feature-text strong {
+  color: #2a3f5f
 }
 </style>

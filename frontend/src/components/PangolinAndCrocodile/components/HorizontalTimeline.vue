@@ -1,13 +1,16 @@
 <template>
-    <div class="container">
-        <div v-for="(event, index) in events" :key="index" class="timeline-item panel">
-            <div class="timeline-content">
-                <div class="timeline-date">{{ event.date }}</div>
-                <div class="timeline-description">{{ event.description }}</div>
-                <div class="timeline-details">
-                    {{ event.details }}
+    <div class="timeline-container">
+        <div class="timeline-background"></div>
+        <div class="container">
+            <div v-for="(event, index) in events" :key="index" class="timeline-item panel">
+                <div class="timeline-content">
+                    <div class="timeline-date">{{ event.date }}</div>
+                    <div class="timeline-description">{{ event.description }}</div>
+                    <div class="timeline-details">
+                        {{ event.details }}
+                    </div>
+                    <div class="timeline-fact">{{ event.fact }}</div>
                 </div>
-                <div class="timeline-fact">{{ event.fact }}</div>
             </div>
         </div>
     </div>
@@ -134,7 +137,6 @@ export default {
     isolation: isolate;
     position: relative;
     z-index: 1;
-    background-color: #f8f5f0; /* Match card background */
 }
 
 .timeline-item {
@@ -144,8 +146,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8)); /* Match card gradient */
-    color: #333; /* Darker text to match cards */
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -171,11 +171,11 @@ export default {
 
 /* New styling to match cards */
 .timeline-item:nth-child(odd) {
-    background: linear-gradient(135deg, rgba(255,255,255,0.97), rgba(255,255,255,0.85));
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
 }
 
 .timeline-item:nth-child(even) {
-    background: linear-gradient(135deg, rgba(250,250,250,0.95), rgba(245,245,245,0.8));
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
 }
 
 .timeline-content {
@@ -186,7 +186,6 @@ export default {
     padding: 2rem 2rem 2rem 3rem;
     transform: translateY(0);
     opacity: 1;
-    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(8px); /* Match card backdrop filter */
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 1px 8px rgba(0,0,0,0.05); /* Match card shadow */

@@ -13,45 +13,45 @@ gsap.registerPlugin(ScrollTrigger);
 const pangolinTimelineItems = [
   {
     date: '1970s',
-    description: 'Initial Conservation Concerns',
-    details: 'Scientists begin documenting declining pangolin populations across Asia and Africa due to hunting and habitat loss.',
-    fact: 'Pangolins are the only mammals in the world covered in scales. '
+    description: 'The First Red Flags',
+    details: 'Scientists began raising alarms as pangolin populations in Asia and Africa started to dwindle. The culprits? Intense hunting and shrinking habitats.',
+    fact: 'Pangolins are the only mammals on Earth with scales made of keratin—the same stuff as human fingernails!'
   },
   {
     date: '2000',
-    description: 'CITES Protection',
-    details: 'All eight pangolin species are listed on CITES Appendix II, regulating international trade of pangolins and their products.',
-    fact:'Pangolins are the most illegally traﬃcked mammal in the world.'
+    description: 'A Step Toward Protection',
+    details: 'All eight species of pangolins were added to CITES Appendix II, putting international trade under regulation for the first time.',
+    fact: 'Pangolins hold the unfortunate title of the world’s most trafficked mammal.'
   },
   {
     date: '2007',
-    description: 'Zero Export Quotas',
-    details: 'CITES establishes zero export quotas for wild-caught Asian pangolins traded for commercial purposes.',
-    fact:'Pangolins can consume up to 200,000 ants per day'
+    description: 'Closing the Loopholes',
+    details: 'CITES took it a step further by banning commercial exports of wild-caught Asian pangolins, aiming to cut off the trade at its source.',
+    fact: 'A single pangolin can gobble up to 200,000 ants and termites in one day!'
   },
   {
     date: '2016',
-    description: 'CITES Appendix I Listing',
-    details: 'All eight pangolin species are transferred to CITES Appendix I, prohibiting all international commercial trade.',
-    fact: 'Pangolin are active and feed at night. '
+    description: 'Full Protection Achieved',
+    details: 'In a major conservation win, all pangolin species were moved to CITES Appendix I, banning international trade altogether.',
+    fact: 'Pangolins are nocturnal, meaning they come alive when the sun goes down.'
   },
   {
-    date: '2017-2019',
-    description: 'Record Seizures',
-    details: 'Record-breaking seizures of pangolin scales occur globally, highlighting the severity of the illegal wildlife trade.',
-    fact:'They have the ability to curl up into a ball to protect themselves from large predators'
+    date: '2017–2019',
+    description: 'Seizures Shine a Spotlight',
+    details: 'Massive busts of pangolin scale shipments made global headlines, putting a spotlight on just how dire the trafficking crisis had become.',
+    fact: 'To defend themselves, pangolins curl up into a tight, scaly ball that’s tough for predators to crack.'
   },
   {
     date: '2020',
-    description: 'COVID-19 Connection',
-    details: 'Increased awareness about pangolins as potential intermediate hosts in zoonotic disease transmission leads to greater conservation focus.',
-    fact:'Worldwide, there are eight pangolin species: four species in Asia and four species in Africa.'
+    description: 'Pandemic Puts Pangolins in the News',
+    details: 'As scientists explored the roots of COVID-19, pangolins became a focus, pushing the world to rethink wildlife trade and conservation.',
+    fact: 'There are eight pangolin species in total—four in Asia and four in Africa.'
   },
   {
-    date: '2021-Present',
-    description: 'Conservation Intensification',
-    details: 'Global efforts to protect remaining pangolin populations intensify with increased funding, research, and anti-poaching initiatives.',
-    fact:'Pangolins can live up to 20'
+    date: '2021–Present',
+    description: 'A Global Push to Save Them',
+    details: 'The fight to save pangolins has gained momentum, with more countries funding anti-poaching teams, investing in research, and cracking down on illegal trade.',
+    fact: 'In the wild, pangolins can live up to 20 years—if we give them the chance.'
   }
 ];
 const main = ref();
@@ -124,20 +124,26 @@ onUnmounted(() => {
       <div class="header-content relative z-10 w-full max-w-4xl bg-white/40 rounded-xl shadow-2xl p-12 backdrop-blur-md transform transition-all duration-500">
         <h1 class="styled-heading text-5xl md:text-6xl font-bold mb-8">Pangolin and Crocodile Gallery</h1>
         <p class="text-xl text-gray-600 leading-relaxed mb-8">Explore the extraordinary world of these unique reptiles and mammals, their habitats, behaviors, and conservation challenges.</p>
-        <ScrollArrow />
+        <div style="margin-top: 100px;">
+          <ScrollArrow />
+        </div>
       </div>
     </header>
     <div>
       <HorizontalTimeline :events="pangolinTimelineItems"/>
       <Background/>
       <div>
-        <ImageTextSection/>
+          <ImageTextSection/>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+#smooth-content {
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  min-height: 100vh;
+}
 .background-video {
 z-index: 0;
 }
