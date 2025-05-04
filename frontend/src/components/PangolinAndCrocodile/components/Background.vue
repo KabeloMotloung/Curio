@@ -192,7 +192,7 @@ export default {
 .last-container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 120vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -209,13 +209,6 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 1;
-}
-
-.gradient-background {
-  background: #f8f5f0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(255,215,0,0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(46,125,50,0.08) 0%, transparent 40%);
 }
 
 .info-wrapper {

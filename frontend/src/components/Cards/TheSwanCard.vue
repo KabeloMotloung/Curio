@@ -1,11 +1,24 @@
 
 <template>
-  <button @click="onClick" class="image-button">
+  <button @click="onClick" class="image-button" :style="buttonStyle">
   </button>
 </template>
 
 <script>
 export default {
+  props: {
+    imageUrl: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    buttonStyle() {
+      return {
+        backgroundImage: `url(${this.imageUrl})`
+      };
+    }
+  },
   methods: {
     onClick() {
       this.$router.push('/the-swan');
@@ -16,7 +29,6 @@ export default {
 
 <style scoped>
     .image-button {
-        background-image: url('./assets/TheSwanImage.png'); 
         background-size: contain; 
         background-position: center; 
         background-repeat: no-repeat;
@@ -36,8 +48,4 @@ export default {
         transform: scale(1.05); 
     }
 
-.description {
-  margin: 0;
-  font-weight: bold;
-}
 </style>
