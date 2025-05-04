@@ -50,7 +50,7 @@
 
 <script>
 import { onMounted } from 'vue';
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -86,62 +86,62 @@ export default {
             mainTl
                 .to(".content", {
                     clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
-                    duration: 0.3,
+                    duration: 0.8,
                     ease: "power2.out"
                 }, 0)
                 .to(".content", {
                     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                    duration: 0.3,
+                    duration: 0.8,
                     ease: "power2.out"
-                }, 0.3)
+                }, 0.8)
                 .to(".info-wrapper", {
                     opacity: 1,
-                    duration: 0.2,
+                    duration: 0.7,
                     ease: "power1.out"
-                }, 0.5)
+                }, 1.5) 
                 .to(".sculpture-image-container", {
                     x: 0,
                     opacity: 1,
-                    duration: 0.3,
+                    duration: 0.8,
                     ease: "back.out(1.7)"
-                }, 0.6)
+                }, 2.0) 
                 .to(".section-title", {
                     y: 0,
                     opacity: 1,
-                    duration: 0.3,
+                    duration: 0.7,
                     ease: "power2.out"
-                }, 0.7)
+                }, 2.5) 
                 .to(".main-description", {
                     y: 0,
                     opacity: 1,
-                    duration: 0.3,
+                    duration: 0.7,
                     ease: "power2.out"
-                }, 0.8)
+                }, 3.0)
                 .to(".feature-list li", {
                     y: 0,
                     opacity: 1,
-                    duration: 0.3,
-                    stagger: 0.05,
+                    duration: 0.6,
+                    stagger: 0.15,
                     ease: "power2.out"
-                }, 0.9)
+                }, 3.5)
                 .to(".fun-fact", {
                     y: 0,
                     opacity: 1,
-                    duration: 0.3,
+                    duration: 0.7,
                     ease: "power2.out"
-                }, 1.0)
+                }, 4.5)
                 .to(".museum-info", {
                     y: 0,
                     opacity: 1,
-                    duration: 0.3,
+                    duration: 0.7,
                     ease: "power2.out"
-                }, 1.1);
-                
+                }, 5.0);
+
             ScrollTrigger.create({
                 trigger: ".last-container",
                 start: "top 80%", 
                 end: "center center", 
-                scrub: 0.5, 
+                scrub: 3,
                 animation: mainTl,
                 toggleActions: "play none none reverse",
                 markers: false, 
