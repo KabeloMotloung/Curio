@@ -2,86 +2,86 @@
 import {nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {gsap} from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import TheDiscoveryCard from '../Cards/TheDiscoveryCard.vue'
-import TheSwanCard from '../Cards/TheSwanCard.vue'
-import PangolinAndCrocodileCard from '../Cards/PangolinAndCrocodileCard.vue'
-import SpindleWhorlCard from '../Cards/SpindleWhorlCard.vue'
-import TheKraalCard from '../Cards/TheKraalCard.vue'
-import SidwaneTokozileCard from '../Cards/SidwaneTokozileCard.vue'
-import BattleOfTorquayCard from '../Cards/BattleOfTorquayCard.vue'
+import BattleOfTorquayCard from "../Cards/BattleOfTorquayCard.vue";
+import PangolinAndCrocodileCard from "../Cards/PangolinAndCrocodileCard.vue";
+import SidwaneTokozileCard from "../Cards/SidwaneTokozileCard.vue";
+import SpindleWhorlCard from "../Cards/SpindleWhorlCard.vue";
+import TheDiscoveryCard from "../Cards/TheDiscoveryCard.vue";
+import TheKraalCard from "../Cards/TheKraalCard.vue";
+import TheSwanCard from "../Cards/TheSwanCard.vue";
 
 gsap.registerPlugin(ScrollTrigger)
+
+const data = ref(null);
 const loading = ref(true);
 const error = ref(null);
-
+const scrollContainer = ref(null)
+const cardContainer = ref(null)
+const welcomeMessage = ref(null)
+const scrollPrompt = ref(null)
+const navArrows = ref(null)
+const sections = ref([])
+const currentSection = ref(-1)
+const animations = ref([])
 const artifactInfo = ref([]);
-// Fallback data in case API fails
-const artifactInfoFallback = [
-  {
-    "title": "The Discovery",
-    "artist": "Alexis Preller",
-    "description": "A significant painting that exemplifies the artist's distinctive style and approach to South African art.",
-    "date": "1959",
-    "type": "Painting",
-    "location": "Edoardo Villa Gallery, Old Merensky",
-    "artifact-id": "discovery-001"
+const artifactInfoFallBack = {
+  theDiscovery: {
+    title: "The Discovery",
+    artist: "Alexis Preller",
+    description: "A significant painting that exemplifies the artist's distinctive style and approach to South African art.",
+    year: "1959",
+    type: "Painting",
+    location: "Edoardo Villa Gallery, Old Merensky"
   },
-  {
-    "title": "The Swan",
-    "artist": "Jacob Spohler",
-    "description": "A detailed painting showcasing the artist's mastery of light and composition.",
-    "date": "1849",
-    "type": "Painting",
-    "location": "Van Tilburg Gallery, Old Arts 2-10",
-    "artifact-id": "swan-002"
+  theSwan: {
+    title: "The Swan",
+    artist: "Jacob Spohler",
+    description: "A detailed painting showcasing the artist's mastery of light and composition.",
+    year: "1849",
+    type: "Painting",
+    location: "Van Tilburg Gallery, Old Arts 2-10"
   },
-  {
-    "title": "Pangolin and Crocodile",
-    "artist": "Thulani Mntungwa & Jabu Nene",
-    "description": "A contemporary ceramic work depicting the relationship between these two species in African wildlife.",
-    "date": "2022",
-    "type": "Ceramic",
-    "location": "Gallery room 2-13, Old Arts",
-    "artifact-id": "pangolin-003"
+  pangolinAndCrocodile: {
+    title: "Pangolin and Crocodile",
+    artist: "Thulani Mntungwa & Jabu Nene",
+    description: "A contemporary ceramic work depicting the relationship between these two species in African wildlife.",
+    year: "2022",
+    type: "Ceramic",
+    location: "Gallery room 2-13, Old Arts"
   },
-  {
-    "title": "Spindle whorls",
-    "artist": "Mapungubwe (Archaeological collection)",
-    "description": "Ancient ceramic artifacts used in textile production, showcasing the technological innovations of early societies.",
-    "date": "1200 - 1290 AD",
-    "type": "Archaeological ceramic",
-    "location": "Mapungubwe Ceramics Gallery, Old Arts 2-5",
-    "artifact-id": "spindle-004"
+  spindleWhorl: {
+    title: "Spindle whorls",
+    artist: "Mapungubwe (Archaeological collection)",
+    description: "Ancient ceramic artifacts used in textile production, showcasing the technological innovations of early societies.",
+    year: "1200 - 1290 AD",
+    type: "Archaeological ceramic",
+    location: "Mapungubwe Ceramics Gallery, Old Arts 2-5"
   },
-  {
-    "title": "The Kraal",
-    "artist": "Josephine Memela & Mary Shabalala",
-    "description": "A tapestry representing traditional African living structures and community organization.",
-    "date": "1974",
-    "type": "Tapestry",
-    "location": "Bridge Gallery, Javett-UP Art Centre",
-    "artifact-id": "kraal-005"
+  theKraal: {
+    title: "The Kraal",
+    artist: "Josephine Memela & Mary Shabalala",
+    description: "A tapestry representing traditional African living structures and community organization.",
+    year: "1974",
+    type: "Tapestry",
+    location: "Bridge Gallery, Javett-UP Art Centre"
   },
-  {
-    "title": "Sidwane Tokozile",
-    "artist": "Anton van Wouw",
-    "description": "A remarkable sculpture depicting indigenous South African culture, showcasing van Wouw's masterful attention to detail and expression.",
-    "date": "1910",
-    "type": "Sculpture",
-    "location": "Edoardo Villa Gallery, Old Merensky",
-    "artifact-id": "sidwane-006"
+  sidwaneTokozile: {
+    title: "Sidwane Tokozile",
+    artist: "Anton van Wouw",
+    description: "A remarkable sculpture depicting indigenous South African culture, showcasing van Wouw's masterful attention to detail and expression.",
+    year: "1910",
+    type: "Sculpture",
+    location: "Edoardo Villa Gallery, Old Merensky"
   },
-  {
-    "title": "Battle of Torquay",
-    "artist": "Abraham Storck",
-    "description": "A dramatic naval scene depicting historical maritime conflict with exceptional attention to detail and atmospheric effects.",
-    "date": "1688",
-    "type": "Painting",
-    "location": "Van Tilburg Gallery, Old Arts 2-10",
-    "artifact-id": "battle-007"
+  battleOfTorquay: {
+    title: "Battle of Torquay",
+    artist: "Abraham Storck",
+    description: "A dramatic naval scene depicting historical maritime conflict with exceptional attention to detail and atmospheric effects.",
+    year: "1688",
+    type: "Painting",
+    location: "Van Tilburg Gallery, Old Arts 2-10"
   }
-];
-
+}
 const fetchData = async () => {
   loading.value = true;
   error.value = null;
@@ -93,17 +93,15 @@ const fetchData = async () => {
     }
 
     artifactInfo.value = await response.json();
+
     console.log('Formatted artifact info:', artifactInfo.value);
 
   } catch (e) {
-    console.error('Error fetching data, using fallback:', e);
-    error.value = e;
-    artifactInfo.value = artifactInfoFallback;
+    artifactInfo.value = Object.values(artifactInfoFallBack)
   } finally {
     loading.value = false;
   }
 };
-
 const cardMap = {
   'Battle of Torquay': BattleOfTorquayCard,
   'Pangolin and Crocodile': PangolinAndCrocodileCard,
@@ -117,15 +115,6 @@ const cardMap = {
 const getComponentName = (title) => {
   return cardMap[title] || null;
 };
-ref(null);
-const cardContainer = ref(null)
-const welcomeMessage = ref(null)
-const scrollPrompt = ref(null)
-const navArrows = ref(null)
-const sections = ref([])
-const currentSection = ref(-1)
-const animations = ref([])
-
 const navigateToSection = (index) => {
   if (index === currentSection.value || index < -1 || index >= sections.value.length) return;
 
@@ -150,17 +139,14 @@ const navigateToSection = (index) => {
         {opacity: 1, y: 0, duration: animDuration, ease: "power2.out"}
     );
 
-    if (currentSection.value >= 0 && currentSection.value < sections.value.length) {
-      const sectionAnim = gsap.to(sections.value[currentSection.value], {
-        autoAlpha: 0,
-        x: "100%",
-        duration: animDuration,
-        ease: "power2.out",
-      });
-      animations.value.push(sectionAnim);
-    }
+    const sectionAnim = gsap.to(sections.value[currentSection.value], {
+      autoAlpha: 0,
+      x: "100%",
+      duration: animDuration,
+      ease: "power2.out",
+    });
 
-    animations.value.push(welcomeAnim, promptAnim);
+    animations.value.push(welcomeAnim, promptAnim, sectionAnim);
   } else {
     if (currentSection.value === -1) {
       // Hide the welcome message
@@ -287,6 +273,7 @@ const handleWheel = (e) => {
   }
 };
 
+
 let lastScrollTime = 0;
 
 const handleKeydown = (e) => {
@@ -300,91 +287,93 @@ const handleKeydown = (e) => {
     if (currentSection.value > 0) {
       navigateToSection(currentSection.value - 1)
     } else if (currentSection.value === 0) {
-      navigateToSection(-1);
+      currentSection.value = -1
+      welcomeMessage.value.style.display = 'flex'
+
+      const welcomeAnim = gsap.fromTo(welcomeMessage.value,
+          {opacity: 0, scale: 0.95},
+          {opacity: 1, scale: 1, duration: 0.5}
+      )
+
+      const promptAnim = gsap.fromTo(scrollPrompt.value,
+          {opacity: 0, y: 20},
+          {opacity: 1, y: 0, duration: 0.5}
+      )
+
+      animations.value.push(welcomeAnim, promptAnim)
     }
   }
 }
 
-const initSections = () => {
-  nextTick(() => {
-    sections.value = Array.from(document.querySelectorAll('.card-pair'));
-    if (sections.value.length > 0) {
-      console.log('Sections initialized:', sections.value.length);
-      sections.value.forEach(section => {
-        gsap.set(section, {autoAlpha: 0});
-      });
-    } else {
-      console.error('No sections found');
-      // Try again after a small delay
-      setTimeout(initSections, 200);
-    }
-  });
-}
-
-const handleWelcomeClick = () => {
-  navigateToSection(0);
-}
-
 onMounted(() => {
-  fetchData();
-
+  fetchData()
+  console.log(data.value)
+  watch(artifactInfo, async (newVal) => {
+    if (newVal.length) {
+      await nextTick()
+      sections.value = Array.from(cardContainer.value.querySelectorAll('.card-pair'))
+      sections.value.forEach(section => {
+        gsap.set(section, {autoAlpha: 0})
+      })
+    }
+  })
   const welcomeAnim = gsap.fromTo(
       welcomeMessage.value,
       {opacity: 0, scale: 0.95},
       {opacity: 1, scale: 1, duration: 1, ease: "power2.out"}
   );
 
-  const promptAnim = gsap.fromTo(
-      scrollPrompt.value,
-      {opacity: 0, y: 20},
-      {opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.5}
-  );
+  sections.value = Array.from(cardContainer.value.querySelectorAll('.card-pair'))
+
+  sections.value.forEach(section => {
+    gsap.set(section, {autoAlpha: 0})
+  })
 
   const arrowAnim = gsap.to(scrollPrompt.value.querySelector('.scroll-arrow'), {
-    y: 10,
+    x: 10,
     repeat: -1,
     yoyo: true,
     duration: 1,
     ease: 'power1.inOut'
-  });
+  })
 
-  animations.value.push(arrowAnim, welcomeAnim, promptAnim);
+  const navAnim = gsap.fromTo(
+      navArrows.value,
+      {opacity: 0, y: 20},
+      {opacity: 1, y: 0, duration: 1, ease: "power2.out"}
+  );
 
-  // Add event listeners
-  window.addEventListener('wheel', handleWheel, {passive: false});
-  window.addEventListener('keydown', handleKeydown);
+  animations.value.push(arrowAnim, welcomeAnim, navAnim)
 
-  // Initialize sections after data is loaded
-  watch(artifactInfo, () => {
-    if (artifactInfo.value.length) {
-      console.log('Artifact info updated, initializing sections');
-      initSections();
-    }
-  }, { immediate: false });
-
-  // Just in case the data loads too quickly
-  setTimeout(initSections, 1000);
-});
+  window.addEventListener('wheel', handleWheel, {passive: false})
+  window.addEventListener('keydown', handleKeydown)
+})
 
 onBeforeUnmount(() => {
-  window.removeEventListener('wheel', handleWheel);
-  window.removeEventListener('keydown', handleKeydown);
+  window.removeEventListener('wheel', handleWheel)
+  window.removeEventListener('keydown', handleKeydown)
 
   animations.value.forEach(anim => {
     if (anim && anim.kill) {
-      anim.kill();
+      anim.kill()
     }
-  });
+  })
 
   if (ScrollTrigger) {
     ScrollTrigger.getAll().forEach(trigger => {
-      trigger.kill();
-    });
+      trigger.kill()
+    })
   }
+})
 
-  gsap.globalTimeline.clear();
-});
+onBeforeUnmount(() => {
+
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+
+  gsap.globalTimeline.clear()
+})
 </script>
+
 
 <template>
   <div class="background-blur">
@@ -405,42 +394,42 @@ onBeforeUnmount(() => {
     </div>
   </nav>
 
-  <div class="welcome-message" ref="welcomeMessage" @click="handleWelcomeClick">
+  <div class="welcome-message" ref="welcomeMessage">
     <h2>A Virtual Tour of:</h2>
     <h1>The University of Pretoria Museum</h1>
   </div>
 
-  <div class="scroll-prompt" ref="scrollPrompt" @click="handleWelcomeClick">
+  <div class="scroll-prompt" ref="scrollPrompt">
     <p>Click to Begin Tour</p>
-    <div class="scroll-arrow">↓</div>
+    <!-- <div class="scroll-arrow">→</div> -->
   </div>
-
-  <div class="card-container" ref="cardContainer">
-    <div
-        v-if="artifactInfo.length"
-        v-for="(artifact, index) in artifactInfo"
-        :key="artifact['artifact-id'] || index"
-        class="card-pair"
-    >
-      <div class="artifact-container">
-        <div class="artifact-image-container">
-          <component
-              :is="getComponentName(artifact.title)"
-              v-if="getComponentName(artifact.title)"
-              :image-url="artifact.image_url"
-          />
-          <div v-else class="placeholder-image">
-            {{ artifact.title }}
-          </div>
-        </div>
-        <div class="info-card">
-          <h2>{{ artifact.title }}</h2>
-          <h3>{{ artifact.artist }}</h3>
-          <p>{{ artifact.description || 'No description available.' }}</p>
-          <div class="info-details">
-            <p><strong>Year:</strong> {{ artifact.date }}</p>
-            <p><strong>Type:</strong> {{ artifact.type }}</p>
-            <p><strong>Location:</strong> {{ artifact.location }}</p>
+  <div v-if="loading" class="fixed bottom-0 left-0 w-full z-[9999]">
+    <div class="w-full bg-black/60 h-1.5 overflow-hidden">
+      <div class="bg-zinc-200 h-1.5 animate-loading-bar"></div>
+    </div>
+  </div>
+  <div ref="scrollContainer" class="card-container-wrapper">
+    <div ref="cardContainer" class="card-container">
+      <div v-if="artifactInfo.length">
+        <div
+            v-for="(artifact, index) in artifactInfo"
+            :key="artifact['artifact-id'] || index"
+            class="card-pair"
+        >
+          <div class="artifact-container">
+            <div class="artifact-image-container">
+              <component :is="getComponentName(artifact.title)" v-if="getComponentName(artifact.title)" :image-url="artifact.image_url"/>
+            </div>
+            <div class="info-card">
+              <h2>{{ artifact.title }}</h2>
+              <h3>{{ artifact.artist }}</h3>
+              <p>{{ artifact.description || 'No description available.' }}</p>
+              <div class="info-details">
+                <p><strong>Year:</strong> {{ artifact.date }}</p>
+                <p><strong>Type:</strong> {{ artifact.type }}</p>
+                <p><strong>Location:</strong> {{ artifact.location }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -466,7 +455,17 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
+
 <style>
+@keyframes loading-bar {
+  0% { transform: translateX(-100%) }
+  100% { transform: translateX(100%) }
+}
+
+.animate-loading-bar {
+  width: 50%;
+  animation: loading-bar 1.2s linear infinite;
+}
 .welcome-message {
   position: fixed;
   top: 45%;
@@ -475,18 +474,14 @@ onBeforeUnmount(() => {
   z-index: 2;
   color: white;
   text-align: center;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
   padding: 2rem 3rem;
   border-radius: 15px;
   max-width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.welcome-message:hover {
-  transform: translate(-50%, -50%) scale(1.02);
 }
 
 .welcome-message h1 {
@@ -502,6 +497,7 @@ onBeforeUnmount(() => {
 .welcome-message h2 {
   margin: 0;
   font-size: 1.2rem;
+  /* font-weight: 600; */
   letter-spacing: 1px;
   text-shadow: 0 2px 50px rgb(255, 255, 255);
   line-height: 1.2;
@@ -517,14 +513,7 @@ onBeforeUnmount(() => {
   text-align: center;
   font-size: 1.2rem;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
   animation: fade-in 1.5s ease-in-out;
-}
-
-.scroll-arrow {
-  font-size: 2rem;
-  margin-top: 5px;
-  color: #f0f0f0;
 }
 
 @keyframes fade-in {
@@ -538,10 +527,21 @@ onBeforeUnmount(() => {
   }
 }
 
-.card-container {
+.card-container-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   position: relative;
+}
+
+.card-container {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .card-pair {
@@ -567,6 +567,7 @@ onBeforeUnmount(() => {
   border-radius: 15px;
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+
 }
 
 .artifact-image-container {
@@ -574,20 +575,6 @@ onBeforeUnmount(() => {
   height: 400px;
 }
 
-.placeholder-image {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  color: white;
-  font-size: 1.5rem;
-  text-align: center;
-  padding: 20px;
-  border: 1px dashed rgba(255, 255, 255, 0.3);
-}
 
 .info-card {
   flex: 1;
@@ -667,8 +654,7 @@ body {
 .navigation-controls {
   position: fixed;
   bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 47%;
   z-index: 10;
   display: flex;
   gap: 15px;
@@ -750,8 +736,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
 }
 
 .nav-item {
