@@ -1,7 +1,14 @@
 <template>
-  <div class="min-h-screen w-full flex justify-center items-center bg-gradient-to-br from-gray-800 to-gray-900 text-white relative overflow-hidden">
-    <!-- Background overlay with texture -->
-    <div class="absolute inset-0 bg-[url('../assets/background-texture.jpg')] bg-cover opacity-15 mix-blend-overlay"></div>
+  <div class="min-h-screen w-full flex justify-center items-center bg-gradient-to-br from-[#2d1e0f] to-[#1a1209] text-white relative overflow-hidden">
+    <!-- Background overlay with coffee texture -->
+    <div class="absolute inset-0 bg-[url('../assets/background-texture.jpg')] bg-cover opacity-20 mix-blend-overlay"></div>
+    
+    <!-- Coffee stain overlays -->
+    <div class="absolute inset-0 opacity-15">
+      <div class="coffee-stain stain-1"></div>
+      <div class="coffee-stain stain-2"></div>
+      <div class="coffee-stain stain-3"></div>
+    </div>
     
     <!-- Coffee beans background with parallax -->
     <div class="absolute inset-0 overflow-hidden">
@@ -12,6 +19,13 @@
       <div class="coffee-bean bean-5" ref="bean5"></div>
       <div class="coffee-bean bean-6" ref="bean6"></div>
       <div class="coffee-bean bean-7" ref="bean7"></div>
+    </div>
+    
+    <!-- Coffee steam effect -->
+    <div class="absolute top-[10%] left-1/2 transform -translate-x-1/2 opacity-10">
+      <div class="coffee-steam steam-1"></div>
+      <div class="coffee-steam steam-2"></div>
+      <div class="coffee-steam steam-3"></div>
     </div>
     
     <div class="flex flex-col justify-center items-center z-10 p-8 text-center max-w-4xl">
@@ -256,10 +270,95 @@ onUnmounted(() => {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.15;
+  opacity: 0.18;
   filter: drop-shadow(0 0 8px rgba(166, 124, 82, 0.3));
   will-change: transform;
   pointer-events: none;
+}
+
+/* Coffee stain styling */
+.coffee-stain {
+  position: absolute;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cGF0aCBmaWxsPSIjQTY3QzUyIiBkPSJNMTAwIDEwYzQ5LjcgMCA5MCA0MC4zIDkwIDkwYzAgNDkuNy00MC4zIDkwLTkwIDkwYy00OS43IDAtOTAtNDAuMy05MC05MEMxMCA1MC4zIDUwLjMgMTAgMTAwIDEwWiIgc3R5bGU9Im9wYWNpdHk6MC44OyBmaWx0ZXI6Ymx1cig4cHgpOyIvPjwvc3ZnPg==');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(8px);
+}
+
+.stain-1 {
+  width: 350px;
+  height: 350px;
+  top: 10%;
+  left: 5%;
+  opacity: 0.2;
+  transform: rotate(20deg);
+}
+
+.stain-2 {
+  width: 400px;
+  height: 400px;
+  bottom: 5%;
+  right: 10%;
+  opacity: 0.15;
+  transform: rotate(-15deg);
+}
+
+.stain-3 {
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  right: 25%;
+  opacity: 0.1;
+  transform: rotate(45deg) scale(1.5, 0.8);
+}
+
+/* Coffee steam styling */
+.coffee-steam {
+  position: absolute;
+  width: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.6);
+  filter: blur(5px);
+  animation: steam-rise 3s infinite ease-in-out;
+}
+
+.steam-1 {
+  height: 80px;
+  left: -20px;
+  animation-delay: 0.2s;
+}
+
+.steam-2 {
+  height: 60px;
+  left: 0;
+  animation-delay: 0.7s;
+}
+
+.steam-3 {
+  height: 70px;
+  left: 20px;
+  animation-delay: 0.4s;
+}
+
+@keyframes steam-rise {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-100px) scaleX(2);
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-120px) scaleX(3);
+    opacity: 0;
+  }
 }
 
 .bean-1 {
@@ -310,5 +409,19 @@ onUnmounted(() => {
   height: 130px;
   top: 40%;
   left: 35%;
+}
+
+/* Subtle coffee grain texture overlay */
+.min-h-screen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJub2lzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giIHJlc3VsdD0ibm9pc2UiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjbm9pc2UpIiBvcGFjaXR5PSIwLjA1Ii8+PC9zdmc+');
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
 </style>

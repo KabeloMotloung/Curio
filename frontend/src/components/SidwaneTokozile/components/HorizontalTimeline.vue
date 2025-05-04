@@ -131,7 +131,7 @@ export default {
     height: 100vh;
     display: flex;
     flex-wrap: nowrap;
-    isolation: isolate; /* Add this for CSS isolation */
+    isolation: isolate;
     position: relative;
     z-index: 1;
 }
@@ -143,8 +143,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(145deg, #2d1e0f, #111);
-    color: white;
+    background: url('../assets/timeline-background.jpeg') center/cover no-repeat;
+    color: #3a2718;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -158,32 +158,31 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('./assets/spindle.png');
-    background-size: 300px;
-    background-position: center;
-    opacity: 0.05;
-    filter: blur(2px);
+    background-color: rgba(20, 12, 8, 0.65); /* Darkened background overlay */
     z-index: 1;
-    transform: rotate(-5deg) scale(1.2);
 }
 
-/* Rest of the CSS remains unchanged */
 .timeline-item:nth-child(odd) {
-    background: linear-gradient(135deg, #2d1e0f 40%, #1a130a);
+    background: url('../assets/timeline-background.jpeg') center/cover no-repeat;
 }
 
 .timeline-item:nth-child(even) {
-    background: linear-gradient(135deg, #111 40%, #1e1e1e);
+    background: url('../assets/timeline-background.jpeg') center/cover no-repeat;
 }
 
 .timeline-content {
     position: relative;
     z-index: 2;
     max-width: 800px;
-    border-left: 3px solid #ffd700;
-    padding-left: 2rem;
+    border-left: 3px solid #6b4226;
+    padding: 2rem;
+    padding-left: 2.5rem;
     transform: translateY(0);
     opacity: 1;
+    background-color: rgba(242, 235, 225, 0.9); /* Softer latte color */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(30, 20, 10, 0.4);
+    backdrop-filter: blur(5px);
 }
 
 .panel.active .timeline-content {
@@ -194,10 +193,10 @@ export default {
 .timeline-date {
     font-size: 3.2rem;
     font-weight: bold;
-    color: #ffd700;
+    color: #6b4226; /* Coffee brown */
     margin-bottom: 1.5rem;
     position: relative;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 2px 4px rgba(107, 66, 38, 0.2);
     display: inline-block;
 }
 
@@ -208,22 +207,23 @@ export default {
     left: 0;
     width: 60px;
     height: 3px;
-    background: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    background: #6b4226; /* Coffee brown */
+    box-shadow: 0 0 10px rgba(107, 66, 38, 0.5);
 }
 
 .timeline-description {
     font-size: 1.4rem;
     line-height: 1.6;
-    color: white;
+    color: #3a2718; /* Darker coffee */
     margin-bottom: 1.5rem;
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
+    font-weight: 600;
 }
 
 .timeline-details {
-    color: #ccc;
+    color: #5a483a; /* Medium coffee */
     font-size: 1.1rem;
     line-height: 1.5;
     margin-top: 1.5rem;
@@ -232,16 +232,16 @@ export default {
 
 .timeline-fact {
     display: inline-block;
-    background: rgba(45, 30, 15, 0.7);
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: #e0d2c0; /* Light coffee cream */
+    border: 1px solid #6b4226;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     font-size: 0.9rem;
     margin-top: 1.5rem;
-    /* Start visible but with small offset */
     transform: translateY(10px);
     opacity: 0.7;
     transition: transform 0.4s ease, opacity 0.4s ease;
+    color: #3a2718;
 }
 
 .timeline-item:hover .timeline-fact {
@@ -249,22 +249,14 @@ export default {
     opacity: 1;
 }
 
-/* Add this to create a highlight effect when hovering over timeline items */
 .timeline-item:hover .timeline-date {
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+    color: #3a2718; /* Darker coffee when hovered */
+    text-shadow: 0 0 10px rgba(248, 240, 229, 0.6);
 }
 
 .panel.active .timeline-fact {
     transform: translateY(0);
     opacity: 1;
-}
-
-.timeline-icon {
-    font-size: 2rem;
-    color: #ffd700;
-    margin-bottom: 1rem;
-    display: block;
 }
 
 /* Responsive styles */
