@@ -1,7 +1,7 @@
 <template>
   <div class="sidwane-container">
     <BackButton />
-    <ScrollProgress :totalSections="5" />
+    <ScrollProgress :totalSections="4" />
     
     <section class="section">
       <LandingPage />
@@ -11,9 +11,9 @@
       <TimelineScroll :events="timelineEvents" />
     </section >
 
-    <!-- <section class="section">
+    <section class="section">
       <BackgroundInformation />
-    </section> -->
+    </section>
     
   </div>
 </template>
