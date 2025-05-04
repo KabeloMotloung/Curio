@@ -92,56 +92,6 @@
     </div>
   </div>
 
-  <div class="parallax-container">
-    <div class="spindle-track">
-      <div v-for="i in 5" :key="`top-${i}`" class="spindle-item top">
-        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
-      </div>
-      <div v-for="i in 5" :key="`bottom-${i}`" class="spindle-item bottom">
-        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
-      </div>
-    </div>
-
-    <div class="impact-visualization">
-      <div class="central-spindle">
-        <img alt="Central Spindle Whorl" src="./assets/spindle.png" />
-      </div>
-      <div class="ripple-circles">
-        <div class="ripple-circle" data-category="trade"></div>
-        <div class="ripple-circle" data-category="technology"></div>
-        <div class="ripple-circle" data-category="society"></div>
-        <div class="ripple-circle" data-category="art"></div>
-      </div>
-      <div class="impact-cards">
-        <div class="impact-card" data-category="trade">
-          <h3>Trade Networks</h3>
-          <p>Spindle whorls enabled textile production that became central to Mapungubwe's extensive trade networks
-            across Africa and beyond.</p>
-        </div>
-        <div class="impact-card" data-category="technology">
-          <h3>Technological Innovation</h3>
-          <p>This simple tool represented sophisticated engineering knowledge, balancing weight and momentum for
-            efficient fiber spinning.</p>
-        </div>
-        <div class="impact-card" data-category="society">
-          <h3>Social Structure</h3>
-          <p>Textile production influenced social organization, creating specialized roles and contributing to
-            Mapungubwe's complex society.</p>
-        </div>
-        <div class="impact-card" data-category="art">
-          <h3>Cultural Expression</h3>
-          <p>The decorative patterns on spindle whorls reflected artistic traditions and cultural symbolism unique to
-            the region.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="scroll-hint">
-      <p>Continue scrolling</p>
-      <div class="scroll-arrow"></div>
-    </div>
-  </div>
-
   <div class="image-transition-section">
     <div class="slide-view base-slide" data-index="1">
       <div class="background-layer" style="background-image: url('./assets/decorated.png')"></div>
@@ -249,6 +199,56 @@
       </div>
     </div>
   </div>
+
+  <div class="parallax-container">
+    <div class="spindle-track">
+      <div v-for="i in 5" :key="`top-${i}`" class="spindle-item top">
+        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
+      </div>
+      <div v-for="i in 5" :key="`bottom-${i}`" class="spindle-item bottom">
+        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
+      </div>
+    </div>
+
+    <div class="impact-visualization">
+      <div class="central-spindle">
+        <img alt="Central Spindle Whorl" src="./assets/spindle.png" />
+      </div>
+      <div class="ripple-circles">
+        <div class="ripple-circle" data-category="trade"></div>
+        <div class="ripple-circle" data-category="technology"></div>
+        <div class="ripple-circle" data-category="society"></div>
+        <div class="ripple-circle" data-category="art"></div>
+      </div>
+      <div class="impact-cards">
+        <div class="impact-card" data-category="trade">
+          <h3>Trade Networks</h3>
+          <p>Spindle whorls enabled textile production that became central to Mapungubwe's extensive trade networks
+            across Africa and beyond.</p>
+        </div>
+        <div class="impact-card" data-category="technology">
+          <h3>Technological Innovation</h3>
+          <p>This simple tool represented sophisticated engineering knowledge, balancing weight and momentum for
+            efficient fiber spinning.</p>
+        </div>
+        <div class="impact-card" data-category="society">
+          <h3>Social Structure</h3>
+          <p>Textile production influenced social organization, creating specialized roles and contributing to
+            Mapungubwe's complex society.</p>
+        </div>
+        <div class="impact-card" data-category="art">
+          <h3>Cultural Expression</h3>
+          <p>The decorative patterns on spindle whorls reflected artistic traditions and cultural symbolism unique to
+            the region.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <p>Continue scrolling</p>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -261,7 +261,7 @@ import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
-  components: {ScrollProgress, BackButton},
+  components: { ScrollProgress, BackButton },
   setup() {
     const bg = ref(null);
     const title = ref(null);
@@ -440,6 +440,8 @@ export default {
 
       gsap.set(".ripple-circle", { scale: 0, opacity: 0 });
 
+      gsap.set(".scroll-arrow", { opacity: 1 });
+
       rippleTl
         // Expand ripple circles in sequence
         .to(".ripple-circle[data-category='trade']", {
@@ -491,6 +493,16 @@ export default {
           duration: 0.8,
           ease: "back.out(1.5)"
         }, "-=0.6")
+        .to(".scroll-hint p", {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power1.out"
+        }, "-=0.7")
+        .to(".scroll-arrow", {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power1.out"
+        }, "-=0.7");
 
       // Add all timelines to the master timeline
       masterTimeline
@@ -598,6 +610,8 @@ export default {
             setTimeout(() => artCard.classList.remove('glow-effect'), 1200);
           }, [], "+=1.5");
       }
+
+
     }
 
     onMounted(() => {
@@ -793,7 +807,6 @@ export default {
         gsap.set(".feature-list li", { x: -20, opacity: 0 });
       }
 
-      setupParallaxEffect();
 
       function setupImageTransitionSection() {
         const section = document.querySelector('.image-transition-section');
@@ -869,6 +882,9 @@ export default {
 
       // Call the setup function
       setupImageTransitionSection();
+
+
+      setupParallaxEffect();
 
     });
 
@@ -1774,7 +1790,7 @@ h2 {
 }
 
 .impact-card[data-category="art"] {
-  top: calc(50% + 150px);
+  top: calc(50% + 120px);
   left: calc(50% - 375px);
 }
 
@@ -1832,7 +1848,7 @@ h2 {
   }
 
   .impact-card[data-category="art"] {
-    top: calc(50% + 150px);
+    top: calc(50% + 50px);
     left: calc(50% - 220px);
   }
 }
