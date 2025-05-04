@@ -27,7 +27,7 @@
                         <div class="museum-info">
                             <span class="museum-label">EXHIBITION DETAILS</span>
                             <div class="museum-content">
-                                <p class="location-text"><strong>Location:</strong> South African Art Collection, Gallery 7</p>
+                                <p class="location-text"><strong>Location:</strong> Edoardo Villa Gallery, Old Merensky</p>
                                 <p class="artifact-id"><strong>Artist:</strong> Anton van Wouw (1862-1945)</p>
                                 <p class="period-text"><strong>Dating:</strong> c. 1907 (Early 20th Century)</p>
                             </div>
@@ -79,9 +79,7 @@ export default {
                 opacity: 0
             });
             
-            const mainTl = gsap.timeline({
-                paused: true
-            });
+            const mainTl = gsap.timeline();
             
             mainTl
                 .to(".content", {
@@ -144,15 +142,7 @@ export default {
                 scrub: 3,
                 animation: mainTl,
                 toggleActions: "play none none reverse",
-                markers: false, 
-                onEnter: () => {
-                    console.log("ScrollTrigger entered");
-                    mainTl.play();
-                },
-                onLeaveBack: () => {
-                    console.log("ScrollTrigger left");
-                    mainTl.reverse();
-                }
+                markers: false
             });
 
             return () => {
