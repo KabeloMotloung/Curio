@@ -1,5 +1,5 @@
 <template>
-    <div class="last-container">
+    <div id="sidwane-background" class="last-container">
         <div class="content gradient-coffee">
             <div class="info-wrapper">
                 <div class="info-container">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -58,99 +58,128 @@ gsap.registerPlugin(ScrollTrigger);
 export default {
     name: 'BackgroundInformation',
     setup() {
+        let mainTl;
+
         onMounted(() => {
-            gsap.registerPlugin(ScrollTrigger);
-            
-            gsap.set(".content", {
-                clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)"
-            });
-            
-            gsap.set(".info-wrapper", {
-                opacity: 0
-            });
-            
-            gsap.set(".sculpture-image-container", {
-                x: 80,
-                opacity: 0
-            });
-            
-            gsap.set(".section-title, .main-description, .feature-list li, .fun-fact, .museum-info", {
-                y: 20,
-                opacity: 0
-            });
-            
-            const mainTl = gsap.timeline();
-            
-            mainTl
-                .to(".content", {
-                    clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
-                    duration: 0.8,
-                    ease: "power2.out"
-                }, 0)
-                .to(".content", {
-                    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                    duration: 0.8,
-                    ease: "power2.out"
-                }, 0.8)
-                .to(".info-wrapper", {
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power1.out"
-                }, 1.5) 
-                .to(".sculpture-image-container", {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.8,
-                    ease: "back.out(1.7)"
-                }, 2.0) 
-                .to(".section-title", {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power2.out"
-                }, 2.5) 
-                .to(".main-description", {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power2.out"
-                }, 3.0)
-                .to(".feature-list li", {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    stagger: 0.15,
-                    ease: "power2.out"
-                }, 3.5)
-                .to(".fun-fact", {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power2.out"
-                }, 4.5)
-                .to(".museum-info", {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power2.out"
-                }, 5.0);
-
-            ScrollTrigger.create({
-                trigger: ".last-container",
-                start: "top 80%", 
-                end: "center center", 
-                scrub: 3,
-                animation: mainTl,
-                toggleActions: "play none none reverse",
-                markers: false
-            });
-
-            return () => {
-                ScrollTrigger.getAll().forEach(trigger => {
-                    trigger.kill();
+            setTimeout(() => {
+                const container = document.getElementById('sidwane-background');
+                if (!container) {
+                    console.error('Could not find sidwane-background element');
+                    return;
+                }
+                
+                gsap.set(`#sidwane-background .content`, {
+                    clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)"
                 });
+                
+                gsap.set(`#sidwane-background .info-wrapper`, {
+                    opacity: 0
+                });
+                
+                gsap.set(`#sidwane-background .sculpture-image-container`, {
+                    x: 80,
+                    opacity: 0
+                });
+                
+                gsap.set(`#sidwane-background .section-title, #sidwane-background .main-description, #sidwane-background .feature-list li, #sidwane-background .fun-fact, #sidwane-background .museum-info`, {
+                    y: 20,
+                    opacity: 0
+                });
+                
+                mainTl = gsap.timeline({paused: true});
+                
+                mainTl
+                    .to(`#sidwane-background .content`, {
+                        clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
+                        duration: 0.4,
+                        ease: "power2.out"
+                    })
+                    .to(`#sidwane-background .content`, {
+                        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                        duration: 0.4,
+                        ease: "power2.out"
+                    })
+                    .to(`#sidwane-background .info-wrapper`, {
+                        opacity: 1,
+                        duration: 0.4,
+                        ease: "power1.out"
+                    })
+                    .to(`#sidwane-background .sculpture-image-container`, {
+                        x: 0,
+                        opacity: 1,
+                        duration: 0.4,
+                        ease: "back.out(1.7)"
+                    })
+                    .to(`#sidwane-background .section-title`, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.2,
+                        ease: "power2.out"
+                    })
+                    .to(`#sidwane-background .main-description`, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.2,
+                        ease: "power2.out"
+                    })
+                    .to(`#sidwane-background .feature-list li`, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.2,
+                        stagger: 0.15,
+                        ease: "power2.out"
+                    })
+                    .to(`#sidwane-background .fun-fact`, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.2,
+                        ease: "power2.out"
+                    })
+                    .to(`#sidwane-background .museum-info`, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.2,
+                        ease: "power2.out"
+                    });
+
+                ScrollTrigger.create({
+                    trigger: "#sidwane-background",
+                    start: "top 80%", 
+                    end: "bottom 20%", 
+                    onEnter: () => {
+                        mainTl.play();
+                    },
+                    onEnterBack: () => {
+                        mainTl.play();
+                    },
+                    onLeave: () => {
+                        mainTl.pause();
+                    },
+                    onLeaveBack: () => {
+                        mainTl.pause();
+                        mainTl.progress(0);
+                    },
+                    markers: false
+                });
+                
+                if (mainTl && ScrollTrigger.isInViewport(container, 0.5)) {
+                    console.log("Background section already in viewport");
+                    mainTl.play();
+                }
+            }, 300); 
+        });
+
+        onUnmounted(() => {
+            ScrollTrigger.getAll().forEach(trigger => {
+                if (trigger.vars.trigger === "#sidwane-background" || 
+                    trigger.vars.trigger.includes('sidwane-background')) {
+                    trigger.kill();
+                }
+            });
+            
+            if (mainTl) {
                 mainTl.kill();
-            };
+            }
         });
 
         return {};
