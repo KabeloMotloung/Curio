@@ -3,15 +3,6 @@
         <div class="content gradient-coffee">
             <div class="info-wrapper">
                 <div class="info-container">
-                    <div class="sculpture-image-container left">
-                        <img alt="Sidwane Tokozile Sculpture" class="sculpture-image" src="../assets/sculpture-1.png" />
-                        <div class="image-overlay">
-                            <div class="overlay-content">
-                                <span>Circa 1907</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="info-text">
                         <h2 class="section-title"><span class="highlight">Sidwane Tokozile</span></h2>
                         <p class="main-description">
@@ -43,7 +34,7 @@
                         </div>
                     </div>
 
-                    <div class="sculpture-image-container right">
+                    <div class="sculpture-image-container">
                         <img alt="Anton van Wouw" class="sculpture-image" src="../assets/anton-van-wouw.jpg" />
                         <div class="image-overlay">
                             <div class="overlay-content">
@@ -77,12 +68,7 @@ export default {
                 opacity: 0
             });
             
-            gsap.set(".sculpture-image-container.left", {
-                x: -80,
-                opacity: 0
-            });
-            
-            gsap.set(".sculpture-image-container.right", {
+            gsap.set(".sculpture-image-container", {
                 x: 80,
                 opacity: 0
             });
@@ -117,15 +103,8 @@ export default {
                     duration: 0.2,
                     ease: "power1.out"
                 }, 0.5)
-                // Animate in left image
-                .to(".sculpture-image-container.left", {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.3,
-                    ease: "back.out(1.7)"
-                }, 0.6)
-                // Animate in right image
-                .to(".sculpture-image-container.right", {
+                // Animate in right image - now just using class sculpture-image-container
+                .to(".sculpture-image-container", {
                     x: 0,
                     opacity: 1,
                     duration: 0.3,
@@ -257,14 +236,6 @@ export default {
     box-shadow: none;
     background: transparent;
     border-radius: 0;
-}
-
-.sculpture-image-container.left {
-    transform: perspective(1000px) rotateY(5deg);
-}
-
-.sculpture-image-container.right {
-    transform: perspective(1000px) rotateY(-5deg);
 }
 
 .sculpture-image-container:hover {
@@ -570,22 +541,10 @@ export default {
         width: 100%;
         margin: 0 auto 1rem auto;
     }
-
-    .sculpture-image-container.left {
-        order: -1;
-    }
-
-    .sculpture-image-container.right {
-        order: 1;
-    }
 }
 
 @media (max-width: 768px) {
-    .sculpture-image-container.right {
-        display: none;
-    }
-
-    .sculpture-image-container.left {
+    .sculpture-image-container {
         width: 40%;
         max-width: 180px;
         margin: 0 auto 1rem auto;

@@ -14,6 +14,10 @@
     <section class="section">
       <BackgroundInformation />
     </section>
+
+    <section class="section">
+      <ImageShowcase />
+    </section>
     
   </div>
 </template>
@@ -28,6 +32,7 @@ import ScrollProgress from '../UniversalComponents/ScrollProgress.vue';
 import LandingPage from './components/LandingPage.vue';
 import BackgroundInformation from './components/BackgroundInformation.vue';
 import TimelineScroll from './components/HorizontalTimeline.vue';
+import ImageShowcase from './components/ImageShowcase.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
