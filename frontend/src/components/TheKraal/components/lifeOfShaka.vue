@@ -1,8 +1,12 @@
 <template>
+    <BackButton />
+    <ScrollProgress :totalSections="4" />
+    <ScrollArrow/>
     <div class="tapestry-container">
       <!-- Landing Screen -->
       <section class="landing-screen" ref="landingScreen">
-        <h1 class="artifact-name">The Kraal</h1>
+        <h1 class="artifact-name">Life of Shaka</h1>
+        <h2>Mary Shabalala and Josephine Memela</h2>
         <div class="lines-container">
           <div class="line" v-for="n in 10" :key="n"></div>
         </div>
@@ -15,16 +19,16 @@
       <div class="border-spiral-section" ref="borderSpiralSection">
         <svg ref="spiralSvg" class="spiral-svg"></svg>
         <div class="text-container">
-          <h2 v-for="(text, index) in messages" :key="index" class="message-text" :class="{ 'active': currentMessage === index }">
+          <h3 v-for="(text, index) in messages" :key="index" class="message-text" :class="{ 'active': currentMessage === index }">
             {{ text }}
-          </h2>
+          </h3>
         </div>
       </div>
 
       <!-- Black Section -->
       <div class="black-section">
         <div class = "kraal">
-          <img src="../assets/the kraal.jpg" alt="The Kraal" class="kraal-image" />
+          <img src="../assets/shaka.jpg" alt="The Kraal" class="kraal-image" />
         </div>
       </div>
     </div>
@@ -36,6 +40,10 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import Background from "./Background.vue";
   import Timeline from "./HorizontalTimeline.vue";
+  import BackButton from "../../UniversalComponents/BackButton.vue";
+  import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
+  import ScrollArrow from "../../UniversalComponents/ScrollArrow.vue";
+
 
   gsap.registerPlugin(ScrollTrigger);
   
@@ -44,6 +52,9 @@
     components: {
      Background,
      Timeline,
+     BackButton,
+     ScrollProgress,
+     ScrollArrow,
     },
     setup() {
       const landingScreen = ref(null);
@@ -54,33 +65,51 @@
       const timelineComponent = ref(null);
 
       const timelineEvents = [
+
         {
-          date: "900 AD",
-          description: "First evidence of fiber spinning in Mapungubwe.",
-          details: "Archaeological excavations revealed simple spindle whorls made from clay, marking the earliest evidence of textile production in the region.",
-          fact: "These early spindle whorls weighed between 15-30 grams - perfect for spinning indigenous cotton."
+          "date": "1973",
+          "description": "A vision woven in Rorke's Drift.",
+          "details": "At the Evangelical Lutheran Church Art and Craft Centre in Rorke's Drift, artists Mary Shabalala and Josephine Memela begin conceptualizing a tapestry that would honour one of Africa's most legendary figures: King Shaka Zulu.",
+          "fact": "This centre had become a powerful incubator of Black South African creativity during apartheid, giving rural women the tools to tell their stories through wool and weave."
         },
         {
-          date: "1000 AD",
-          description: "Mapungubwe's rise as a key economic and political center.",
-          details: "As Mapungubwe grew in importance, so did the craftsmanship of its spindle whorls, becoming more uniform and balanced for improved thread production.",
-          fact: "Specialized spindle whorls for different fabric types began appearing around this time."
+          "date": "1974",
+          "description": "The weaving begins: Life of Shaka takes form.",
+          "details": "Using a linocut design by artist Caiphas Nxumalo as their guide, the weavers begin the intricate process of translating his imagery into textile. The piece spans over 4.5 meters, and every thread tells part of Shaka’s story.",
+          "fact": "It took four and a half months of dedicated labour to complete, under the direction of master weaver Allina Ndebele."
         },
         {
-          date: "1200 AD",
-          description: "Peak of Mapungubwe's textile production.",
-          details: "The spindle whorls from this period show remarkable sophistication in design and craftsmanship.",
-          fact: "Chemical analysis revealed traces of indigenous cotton and wild silk in the fibers."
+          "date": "1974 (late)",
+          "description": "Threads of resistance and remembrance.",
+          "details": "The tapestry narrates the birth, rise, and tragic death of Shaka — scenes of military strategy, royal lineage, and betrayal are frozen in wool. Yet it also speaks to a broader African legacy: pride, power, and perseverance in the face of erasure.",
+          "fact": "The use of pure karakul wool and linen symbolized a reclaiming of indigenous craft at a time when Black South African expression was tightly controlled."
         },
         {
-          date: "1290 AD",
-          description: "Final phase of Mapungubwe's spindle whorl production.",
-          details: "The last known spindle whorls from Mapungubwe show the culmination of centuries of refinement.",
-          fact: "These artifacts represent the height of pre-colonial African textile technology."
+          "date": "Mid-1970s",
+          "description": "A journey abroad: the tapestry leaves South Africa.",
+          "details": "Shortly after its creation, the Life of Shaka tapestry becomes part of a private collection in Sweden. For decades, it remains there—far from the land and people whose history it honors.",
+          "fact": "Despite its displacement, the tapestry continued to speak silently of Zulu resistance and the artistry of rural South African women."
+        },
+        {
+          "date": "2024",
+          "description": "Return of the king: the tapestry comes home.",
+          "details": "After fifty years abroad, the tapestry is returned to South Africa. Its homecoming is both symbolic and historic—a restoration of cultural memory and artistic legacy.",
+          "fact": "Now recognized as a national treasure, the tapestry bridges generations, bringing Shaka’s legacy—and that of the women who wove him—back into the collective South African imagination."
         }
+      
+
       ];
 
-      const messages = ["hello", "how are you", "wow", "testing", "we are real"];
+      const messages = [
+        "Each thread is a memory — not just of history, but of the hands that spun it.",
+        "Tapestry is slow work — it teaches patience, precision, and how to tell a story without words.",
+        "To weave is to resist — especially when your voice is denied, your history erased.",
+        "The loom is a place of meditation. Every shuttle pass is a heartbeat, every knot a decision.",
+        "Weaving the Life of Shaka wasn’t just art — it was honouring an ancestor, stitching pride into wool.",
+        "Tapestry holds weight — not just in wool, but in legacy. It outlives the weaver.",
+        "Even silence has a texture in tapestry. What’s left unwoven is as powerful as what’s shown.",
+        "We don't just weave what we see — we weave what we carry, what we lost, and what we hope for."
+      ];
       const currentMessage = ref(0);
   
       onMounted(() => {
@@ -292,7 +321,7 @@
   .black-section {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom, #ffffff, #4F2D2C);
+    background: linear-gradient(to bottom, #ffffff, #99724B);
     display:flex;
     align-items: center;
     justify-content: center;
@@ -319,7 +348,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    font-size: 3rem;
+    font-size: 1.5rem;
     color: #fff;
     opacity: 0;
     transform: translateY(20px);
