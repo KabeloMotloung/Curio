@@ -5,25 +5,25 @@
     </div>
     <img 
       :src="cloudImageUrl"
-      class="absolute top-[15%] left-[10%] w-[30%] opacity-0 animate-float-slow" 
+      class="absolute top-[15%] left-[18%] w-[40%] opacity-0 animate-float-slow cloud-monotonous" 
       ref="cloud1" 
       alt="Cloud 1"
     />
     <img 
       :src="cloudImageUrl"
-      class="absolute top-[25%] right-[20%] w-[40%] opacity-0 animate-float-medium" 
+      class="absolute top-[25%] right-[15%] w-[50%] opacity-0 animate-float-medium cloud-monotonous" 
       ref="cloud2" 
       alt="Cloud 2"
     />
     <img 
       :src="cloudImageUrl"
-      class="absolute top-[60%] left-[30%] w-[35%] opacity-0 animate-float-fast" 
+      class="absolute top-[60%] left-[15%] w-[45%] opacity-0 animate-float-fast cloud-monotonous" 
       ref="cloud3" 
       alt="Cloud 3"
     />
   </div>
 
-  <ScrollArrow />
+  <ScrollArrow textColor="text-white/80" arrowColor="text-white/80" />
 </template>
 
 <script setup>
@@ -61,9 +61,8 @@ defineProps({
 onMounted(() => {
   if (cloud1.value && cloud2.value && cloud3.value) {
     gsap.to([cloud1.value, cloud2.value, cloud3.value], {
-      opacity: 0.8,
+      opacity: 0.75,
       duration: 1.5,
-      stagger: 0.3,
       ease: "power2.out"
     });
   }
@@ -87,6 +86,15 @@ defineExpose({
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'),
+       url('/fonts/Raleway/static/Raleway-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
 h1 {
   font-family: 'Raleway', sans-serif !important;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -94,24 +102,16 @@ h1 {
   font-weight: 200 !important;
 }
 
-[ref="scrollIndicator"] {
-  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
-  font-weight: 200;
-}
-
-[ref="scrollIndicator"] span {
-  font-family: 'Raleway', sans-serif !important;
-}
 
 @keyframes floatSlow {
   0%, 100% { 
     transform: translate(0, 0) rotate(0deg); 
   }
   25% {
-    transform: translate(25px, 8px) rotate(1deg);
+    transform: translate(55px, 18px) rotate(2deg);
   }
   75% {
-    transform: translate(-15px, -5px) rotate(-1deg);
+    transform: translate(-35px, -15px) rotate(-2deg);
   }
 }
 
@@ -120,10 +120,10 @@ h1 {
     transform: translate(0, 0) rotate(0deg); 
   }
   33% {
-    transform: translate(-30px, 10px) rotate(-1deg);
+    transform: translate(-70px, 20px) rotate(-2deg);
   }
   66% {
-    transform: translate(20px, -8px) rotate(1deg);
+    transform: translate(50px, -18px) rotate(2deg);
   }
 }
 
@@ -132,25 +132,25 @@ h1 {
     transform: translate(0, 0) rotate(0deg); 
   }
   40% {
-    transform: translate(35px, -12px) rotate(1.5deg);
+    transform: translate(75px, -22px) rotate(2.5deg);
   }
   60% {
-    transform: translate(-25px, 8px) rotate(-1deg);
+    transform: translate(-55px, 18px) rotate(-2deg);
   }
 }
 
 .animate-float-slow {
-  animation: floatSlow 12s ease-in-out infinite;
+  animation: floatSlow 15s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-float-medium {
-  animation: floatMedium 14s ease-in-out infinite;
+  animation: floatMedium 18s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-float-fast {
-  animation: floatFast 10s ease-in-out infinite;
+  animation: floatFast 12s ease-in-out infinite;
   will-change: transform;
 }
 
@@ -159,5 +159,9 @@ h1 {
 [ref="cloud3"] {
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   transform-origin: center center;
+}
+
+.cloud-monotonous {
+  filter: grayscale(0.2) brightness(0.6);
 }
 </style>
