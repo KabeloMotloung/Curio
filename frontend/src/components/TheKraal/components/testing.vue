@@ -7,7 +7,12 @@
           <div class="line" v-for="n in 10" :key="n"></div>
         </div>
       </section>
-  
+
+      <!-- Timeline Component -->
+      <Timeline :events="timelineEvents" ref="timelineComponent"/>
+
+      <Background/>
+
       <!-- Map Section -->
       <div class="map-section" ref="mapSection">
         <div class="dots-container" ref="dotsContainer">
@@ -18,19 +23,6 @@
           ></div>
         </div>
       </div>
-  
-      <!-- Text Section for Each Dot -->
-      <section
-        class="dot-details"
-        v-for="(dot, index) in dots"
-        :key="'details-' + index"
-        ref="dotDetails"
-      >
-        <div class="dot-center"></div>
-        <div class="text">
-          <p v-for="(sentence, i) in dot.text" :key="'sentence-' + i">{{ sentence }}</p>
-        </div>
-      </section>
     </div>
   </template>
   
@@ -38,15 +30,25 @@
   import { ref, onMounted } from "vue";
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
-  
+  import Background from "./Background.vue";
+  import Timeline from "./HorizontalTimeline.vue";
+
   gsap.registerPlugin(ScrollTrigger);
   
   export default {
     name: "Tapestry",
+    components: {
+     Background,
+     Timeline,
+    },
     setup() {
       const landingScreen = ref(null);
+      const backgroundSection = ref(null);
+      const timelineSection = ref(null);
       const mapSection = ref(null);
       const dotsContainer = ref(null);
+      const backgroundComponent = ref(null);
+      const timelineComponent = ref(null);
       const dotDetails = ref([]);
       const dots = [
         { text: ["This is the first dot.", "It represents the beginning.", "A story starts here."] },
@@ -54,6 +56,33 @@
         { text: ["This is the third dot.", "It represents challenges.", "A story unfolds."] },
         { text: ["This is the fourth dot.", "It represents triumph.", "A story concludes."] },
       ];
+
+      const timelineEvents = [
+        {
+          date: "900 AD",
+          description: "First evidence of fiber spinning in Mapungubwe.",
+          details: "Archaeological excavations revealed simple spindle whorls made from clay, marking the earliest evidence of textile production in the region.",
+          fact: "These early spindle whorls weighed between 15-30 grams - perfect for spinning indigenous cotton."
+        },
+        {
+          date: "1000 AD",
+          description: "Mapungubwe's rise as a key economic and political center.",
+          details: "As Mapungubwe grew in importance, so did the craftsmanship of its spindle whorls, becoming more uniform and balanced for improved thread production.",
+          fact: "Specialized spindle whorls for different fabric types began appearing around this time."
+        },
+        {
+          date: "1200 AD",
+          description: "Peak of Mapungubwe's textile production.",
+          details: "The spindle whorls from this period show remarkable sophistication in design and craftsmanship.",
+          fact: "Chemical analysis revealed traces of indigenous cotton and wild silk in the fibers."
+        },
+        {
+          date: "1290 AD",
+          description: "Final phase of Mapungubwe's spindle whorl production.",
+          details: "The last known spindle whorls from Mapungubwe show the culmination of centuries of refinement.",
+          fact: "These artifacts represent the height of pre-colonial African textile technology."
+        }
+      ]
   
       onMounted(() => {
         // Landing Screen Animation
@@ -83,13 +112,47 @@
             scrub: true,
           },
         });
+
+        // Background Component Animation
+        gsap.fromTo(
+          backgroundSection.value,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 1,
+            scrollTrigger: {
+              trigger: backgroundSection.value,
+              start: "top center",
+              end: "bottom center",
+              scrub: true,
+              pin: true,
+            },
+          }
+        );
+
+        // Timeline Component Animation
+        gsap.fromTo(
+          timelineSection.value,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 1,
+            scrollTrigger: {
+              trigger: timelineSection.value,
+              start: "top center",
+              end: "bottom center",
+              scrub: true,
+              pin: true,
+            },
+          }
+        );
   
-        // Create main timeline for dot animations
+        // Map Section Animation
         const mainTimeline = gsap.timeline({
           scrollTrigger: {
-            trigger: ".map-section",
+            trigger: mapSection.value,
             start: "top top",
-            end: "+=400%", // Adjust based on number of dots and final zoom out
+            end: "+=400%",
             scrub: 1,
             pin: true,
             anticipatePin: 1,
@@ -147,10 +210,15 @@
   
       return {
         landingScreen,
+        backgroundSection,
+        timelineSection,
         mapSection,
         dotsContainer,
+        backgroundComponent,
+        timelineComponent,
         dotDetails,
         dots,
+        timelineEvents,
       };
     },
   };
@@ -253,5 +321,11 @@
     font-size: 1.2rem;
     color: #333;
     opacity: 0;
+  }
+
+  .component-section {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
   }
   </style>
