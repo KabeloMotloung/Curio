@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full overflow-hidden h-[500vh]">
+  <div class="relative w-full overflow-hidden h-[500vh] custom-cursor">
     <!-- Loading overlay removed -->
 
     <!-- Back button -->
@@ -396,5 +396,9 @@ body::-webkit-scrollbar {
 html, body {
   overflow-x: hidden;
   height: 100%;
+}
+
+.custom-cursor {
+  cursor: url('./assets/quill_cursor.png'), auto;
 }
 </style>

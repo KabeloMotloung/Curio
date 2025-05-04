@@ -17,7 +17,7 @@
                     <div class="info-text" :style="infoTextStyle">
                         <h2 class="section-title" :style="titleStyle"><span class="highlight">The Swan</span></h2>
                         <p class="main-description" :style="descriptionStyle">
-                            The painting is oil on Canvas by the Dutch artist Jan Jacob Spohler (1811-1879) titled <strong>The Swan</strong> or <em>Her Zwaantjie</em>. Created in 1849, this landscape depicts a building on the right side of a road, a small ship to the left and a large area of sky dominating the top half.
+                            The painting is oil on Canvas by the Dutch artist Jan Jacob Spohler (1811-1879) titled <strong>The Swan</strong> or <em>Het Zwaantje</em>. Created in 1849, this landscape depicts a building on the right side of a road, a small ship to the left and a large area of sky dominating the top half.
                         </p>
                         <ul class="feature-list">
                             <li :style="featureStyle">
@@ -31,12 +31,12 @@
                         </ul>
                         <div class="fun-fact" :style="factStyle">
                             <span class="fact-label">ARTISTIC INSIGHT</span>
-                            <p>"Het Zwaantjie" is an inn conjured from the artist's imagination, representing a temporary dwelling between life and the afterlife. There is no bridge connecting the inn to the town, and the boat likely symbolizes the Roman vessel that carries souls across the river Styx.</p>
+                            <p>"Het Zwaantje" is an inn conjured from the artist's imagination, representing a temporary dwelling between life and the afterlife. There is no bridge connecting the inn to the town, and the boat likely symbolizes the Roman vessel that carries souls across the river Styx.</p>
                         </div>
                         <div class="museum-info" :style="museumStyle">
                             <span class="museum-label">ARTWORK DETAILS</span>
                             <div class="museum-content">
-                                <p class="location-text"><strong>Collection:</strong> University of Pretoria Museums</p>
+                                <p class="location-text"><strong>Location:</strong> Van Tilburg Gallery, Old Arts 2-10</p>
                                 <p class="artifact-id"><strong>Physical Dimensions:</strong> 580mm x 850mm</p>
                                 <p class="period-text"><strong>Created:</strong> 1849, Netherlands</p>
                                 <p class="medium-text"><strong>Medium:</strong> Oil on Canvas</p>
@@ -429,17 +429,6 @@ export default {
 }
 
 
-.info-text::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjY1IiBudW1PY3RhdmVzPSI2IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC4xIDAiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjYSkiLz48L3N2Zz4=');
-    opacity: 0.1;
-    z-index: -1;
-}
 
 .main-description {
     font-size: 1.2rem;
