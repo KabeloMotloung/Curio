@@ -58,198 +58,117 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
-    name: 'Background',
+    name: 'BackgroundInformation',
     setup() {
-        const isAnimating = ref(false);
-        const hasAnimated = ref(false);
-        
         onMounted(() => {
-            // Eye opening animation effect - happens when section becomes visible
-            const eyeOpeningTl = gsap.timeline({
-                paused: true,
-                onComplete: () => {
-                    isAnimating.value = false;
-                    hasAnimated.value = true;
-                    infoAnimation();
-                }
+            // Set initial state - fully closed eye
+            gsap.set(".content", {
+                clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)"
             });
-
-            // Eye opening animation setup
-            eyeOpeningTl
-                .set(".content", {
-                    clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)"
-                })
+            
+            gsap.set(".info-wrapper", {
+                opacity: 0
+            });
+            
+            // Main eye opening timeline
+            const mainTl = gsap.timeline({
+                paused: true,
+                defaults: { ease: "power2.inOut" }
+            });
+            
+            // Eye opening sequence
+            mainTl
+                // First phase - horizontal eye opening
                 .to(".content", {
                     clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
-                    duration: 1,
+                    duration: 3,
                     ease: "power2.out"
                 })
+                // Second phase - vertical eye opening
                 .to(".content", {
                     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                    duration: 1,
+                    duration: 3,
                     ease: "power2.out"
-                });
-
-            // Create the scroll trigger for the background section
+                })
+                // Fade in the info wrapper
+                .to(".info-wrapper", {
+                    opacity: 1,
+                    duration: 2
+                }, "-=1")
+                // Animate in left image
+                .from(".sculpture-image-container.left", {
+                    x: -80,
+                    opacity: 0,
+                    duration: 2,
+                    ease: "back.out(1.7)"
+                }, "-=1.5")
+                // Animate in right image
+                .from(".sculpture-image-container.right", {
+                    x: 80,
+                    opacity: 0,
+                    duration: 2,
+                    ease: "back.out(1.7)"
+                }, "-=1.8")
+                // Animate in title
+                .from(".section-title", {
+                    y: 30,
+                    opacity: 0,
+                    duration: 1.5
+                }, "-=1.5")
+                // Animate in description
+                .from(".main-description", {
+                    y: 20,
+                    opacity: 0,
+                    duration: 1.5
+                }, "-=1.3")
+                // Animate in feature list
+                .from(".feature-list li", {
+                    x: -20,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.2
+                }, "-=1.2")
+                // Animate in fun fact
+                .from(".fun-fact", {
+                    y: 20,
+                    opacity: 0,
+                    duration: 1.5
+                }, "-=1")
+                // Animate in museum info
+                .from(".museum-info", {
+                    y: 20,
+                    opacity: 0,
+                    duration: 1.5
+                }, "-=1.2");
+                
+            // Create ScrollTrigger that controls the timeline based on scroll position
             ScrollTrigger.create({
                 trigger: ".last-container",
-                start: "top 80%", 
-                end: "bottom 20%",
-                onEnter: () => {
-                    // Only play the opening animation if it hasn't played before
-                    if (!hasAnimated.value && !isAnimating.value) {
-                        isAnimating.value = true;
-                        eyeOpeningTl.restart();
-                    } else if (hasAnimated.value) {
-                        // If we've already animated once, just ensure content is visible
-                        gsap.set(".content", {
-                            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
-                        });
-                        gsap.set(".info-wrapper", { opacity: 1 });
-                    }
-                },
-                onLeave: () => {
-                    // Don't do anything when scrolling down away from this section
-                    // We want to keep the content visible
-                },
-                onEnterBack: () => {
-                    // When scrolling back up to this section, make sure content is visible
-                    if (hasAnimated.value) {
-                        gsap.set(".content", {
-                            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
-                        });
-                        gsap.set(".info-wrapper", { opacity: 1 });
-                    }
-                },
-                onLeaveBack: () => {
-                    // Only hide content when we scroll back above this section 
-                    // (going to previous sections)
-                    fadeOutContent();
+                start: "top 80%", // Start animation when the top of the container hits 80% from the top of viewport
+                end: "bottom 20%", // End animation when the bottom of the container hits 20% from the top of viewport
+                scrub: 1, // Smooth scrubbing effect with 1 second lag
+                animation: mainTl,
+                toggleActions: "play none none reverse",
+                markers: false, // Set to true for debugging
+                onUpdate: (self) => {
+                    // Optional: You can add custom logic during scroll update if needed
                 }
             });
 
-            function infoAnimation() {
-                // Don't animate info content if it's already been shown
-                if (gsap.getProperty(".info-wrapper", "opacity") === 1) {
-                    return;
-                }
-                
-                // Content reveal animations - these start after eye opening
-                const infoTl = gsap.timeline({
-                    onComplete: () => isAnimating.value = false
-                });
-
-                infoTl
-                    .to(".info-wrapper", {
-                        opacity: 1,
-                        duration: 0.8,
-                        ease: "power2.out"
-                    })
-                    .from(".sculpture-image-container.left", {
-                        x: -80,
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: "back.out(1.7)"
-                    }, "-=0.3")
-                    .from(".sculpture-image-container.right", {
-                        x: 80,
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: "back.out(1.7)"
-                    }, "-=0.6")
-                    .from(".section-title", {
-                        y: 30,
-                        opacity: 0,
-                        duration: 0.6,
-                        ease: "power2.out"
-                    }, "-=0.4")
-                    .from(".main-description", {
-                        y: 20,
-                        opacity: 0,
-                        duration: 0.6,
-                        ease: "power2.out"
-                    }, "-=0.3")
-                    .from(".feature-list li", {
-                        x: -20,
-                        opacity: 0,
-                        stagger: 0.1,
-                        duration: 0.4,
-                        ease: "power1.out"
-                    }, "-=0.2")
-                    .from(".fun-fact", {
-                        y: 20,
-                        opacity: 0,
-                        duration: 0.6,
-                        ease: "power2.out"
-                    }, "-=0.2")
-                    .from(".museum-info", {
-                        y: 20,
-                        opacity: 0,
-                        duration: 0.6,
-                        ease: "power2.out"
-                    }, "-=0.4");
-            }
-
-            function fadeOutContent() {
-                // Only fade out when leaving upward to previous sections
-                gsap.timeline()
-                    .to(".content", {
-                        clipPath: "polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%)",
-                        duration: 0.8,
-                        ease: "power2.in"
-                    });
-            }
-
-            // Create a special listener for parent section activation
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                        const targetElement = mutation.target;
-                        if (targetElement.id === 'background' && targetElement.classList.contains('active')) {
-                            // Parent section is active, ensure our animations start or content is visible
-                            if (!hasAnimated.value && !isAnimating.value) {
-                                isAnimating.value = true;
-                                eyeOpeningTl.restart();
-                            } else if (hasAnimated.value) {
-                                // If we've already animated once, just ensure content is visible
-                                gsap.set(".content", {
-                                    clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
-                                });
-                                gsap.set(".info-wrapper", { opacity: 1 });
-                            }
-                        }
-                    }
-                });
-            });
-
-            // Start observing the parent section for class changes
-            const backgroundSection = document.querySelector('#background');
-            if (backgroundSection) {
-                observer.observe(backgroundSection, { attributes: true });
-            }
-
-            // Cleanup on component unmount
+            // Clean up on component unmount
             return () => {
-                observer.disconnect();
                 ScrollTrigger.getAll().forEach(trigger => {
-                    if (trigger.vars.trigger === ".last-container") {
-                        trigger.kill();
-                    }
+                    trigger.kill();
                 });
             };
         });
-
-        return {
-            isAnimating,
-            hasAnimated
-        };
     }
 };
 </script>
