@@ -11,16 +11,20 @@
       <!-- Timeline Component -->
       <Timeline :events="timelineEvents" ref="timelineComponent"/>
 
-      <Background/>
+      <!-- Border Spiral Section -->
+      <div class="border-spiral-section" ref="borderSpiralSection">
+        <svg ref="spiralSvg" class="spiral-svg"></svg>
+        <div class="text-container">
+          <h2 v-for="(text, index) in messages" :key="index" class="message-text" :class="{ 'active': currentMessage === index }">
+            {{ text }}
+          </h2>
+        </div>
+      </div>
 
-      <!-- Map Section -->
-      <div class="map-section" ref="mapSection">
-        <div class="dots-container" ref="dotsContainer">
-          <div 
-            v-for="(dot, index) in dots" 
-            :key="index" 
-            :class="['dot', 'dot-' + (index + 1)]"
-          ></div>
+      <!-- Black Section -->
+      <div class="black-section">
+        <div class = "kraal">
+          <img src="../assets/the kraal.jpg" alt="The Kraal" class="kraal-image" />
         </div>
       </div>
     </div>
@@ -45,17 +49,9 @@
       const landingScreen = ref(null);
       const backgroundSection = ref(null);
       const timelineSection = ref(null);
-      const mapSection = ref(null);
-      const dotsContainer = ref(null);
-      const backgroundComponent = ref(null);
+      const borderSpiralSection = ref(null);
+      const spiralSvg = ref(null);
       const timelineComponent = ref(null);
-      const dotDetails = ref([]);
-      const dots = [
-        { text: ["This is the first dot.", "It represents the beginning.", "A story starts here."] },
-        { text: ["This is the second dot.", "It represents growth.", "A journey continues."] },
-        { text: ["This is the third dot.", "It represents challenges.", "A story unfolds."] },
-        { text: ["This is the fourth dot.", "It represents triumph.", "A story concludes."] },
-      ];
 
       const timelineEvents = [
         {
@@ -82,7 +78,10 @@
           details: "The last known spindle whorls from Mapungubwe show the culmination of centuries of refinement.",
           fact: "These artifacts represent the height of pre-colonial African textile technology."
         }
-      ]
+      ];
+
+      const messages = ["hello", "how are you", "wow", "testing", "we are real"];
+      const currentMessage = ref(0);
   
       onMounted(() => {
         // Landing Screen Animation
@@ -113,23 +112,6 @@
           },
         });
 
-        // Background Component Animation
-        gsap.fromTo(
-          backgroundSection.value,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 1,
-            scrollTrigger: {
-              trigger: backgroundSection.value,
-              start: "top center",
-              end: "bottom center",
-              scrub: true,
-              pin: true,
-            },
-          }
-        );
-
         // Timeline Component Animation
         gsap.fromTo(
           timelineSection.value,
@@ -146,65 +128,87 @@
             },
           }
         );
-  
-        // Map Section Animation
-        const mainTimeline = gsap.timeline({
+
+        // Border Spiral Animation
+        const numBorders = 10; // Number of spirals
+        const paddingStep = 20; // px between each border
+        const width = borderSpiralSection.value.offsetWidth;
+        const height = borderSpiralSection.value.offsetHeight;
+
+        // Clear SVG
+        spiralSvg.value.innerHTML = "";
+
+        // Draw rectangles
+        const borders = [];
+        for (let i = 0; i < numBorders; i++) {
+          const pad = i * paddingStep;
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rect.setAttribute("x", pad);
+          rect.setAttribute("y", pad);
+          rect.setAttribute("width", width - pad * 2);
+          rect.setAttribute("height", height - pad * 2);
+          rect.setAttribute("fill", "none");
+          rect.setAttribute("stroke", "#fff");
+          rect.setAttribute("stroke-width", "2");
+          spiralSvg.value.appendChild(rect);
+
+          // Prepare for animation
+          const length = 2 * (width + height - 4 * pad);
+          rect.style.strokeDasharray = length;
+          rect.style.strokeDashoffset = length;
+          borders.push({ rect, length });
+        }
+
+        // Animate each border in sequence as you scroll
+        gsap.timeline({
           scrollTrigger: {
-            trigger: mapSection.value,
+            trigger: borderSpiralSection.value,
             start: "top top",
-            end: "+=400%",
-            scrub: 1,
+            end: "+=4000",
+            scrub: true,
             pin: true,
             anticipatePin: 1,
+            pinSpacing: true
+          }
+        })
+        .to(borders.map(b => b.rect), {
+          strokeDashoffset: 0,
+          stagger: {
+            each: 3 / numBorders,
           },
+          ease: "none"
+        })
+        .to(borderSpiralSection.value, {
+          opacity: 0,
+          duration: 0.5,
+          ease: "none"
+        }, ">");
+
+        // Text sequence animation - separate timeline
+        const textTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: borderSpiralSection.value,
+            start: "top top",
+            end: "+=4000",
+            scrub: true,
+          }
         });
-  
-        // Store original positions of dots
-        const dotElements = document.querySelectorAll('.dot');
-        const dotPositions = [];
-        dotElements.forEach(dot => {
-          const rect = dot.getBoundingClientRect();
-          dotPositions.push({
-            x: rect.left + rect.width / 2,
-            y: rect.top + rect.height / 2
-          });
-        });
-  
-        // Center point of the viewport
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-  
-        // Add animations for each dot
-        dots.forEach((_, index) => {
-          const dotClass = `.dot-${index + 1}`;
-          
-          // Calculate movement to center
-          const moveX = centerX - dotPositions[index].x;
-          const moveY = centerY - dotPositions[index].y;
-  
-          // Zoom into current dot
-          mainTimeline
-            .to(dotClass, {
-              scale: 20,
-              duration: 2,
-              x: moveX,
-              y: moveY,
-              zIndex: 10,
-            })
-            // Zoom out current dot
-            .to(dotClass, {
-              scale: 1,
-              duration: 2,
-              x: 0,
+
+        // Add text animations to the timeline
+        messages.forEach((_, index) => {
+          textTimeline
+            .to(`.message-text:nth-child(${index + 1})`, {
+              opacity: 1,
               y: 0,
-              zIndex: 1,
-            });
-        });
-  
-        // Final zoom out to show all dots
-        mainTimeline.to(".dots-container", {
-          scale: 1,
-          duration: 2,
+              duration: 0.5,
+              ease: "power2.out"
+            })
+            .to(`.message-text:nth-child(${index + 1})`, {
+              opacity: 0,
+              y: -20,
+              duration: 0.5,
+              ease: "power2.in"
+            }, "+=1"); // Add a 1-second delay between messages
         });
       });
   
@@ -212,12 +216,11 @@
         landingScreen,
         backgroundSection,
         timelineSection,
-        mapSection,
-        dotsContainer,
-        backgroundComponent,
+        borderSpiralSection,
+        spiralSvg,
         timelineComponent,
-        dotDetails,
-        dots,
+        messages,
+        currentMessage,
         timelineEvents,
       };
     },
@@ -262,70 +265,69 @@
   
   .line {
     height: 2px;
-    background: #333;
+    background: #C8A078;
     transform-origin: left;
     transform: scaleX(0);
   }
-  
-  /* Map Section */
-  .map-section {
+
+  /* Border Spiral Section */
+  .border-spiral-section {
+    position: relative;
+    width: 100vw;
     height: 100vh;
-    background: #222;
-    position: relative;
+    background: #4F2D2C;
     overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
-  
-  .dots-container {
-    position: relative;
+
+  .spiral-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    pointer-events: none;
   }
-  
-  .dot {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ff5722;
-    position: absolute;
-    transform-origin: center center;
-  }
-  
-  .dot-1 { top: 20%; left: 30%; }
-  .dot-2 { top: 50%; left: 70%; }
-  .dot-3 { top: 80%; left: 40%; }
-  .dot-4 { top: 30%; left: 60%; }
-  
-  /* Dot Details Section */
-  .dot-details {
+
+  /* Black Section */
+  .black-section {
+    width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: linear-gradient(to bottom, #ffffff, #4F2D2C);
+    display:flex;
     align-items: center;
-    background: #f9f5f2;
-  }
-  
-  .dot-center {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ff5722;
-    margin-bottom: 20px;
-  }
-  
-  .text {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #333;
-    opacity: 0;
+    justify-content: center;
   }
 
   .component-section {
     min-height: 100vh;
     width: 100%;
     position: relative;
+  }
+
+  .text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    width:100%;
+  }
+
+  .message-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 3rem;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .message-text.active {
+    opacity: 1;
+    transform: translateY(0);
   }
   </style>

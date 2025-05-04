@@ -143,7 +143,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(145deg, #2d1e0f, #111);
+    background: linear-gradient(145deg, #C8A078, #C8A078);
     color: white;
     text-align: center;
     position: relative;
@@ -169,18 +169,18 @@ export default {
 
 /* Rest of the CSS remains unchanged */
 .timeline-item:nth-child(odd) {
-    background: linear-gradient(135deg, #2d1e0f 40%, #1a130a);
+    background: linear-gradient(135deg, #6e3f3e 40%, #4F2D2C);
 }
 
 .timeline-item:nth-child(even) {
-    background: linear-gradient(135deg, #111 40%, #1e1e1e);
+    background: linear-gradient(135deg, #4E513E 40%, #989D81);
 }
 
 .timeline-content {
     position: relative;
     z-index: 2;
     max-width: 800px;
-    border-left: 3px solid #ffd700;
+    border-left: 3px solid #4F2D2C;
     padding-left: 2rem;
     transform: translateY(0);
     opacity: 1;
@@ -194,10 +194,10 @@ export default {
 .timeline-date {
     font-size: 3.2rem;
     font-weight: bold;
-    color: #ffd700;
+    color: #C8A078;
     margin-bottom: 1.5rem;
     position: relative;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 15px #4F2D2C;
     display: inline-block;
 }
 
@@ -208,8 +208,8 @@ export default {
     left: 0;
     width: 60px;
     height: 3px;
-    background: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    background: #4F2D2C;
+    box-shadow: 0 0 10px #4F2D2C;
 }
 
 .timeline-description {
@@ -252,7 +252,7 @@ export default {
 /* Add this to create a highlight effect when hovering over timeline items */
 .timeline-item:hover .timeline-date {
     color: #fff;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+    text-shadow: 0 0 20px #4F2D2C;
 }
 
 .panel.active .timeline-fact {
@@ -262,7 +262,7 @@ export default {
 
 .timeline-icon {
     font-size: 2rem;
-    color: #ffd700;
+    color: #4F2D2C;
     margin-bottom: 1rem;
     display: block;
 }
