@@ -1,7 +1,6 @@
 <template>
     <BackButton />
     <ScrollProgress :totalSections="4" />
-    <ScrollArrow/>
     <div class="tapestry-container">
       <!-- Landing Screen -->
       <section class="landing-screen" ref="landingScreen">
@@ -10,6 +9,7 @@
         <div class="lines-container">
           <div class="line" v-for="n in 10" :key="n"></div>
         </div>
+        <ScrollArrow />
       </section>
 
       <!-- Timeline Component -->
@@ -42,8 +42,7 @@
   import Timeline from "./HorizontalTimeline.vue";
   import BackButton from "../../UniversalComponents/BackButton.vue";
   import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
-  import ScrollArrow from "../../UniversalComponents/ScrollArrow.vue";
-
+  import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
 
   gsap.registerPlugin(ScrollTrigger);
   
