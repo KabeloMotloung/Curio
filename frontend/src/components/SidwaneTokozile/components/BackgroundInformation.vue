@@ -77,10 +77,24 @@ export default {
                 opacity: 0
             });
             
-            // Main eye opening timeline
+            gsap.set(".sculpture-image-container.left", {
+                x: -80,
+                opacity: 0
+            });
+            
+            gsap.set(".sculpture-image-container.right", {
+                x: 80,
+                opacity: 0
+            });
+            
+            gsap.set(".section-title, .main-description, .feature-list li, .fun-fact, .museum-info", {
+                y: 20,
+                opacity: 0
+            });
+            
+            // Create main timeline for all animations
             const mainTl = gsap.timeline({
-                paused: true,
-                defaults: { ease: "power2.inOut" }
+                paused: true
             });
             
             // Eye opening sequence
@@ -88,77 +102,84 @@ export default {
                 // First phase - horizontal eye opening
                 .to(".content", {
                     clipPath: "polygon(0% 45%, 100% 45%, 100% 55%, 0% 55%)",
-                    duration: 3,
+                    duration: 0.3,
                     ease: "power2.out"
-                })
+                }, 0)
                 // Second phase - vertical eye opening
                 .to(".content", {
                     clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-                    duration: 3,
+                    duration: 0.3,
                     ease: "power2.out"
-                })
+                }, 0.3)
                 // Fade in the info wrapper
                 .to(".info-wrapper", {
                     opacity: 1,
-                    duration: 2
-                }, "-=1")
+                    duration: 0.2,
+                    ease: "power1.out"
+                }, 0.5)
                 // Animate in left image
-                .from(".sculpture-image-container.left", {
-                    x: -80,
-                    opacity: 0,
-                    duration: 2,
+                .to(".sculpture-image-container.left", {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.3,
                     ease: "back.out(1.7)"
-                }, "-=1.5")
+                }, 0.6)
                 // Animate in right image
-                .from(".sculpture-image-container.right", {
-                    x: 80,
-                    opacity: 0,
-                    duration: 2,
+                .to(".sculpture-image-container.right", {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.3,
                     ease: "back.out(1.7)"
-                }, "-=1.8")
+                }, 0.6)
                 // Animate in title
-                .from(".section-title", {
-                    y: 30,
-                    opacity: 0,
-                    duration: 1.5
-                }, "-=1.5")
+                .to(".section-title", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                }, 0.7)
                 // Animate in description
-                .from(".main-description", {
-                    y: 20,
-                    opacity: 0,
-                    duration: 1.5
-                }, "-=1.3")
+                .to(".main-description", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                }, 0.8)
                 // Animate in feature list
-                .from(".feature-list li", {
-                    x: -20,
-                    opacity: 0,
-                    duration: 1,
-                    stagger: 0.2
-                }, "-=1.2")
+                .to(".feature-list li", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    stagger: 0.05,
+                    ease: "power2.out"
+                }, 0.9)
                 // Animate in fun fact
-                .from(".fun-fact", {
-                    y: 20,
-                    opacity: 0,
-                    duration: 1.5
-                }, "-=1")
+                .to(".fun-fact", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                }, 1.0)
                 // Animate in museum info
-                .from(".museum-info", {
-                    y: 20,
-                    opacity: 0,
-                    duration: 1.5
-                }, "-=1.2");
+                .to(".museum-info", {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                }, 1.1);
                 
             // Create ScrollTrigger that controls the timeline based on scroll position
             ScrollTrigger.create({
                 trigger: ".last-container",
                 start: "top 80%", // Start animation when the top of the container hits 80% from the top of viewport
-                end: "bottom 20%", // End animation when the bottom of the container hits 20% from the top of viewport
-                scrub: 1, // Smooth scrubbing effect with 1 second lag
+                end: "center center", // End animation when the center of the container hits the center of viewport
+                scrub: 0.5, // Smooth scrubbing effect with 0.5 second lag
                 animation: mainTl,
-                toggleActions: "play none none reverse",
+                toggleActions: "restart none none reverse",
                 markers: false, // Set to true for debugging
                 onUpdate: (self) => {
-                    // Optional: You can add custom logic during scroll update if needed
+                    // Log progress for debugging
+                    // console.log("Progress:", self.progress.toFixed(2));
                 }
             });
 
