@@ -1,3 +1,4 @@
+
 <template>
   <div class="w-full min-h-screen bg-gray-900 text-white overflow-x-hidden font-serif">
     <BackButton />
@@ -10,7 +11,7 @@
     >
     <div class="absolute inset-0 bg-[url('/battle.jpg')] bg-cover bg-no-repeat bg-center opacity-20 z-0"></div>
 
-      <div class="painting-mask absolute inset-0 z-10 bg-black"></div>
+
 
       <div class="relative z-20 text-center max-w-4xl">
         <h1
@@ -22,53 +23,113 @@
         <h2 class="text-xl md:text-2xl text-amber-300 opacity-0 font-light tracking-widest">
           June 27, 1673: When the Sea Turned to Fire
         </h2>
-        <ScrollArrow />
+        <ScrollArrow textColor="text-white" arrowColor="text-white" />
+
       </div>
 
-      <div class="absolute bottom-4 left-0 right-0 text-center text-sm text-gray-400 opacity-0">
-        "The morning mist clung to the Channel as 72 ships prepared for bloodshed..."
-      </div>
+     
     </section>
 
-    <section ref="section2" class="section min-h-[170vh] bg-gray-800 py-20">
-  <div class="w-full max-w-6xl mx-auto px-8">
-    <h2 class="text-4xl font-bold mb-16 text-center text-amber-400 animate-fade-in pt-10">
-      ⚔️ Dawn Approaches: The Battle Unfolds
-    </h2>
+    <TimelineScroll :events="battleTimeline" />
+    <!-- <Background /> -->
 
-    <div class="relative timeline-container">
-      <!-- Timeline Line -->
-      <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-amber-400/50 -translate-x-1/2"></div>
+    <section ref="contextSection" class="contextSection relative min-h-screen py-20 bg-gradient-to-b from-gray-800 to-gray-900">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
+          Historical Context
+        </span>
+      </h2>
 
-      <div class="flex flex-col gap-36">
-        <div
-          v-for="(event, index) in timelineEvents"
-          :key="index"
-          class="relative flex items-start timeline-event animate-fade-in-up"
-          :class="index % 2 === 0 ? 'pl-16' : 'pr-16 justify-end'"
-        >
-          <div class="absolute left-1/2 transform -translate-x-1/2 mt-2">
-            <div class="h-4 w-4 bg-amber-400 rounded-full shadow-glow"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6 parallax-item" :style="parallaxStyle">
+          <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-600/30 hover:border-amber-400">
+            <h3 class="text-2xl font-semibold text-amber-400 mb-4">The Anglo-Dutch Wars</h3>
+            <p class="text-gray-300 leading-relaxed">
+              The Battle of Torquay took place during the Third Anglo-Dutch War, a conflict that arose from both 
+              commercial rivalry and political tension between England and the Dutch Republic.
+            </p>
           </div>
 
-          <div class="bg-gray-900/90 p-6 rounded-lg border border-amber-600/30 max-w-md">
-            <h3 class="text-lg font-bold text-amber-300">{{ event.time }}</h3>
-            <p class="text-gray-300">{{ event.description }}</p>
-            <p class="text-sm text-amber-400/80 mt-2 italic">{{ event.quote }}</p>
+          <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20 hover:border-amber-400">
+            <h3 class="text-2xl font-semibold text-amber-400 mb-4">Naval Tactics</h3>
+            <p class="text-gray-300 leading-relaxed">
+              The battle showcased revolutionary naval tactics, with the Dutch fleet's innovative use of fireships 
+              and line-of-battle formations that would influence maritime warfare for centuries to come.
+            </p>
+          </div>
+        </div>
+
+        <!-- Stats and figures -->
+        <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20 hover:border-amber-400 parallax-item" :style="parallaxStyle">
+          <h3 class="text-2xl font-semibold text-amber-400 mb-6">Battle Statistics</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Dutch Ships</span>
+              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 60%"></div>
+              </div>
+              <span class="text-amber-400">60</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">English Ships</span>
+              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 72%"></div>
+              </div>
+              <span class="text-amber-400">72</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-300">Battle Duration</span>
+              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: 85%"></div>
+              </div>
+              <span class="text-amber-400">8.5 hrs</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+
+   
+    <section class="min-h-[120vh] pt-12 relative" ref="section4">
+      <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <!-- AI Analysis Overlay -->
+        <div class="absolute inset-0 z-0 ai-grid-pattern"></div>
+
+        <!-- Enhanced Painting Container -->
+        <div class="relative w-full max-w-5xl px-4 z-10">
+          <div class="relative overflow-hidden rounded-xl border border-amber-400/20 glow-container">
+            <img 
+              src="./assets/battleOfTorquay.png"
+              alt="Enhanced battle visualization" 
+              class="w-full h-auto painting-img opacity-0"
+              ref="painting"
+            >
+            <div class="absolute inset-0 pointer-events-none">
+              <div 
+                v-for="(layer, i) in aiAnalysisLayers"
+                :key="i"
+                class="absolute inset-0 opacity-0 transition-opacity duration-1000"
+                :class="{ 'opacity-100': activeLayer === i }"
+                :style="{
+                  background: layer.overlay,
+                  mixBlendMode: layer.blendMode
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
 
 
 
     <!-- Tactical Storytelling Section -->
-<section ref="section3" class="section h-[120vh] relative bg-gray-800 overflow-hidden">
+<section ref="section3" class="section h-[120vh] relative bg-gray-900 overflow-hidden">
   <!-- Sticky Viewport -->
   <div class="sticky top-0 h-screen flex items-center">
     <div class="w-full max-w-6xl mx-auto px-8 space-y-12">
@@ -123,95 +184,16 @@
   </div>
 </section>
 
-<section ref="contextSection" class="relative min-h-screen py-20 bg-gradient-to-b from-gray-800 to-gray-900">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
-          Historical Context
-        </span>
-      </h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="space-y-6 parallax-item" :style="parallaxStyle">
-          <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20">
-            <h3 class="text-2xl font-semibold text-amber-400 mb-4">The Anglo-Dutch Wars</h3>
-            <p class="text-gray-300 leading-relaxed">
-              The Battle of Torquay took place during the Third Anglo-Dutch War, a conflict that arose from both 
-              commercial rivalry and political tension between England and the Dutch Republic.
-            </p>
-          </div>
-
-          <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20">
-            <h3 class="text-2xl font-semibold text-amber-400 mb-4">Naval Tactics</h3>
-            <p class="text-gray-300 leading-relaxed">
-              The battle showcased revolutionary naval tactics, with the Dutch fleet's innovative use of fireships 
-              and line-of-battle formations that would influence maritime warfare for centuries to come.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stats and figures -->
-        <div class="bg-gray-800/50 p-6 rounded-lg border border-amber-500/20 parallax-item" :style="parallaxStyle">
-          <h3 class="text-2xl font-semibold text-amber-400 mb-6">Battle Statistics</h3>
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <span class="text-gray-300">Dutch Ships</span>
-              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div class="h-full bg-amber-500 rounded-full" style="width: 60%"></div>
-              </div>
-              <span class="text-amber-400">60</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-300">English Ships</span>
-              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div class="h-full bg-amber-500 rounded-full" style="width: 72%"></div>
-              </div>
-              <span class="text-amber-400">72</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-300">Battle Duration</span>
-              <div class="w-1/2 h-2 bg-gray-700 rounded-full overflow-hidden">
-                <div class="h-full bg-amber-500 rounded-full" style="width: 85%"></div>
-              </div>
-              <span class="text-amber-400">8.5 hrs</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
     <!-- Neural Network Canvas Section -->
-    <section class="min-h-[250vh] relative" ref="section4">
-      <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-        <!-- AI Analysis Overlay -->
-        <div class="absolute inset-0 z-0 ai-grid-pattern"></div>
+    
 
-        <!-- Enhanced Painting Container -->
-        <div class="relative w-full max-w-5xl px-4 z-10">
-          <div class="relative overflow-hidden rounded-xl border border-amber-400/20 glow-container">
-            <img 
-              src="./assets/battleOfTorquay.png"
-              alt="Enhanced battle visualization" 
-              class="w-full h-auto painting-img opacity-0"
-              ref="painting"
-            >
-            <div class="absolute inset-0 pointer-events-none">
-              <div 
-                v-for="(layer, i) in aiAnalysisLayers"
-                :key="i"
-                class="absolute inset-0 opacity-0 transition-opacity duration-1000"
-                :class="{ 'opacity-100': activeLayer === i }"
-                :style="{
-                  background: layer.overlay,
-                  mixBlendMode: layer.blendMode
-                }"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+   
+
+
+    
+
+
     
   </div>
 </template>
@@ -219,6 +201,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import TimelineScroll from '../UniversalComponents/HorizontalTimeline.vue'
+// import Background from '../UniversalComponents/Background.vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BackButton from "../UniversalComponents/BackButton.vue";
@@ -229,7 +213,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Refs
 const section1 = ref(null)
-const section2 = ref(null)
+
 const section3 = ref(null)
 const section4 = ref(null)
 const section5 = ref(null)
@@ -238,38 +222,45 @@ const neuralCanvas = ref(null)
 const endContent = ref(null)
 
 // Data
-const timelineEvents = [
-  {
-    time: '04:00 AM – Mist Over the Water',
-    description: 'The Dutch fleet holds formation, cloaked in fog. English lookouts strain their eyes.',
-    quote: '“We heard them before we saw them.”',
+const battleTimeline = [
+{
+    date: '04:00 AM – Mist Over the Water',
+    description: 'The Dutch fleet holds formation, cloaked in fog.',
+    details: 'English lookouts strain their eyes.',
+    fact: '“We heard them before we saw them.”',
   },
   {
-    time: '06:15 AM – First Salvo',
-    description: 'De Ruyter fires the first broadside, catching the English unprepared.',
-    quote: '“Like thunder, but sharper.”',
+    date: '06:15 AM – First Salvo',
+    description: 'De Ruyter fires the first broadside.',
+    details: 'It catches the English unprepared.',
+    fact: '“Like thunder, but sharper.”',
   },
   {
-    time: '07:45 AM – Counterattack',
-    description: 'The English regroup and return fire, focusing on the Dutch flagship.',
-    quote: '“All hands to cannon!”',
+    date: '07:45 AM – Counterattack',
+    description: 'The English regroup and return fire.',
+    details: 'They focus on the Dutch flagship.',
+    fact: '“All hands to cannon!”',
   },
   {
-    time: '09:30 AM – Tactical Encirclement',
-    description: 'Using wind and tide, the Dutch begin to flank the English formation.',
-    quote: '“They moved like clockwork.”',
+    date: '09:30 AM – Tactical Encirclement',
+    description: 'Using wind and tide, the Dutch flank the English.',
+    details: 'Their maneuvers are swift and precise.',
+    fact: '“They moved like clockwork.”',
   },
   {
-    time: '11:00 AM – Fireships Deployed',
-  description: 'Dutch fireships spark panic among the English, igniting chaos in their ranks.',
-  quote: '“We saw ships ablaze like fallen stars.”',
+    date: '11:00 AM – Fireships Deployed',
+    description: 'Dutch fireships spark panic.',
+    details: 'Chaos erupts in the English ranks.',
+    fact: '“We saw ships ablaze like fallen stars.”',
   },
   {
-    time: '12:30 PM – English Retreat',
-    description: 'Overwhelmed, the English begin to withdraw. The tide turns in the Dutch favor.',
-    quote: '“Torquay burned behind us.”',
-  },
+    date: '12:30 PM – English Retreat',
+    description: 'The English begin to withdraw.',
+    details: 'The tide turns in the Dutch favor.',
+    fact: '“Torquay burned behind us.”',
+  }
 ];
+
 
 const aiAnalysisLayers = [
   {
@@ -301,11 +292,7 @@ const tiltAngle = ref(0)
 const blurAmount = ref(3)
 
 // Methods
-const scrollToSection = (sectionRef) => {
-  if (sectionRef?.value) {
-    sectionRef.value.scrollIntoView({ behavior: "smooth" })
-  }
-}
+
 
 
 
@@ -319,40 +306,10 @@ const animateDataNodes = () => {
   })
 }
 
-const startExperience = () => {
-  gsap.to(".painting-mask", {
-    scaleY: 0,
-    duration: 1.8,
-    ease: "power3.inOut",
-    onComplete: () => {
-      animateTimeline()
-      scrollToSection(section2)
-    }
-  })
-}
 
 
 
-const animateTimeline = () => {
-  gsap.to(".timeline-line", {
-    scaleY: 1,
-    duration: 2,
-    ease: "power2.inOut"
-  })
 
-  gsap.to(".timeline-event", {
-    opacity: 1,
-    x: 0,
-    duration: 0.8,
-    stagger: 0.3,
-    scrollTrigger: {
-      trigger: section2.value,
-      start: "top center",
-      end: "bottom bottom",
-      scrub: 0.5
-    }
-  })
-}
 
 const drawNeuralNetwork = () => {
   const canvas = neuralCanvas.value
@@ -456,7 +413,7 @@ const setupCanvasAnimations = () => {
 
 onMounted(() => {
   // Setup section animations
-  const sections = [section1, section2, section3, section4, section5]
+  const sections = [section1, section3, section4, section5]
 
   sections.forEach((section, index) => {
     const el = section.value
@@ -484,7 +441,7 @@ onMounted(() => {
   })
 
   // Initial setup
-  gsap.set(".painting-mask", { scaleY: 1 })
+
   gsap.set(".timeline-line", { scaleY: 0 })
   gsap.set(".timeline-event", { opacity: 0, x: -20 })
   
@@ -502,6 +459,51 @@ onMounted(() => {
   // Store intervals for cleanup
   window.layerInterval = layerInterval
   window.nodeInterval = nodeInterval
+
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate section title
+  gsap.from(".contextSection h2", {
+    opacity: 0,
+    y: -50,
+    duration: 1,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".contextSection",
+      start: "top 80%",
+    },
+  });
+
+  // Stagger each parallax item
+  gsap.utils.toArray(".parallax-item").forEach((item, i) => {
+    gsap.from(item, {
+      opacity: 0,
+      y: 50,
+      duration: 1,
+      delay: i * 0.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: item,
+        start: "top 85%",
+      },
+    });
+  });
+
+  // Animate progress bars
+  gsap.utils.toArray(".bg-amber-500").forEach((bar) => {
+    const originalWidth = bar.style.width;
+    bar.style.width = "0%";
+    gsap.to(bar, {
+      width: originalWidth,
+      duration: 1.5,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: bar,
+        start: "top 90%",
+      },
+    });
+  });
 })
 
 onUnmounted(() => {
@@ -512,7 +514,8 @@ onUnmounted(() => {
 })
 
 
-const contextSection = ref(null)
+const contextSection = ref(null);
+
 const mousePosition = ref({ x: 0, y: 0 })
 const parallaxStyle = computed(() => {
   const { x, y } = mousePosition.value
@@ -538,10 +541,7 @@ html {
   scroll-snap-align: start;
 }
 
-.painting-mask {
-  transform-origin: top;
-  background: linear-gradient(to bottom, #000 0%, #111 100%);
-}
+
 
 .painting-image {
   transform-origin: center center;
