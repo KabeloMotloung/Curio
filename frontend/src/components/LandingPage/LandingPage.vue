@@ -58,7 +58,7 @@ const artifactInfoFallBack = {
     location: "Mapungubwe Ceramics Gallery, Old Arts 2-5"
   },
   theKraal: {
-    title: "The Kraal",
+    title: "The Life Of Shaka",
     artist: "Josephine Memela & Mary Shabalala",
     description: "A tapestry representing traditional African living structures and community organization.",
     year: "1974",

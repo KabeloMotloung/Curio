@@ -67,7 +67,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import RopeAnimation from "./Rope.vue";
 import Thread from "./Thread.vue";
 import Needle from "./Needle.vue";
-import Clock from "./Clock.vue";
+import Clock from "../Clock.vue";
 import BackButton from "../../UniversalComponents/BackButton.vue";
 import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
 

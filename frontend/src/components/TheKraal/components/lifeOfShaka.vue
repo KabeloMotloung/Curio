@@ -25,6 +25,26 @@
         </div>
       </div>
 
+       <!-- Clock Section -->
+        <div class="clock-section" ref="clockSection">
+          <div class="clock-container">
+            <div>
+              <svg class="clock" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Clock Circle -->
+                <circle cx="50" cy="50" r="48" stroke="black" stroke-width="2" fill="none" />
+                <!-- Minute Hand -->
+                <line ref="minuteHand" x1="50" y1="55" x2="50" y2="20" stroke="black" stroke-width="1" />
+              </svg>
+            </div>
+            <div class="clock-text">
+              <h3 v-for="(text, index) in clockMessages" :key="index" class="clock-message" :class="{ active: currentClockMessage === index }">
+                {{ text }}
+              </h3>
+            </div>
+          </div>
+        </div>
+  
+
       <!-- Black Section -->
       <div class="black-section">
         <div class = "kraal">
@@ -62,6 +82,16 @@
       const borderSpiralSection = ref(null);
       const spiralSvg = ref(null);
       const timelineComponent = ref(null);
+      const clockSection = ref(null);
+    const minuteHand = ref(null);
+    const currentClockMessage = ref(0);
+
+    const clockMessages = [
+      "Four and a half months",
+      "Can you imagine?",
+      "It Took  four and a half months to create the Life of Shaka",
+      "A testament to time, patience and dedication",
+    ];
 
       const timelineEvents = [
 
@@ -238,6 +268,53 @@
               ease: "power2.in"
             }, "+=1"); // Add a 1-second delay between messages
         });
+
+
+      const clockTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: clockSection.value,
+          start: "top top",
+          end: "+=3000",
+          scrub: true,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      
+ // Fade in Clock Section before pinning
+ clockTimeline.fromTo(clockSection.value, 
+  { opacity: 0, backgroundColor: "#ffffff" },
+  { opacity: 1, backgroundColor: "#f9f5f2", duration: 1.5 }
+);
+
+      clockMessages.forEach((_, index) => {
+        clockTimeline
+          .to(`.clock-message:nth-child(${index + 1})`, { opacity: 1, duration: 0.5 }, index * 3)
+          .to(`.clock-message:nth-child(${index + 1})`, { opacity: 0, duration: 0.5 }, (index + 1) * 3);
+      });
+
+      // Fade out Clock Section at the end of the pin
+      clockTimeline.to(clockSection.value, {
+        opacity: 0,
+        backgroundColor: "#99724B",
+        duration: 1,
+      });
+
+
+      gsap.to(minuteHand.value, {
+        rotation: 360 * 12,
+        transformOrigin: "50% 50%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: clockSection.value,
+          start: "top top",
+          end: "+=3000",
+          scrub: true,
+        }
+      });
+
+  
       });
   
       return {
@@ -250,15 +327,36 @@
         messages,
         currentMessage,
         timelineEvents,
+        clockSection,
+      minuteHand,
+      clockMessages,
+      currentClockMessage,
       };
     },
   };
   </script>
   
   <style scoped>
+  @font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 200;
+    src: local('Raleway'),
+        url('/fonts/Raleway/static/Raleway-ExtraLight.ttf') format('truetype');
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Raleway'),
+        url('/fonts/Raleway/static/Raleway-Light.ttf') format('truetype');
+    font-display: swap;
+  }
   /* General Styles */
   .tapestry-container {
-    font-family: Arial, sans-serif;
+    font-family: 'Raleway', Arial, sans-serif; 
     overflow-x: hidden;
   }
   
@@ -274,7 +372,7 @@
   }
   
   .artifact-name {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
     color: #333;
     z-index: 2;
@@ -358,4 +456,66 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  .clock-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  overflow: hidden;
+  transition: background-color 0.5s ease;
+  z-index: 20;
+}
+
+
+.clock-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 300px;
+}
+
+.clock {
+  width: 100%;
+  height: 100%;
+}
+
+.clock-text {
+  position: absolute;
+  top: 110%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  
+  display:flex;
+  width:100vw;
+  height:50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-message {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.clock-message.active {
+  opacity: 1;
+}
+
+.black-section {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #ffffff, #99724b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   </style>
