@@ -38,13 +38,13 @@ onMounted(() => {
   scene.add(ambientLight, directionalLight);
 
   const mtlLoader = new MTLLoader();
-  mtlLoader.setPath('/models/');
+  mtlLoader.setPath('/models/sidwane/');
   mtlLoader.load('sidwane.mtl', (materials) => {
     materials.preload();
 
     const objLoader = new OBJLoader();
     objLoader.setMaterials(materials);
-    objLoader.setPath('/models/');
+    objLoader.setPath('/models/sidwane/');
     objLoader.load('sidwane.obj', (object) => {
       object.scale.set(15, 15, 15);
       scene.add(object);

@@ -8,6 +8,7 @@ import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
 import HorizontalTimeline from "../PangolinAndCrocodile/components/HorizontalTimeline.vue";
 import Background from "../PangolinAndCrocodile/components/Background.vue";
 import ImageTextSection from "./components/ImageTextSection.vue";
+import Model from "../PangolinAndCrocodile/components/3dModel.vue";
 gsap.registerPlugin(ScrollTrigger);
 
 const pangolinTimelineItems = [
@@ -56,8 +57,27 @@ const pangolinTimelineItems = [
 ];
 const main = ref();
 let ctx: gsap.Context;
-
+const isLoading = ref(true);
+const loadingDots = ref(null);
+let loadingDotsInterval: number | null = null;
 onMounted(() => {
+  document.body.style.overflow = 'hidden';
+  animateLoadingDots();
+
+  const imagesToPreload = [
+    './assets/Pangolin.mov',
+  ];
+
+  const preloadPromises = imagesToPreload.map(src => {
+    return new Promise<void>((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = () => resolve();
+      img.src = src;
+    });
+  });
+
+  Promise.all(preloadPromises).then(handleAssetsLoaded);
   ctx = gsap.context(() => {
 
     const mainTimeline = gsap.timeline({
@@ -96,12 +116,49 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  if (loadingDotsInterval) clearInterval(loadingDotsInterval);
+  document.body.style.overflow = '';
   ctx.revert();
 });
+const animateLoadingDots = () => {
+  if (!loadingDots.value) return;
 
+  const dotPatterns = ['.', '..', '...', '.', '..', '...'];
+  let currentIndex = 0;
+
+  loadingDotsInterval = setInterval(() => {
+    loadingDots.value.textContent = dotPatterns[currentIndex];
+    currentIndex = (currentIndex + 1) % dotPatterns.length;
+  }, 400);
+};
+
+const handleAssetsLoaded = () => {
+  setTimeout(() => {
+    isLoading.value = false;
+    if (loadingDotsInterval) clearInterval(loadingDotsInterval);
+    document.body.style.overflow = '';
+  }, 1500);
+};
 </script>
 
 <template>
+  <!-- <section class="section">
+      <Model />
+  </section> -->
+  <!-- Loading overlay -->
+<div 
+  ref="loaderOverlay"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-[#111111] transition-opacity duration-1000"
+  :class="{ 'opacity-0 pointer-events-none': !isLoading }"
+>
+  <div class="flex flex-col items-center">
+    <div class="relative w-16 h-16 mb-5">
+      <div class="absolute inset-0 border-2 border-white/10 rounded-full"></div>
+      <div class="absolute inset-0 border-2 border-transparent border-t-white rounded-full animate-spinner"></div>
+    </div>
+    <p class="text-white text-base font-raleway uppercase tracking-widest">Loading<span ref="loadingDots">.</span></p>
+  </div>
+</div>
   <BackButton />
   <ScrollProgress :totalSections="4" />
   <div id="smooth-content">
@@ -147,7 +204,18 @@ onUnmounted(() => {
 .background-video {
 z-index: 0;
 }
-
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+}
+.section {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  opacity: 0.8;
+  transition: opacity 0.5s ease;
+}
 .header {
 overflow: hidden;
 position: relative;
@@ -193,5 +261,11 @@ transition: transform 0.5s ease;
 @keyframes float {
 0%, 100% { transform: translateY(0); }
 50% { transform: translateY(-10px); }
+}
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+}
+.animate-spinner {
+  animation: spinner 1s linear infinite;
 }
 </style>
