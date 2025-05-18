@@ -46,38 +46,12 @@
             </div>
           </div>
 
-          <!-- <div class="info-text">
-            <h2 class="section-title"><span class="highlight">The Discovery</span></h2>
-            <p class="main-description">
-              The spindle whorl was a vital tool in ancient Mapungubwe, used for spinning fibers into thread. It
-              highlights the advanced craftsmanship and trade practices of the time, symbolizing the ingenuity of the
-              Mapungubwe people.
-            </p>
-            <ul class="feature-list">
-              <li>
-                <span class="feature-icon">✦</span>
-                <span class="feature-text"><strong>Technical Innovation:</strong> Designs evolved to optimize thread
-                  quality with perfect weight distribution and balance</span>
-              </li>
-            </ul>
-            <div class="fun-fact">
-              <span class="fact-label">ARCHAEOLOGICAL INSIGHT</span>
-              <p>Chemical analysis of residue found on spindle whorls from Mapungubwe has identified traces of
-                indigenous cotton, baobab fiber, and even wild silk, suggesting a sophisticated understanding of
-                different fiber properties.</p>
-            </div>
-            <div class="museum-info">
-              <span class="museum-label">EXHIBITION DETAILS</span>
-              <div class="museum-content">
-                <p class="location-text"><strong>Location:</strong> Avett Art Centre at the University of Pretoria, South Africa
-                  2-5</p>
-                <p class="artifact-id"><strong>Artist:</strong> Alexis Preller
-                </p>
-                <p class="period-text"><strong>Date Created:</strong> 1959–1960</p>
-              </div>
-            </div>
-          </div> -->
+          <!-- here -->
+          <div class="symbolic-element">
+            <img src="./assets/TheDiscoveryPaintingImage.jpg" alt="Symbolic Element" />
+          </div>
 
+           
           <div class="spindle-image-container right">
          
             <div class="image-overlay">
@@ -91,73 +65,27 @@
     </div>
   </div>
 
-  <!-- <div class="parallax-container">
-    <div class="spindle-track">
-      <div v-for="i in 5" :key="`top-${i}`" class="spindle-item top">
-        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
-      </div>
-      <div v-for="i in 5" :key="`bottom-${i}`" class="spindle-item bottom">
-        <img alt="Spindle Whorl" class="spindle-parallax-image" src="./assets/spindle.png" />
-      </div>
-    </div>
-
-    <div class="impact-visualization">
-      <div class="central-spindle">
-        <img alt="Central Spindle Whorl" src="./assets/spindle.png" />
-      </div>
-      <div class="ripple-circles">
-        <div class="ripple-circle" data-category="trade"></div>
-        <div class="ripple-circle" data-category="technology"></div>
-        <div class="ripple-circle" data-category="society"></div>
-        <div class="ripple-circle" data-category="art"></div>
-      </div>
-      <div class="impact-cards">
-        <div class="impact-card" data-category="trade">
-          <h3>Trade Networks</h3>
-          <p>Spindle whorls enabled textile production that became central to Mapungubwe's extensive trade networks
-            across Africa and beyond.</p>
-        </div>
-        <div class="impact-card" data-category="technology">
-          <h3>Technological Innovation</h3>
-          <p>This simple tool represented sophisticated engineering knowledge, balancing weight and momentum for
-            efficient fiber spinning.</p>
-        </div>
-        <div class="impact-card" data-category="society">
-          <h3>Social Structure</h3>
-          <p>Textile production influenced social organization, creating specialized roles and contributing to
-            Mapungubwe's complex society.</p>
-        </div>
-        <div class="impact-card" data-category="art">
-          <h3>Cultural Expression</h3>
-          <p>The decorative patterns on spindle whorls reflected artistic traditions and cultural symbolism unique to
-            the region.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="scroll-hint">
-      <p>Continue scrolling</p>
-      <div class="scroll-arrow"></div>
-    </div>
-  </div> -->
-
   <div class="image-transition-section">
     <div class="slide-view base-slide" data-index="1">
       <div class="background-layer" style="background-image: url('./assets/TheDiscoveryPaintingImage.jpg')"></div>
       <div class="sidebar-content">
         <div class="project-number">[01]</div>
         <h2 class="project-title">The Discovery</h2>
-        <!-- <div class="project-tags">
-          <span>CULTURAL SYMBOLISM</span>
+        <div class="project-tags">
+          <!-- <span>CULTURAL SYMBOLISM</span>
           <span>FEMALE IDENTITY</span>
-          <span>ARTISTIC EXPRESSION</span>
-        </div> -->
-        <p class="slide-description">A monumental triptych mural by South African artist Alexis Preller, originally commissioned for the Transvaal Provincial Administration. Measuring over 13 meters in width, the painting portrays an imagined encounter between European explorers and African civilizations during the so-called "Age of Discovery." Rather than glorify colonization, Preller's work blends African and classical European symbolism to challenge colonial narratives. Rich in surrealist and mythological imagery, it presents Africa as culturally advanced and spiritually significant, questioning Western assumptions of superiority..</p>
+          <span>ARTISTIC EXPRESSION</span> -->
+        </div>
+        <p class="slide-description">A monumental triptych mural by South African artist Alexis Preller, originally commissioned for the Transvaal 
+          Provincial Administration. Measuring over 13 meters in width, the painting portrays an imagined encounter between European explorers and 
+          African civilizations during the so-called "Age of Discovery." Rather than glorify colonization, Preller's work blends African and 
+          classical European symbolism to challenge colonial narratives. Rich in surrealist and mythological imagery, it presents Africa as 
+          culturally advanced and spiritually significant, questioning Western assumptions of superiority..</p>
         <a class="view-project-link" href="https://javettup.art/artworks/discovery">VIEW DETAILS <span class="arrow">→</span></a>
       </div>
       <div class="image-frame-container">
         <img alt="Early Designs" src="./assets/TheDiscoveryPaintingImage.jpg">
-        <div class="image-caption">Early Designs (900-1000 AD)</div>
+        <div class="image-caption">South African 1959</div>
       </div>
     </div>
 
@@ -166,25 +94,30 @@
         <div class="background-layer"></div>
         <div class="sidebar-content">
           <div class="project-number">[02]</div>
-          <h2 class="project-title">Blank Spindles</h2>
+          <h2 class="project-title">Alexis Preller</h2>
           <div class="project-tags">
-            <span>PRODUCTION PROCESS</span>
+            <!-- <span>PRODUCTION PROCESS</span>
             <span>CRAFTING TECHNIQUES</span>
-            <span>MATERIAL TRANSFORMATION</span>
+            <span>MATERIAL TRANSFORMATION</span> -->
           </div>
-          <p class="slide-description">Blank spindles represent the early manufacturing stage where clay fragments or
-            potsherds were shaped into rough circles. Craftspeople would grind and reshape these discs on stone
-            surfaces, with some receiving fine smoothing before the crucial central perforation was added to complete
-            the functional spindle whorl.</p>
-          <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
+          <p class="slide-description">Pretoria-born artist Alexis Preller studied art in London at the Westminster School of Art and expanded 
+            his knowledge of art and art history by reading voraciously and travelling widely in Europe and Africa. He studied Egyptian, 
+            ancient Greek, Etruscan, early Renaissance and southern and central African art and culture, in particular, and created an art 
+            that was of his own place and time rather than a continuation of either traditional European practice or avant-garde Modernism. He
+             visited Ndebele settlements near Pretoria in the late 1940s and early 1950s, and the ‘Mapogga’ women in their distinctive 
+             traditional costume and the colourful geometric wall paintings that decorated the homesteads appear in his work from this time. 
+             His work became progressively more abstract in later years, informed by his interest in space travel and discovery, and his focus
+              shifted from the local and the African to encompass the universal.</p>
+          <a class="view-project-link" href="https://www.straussart.co.za/artists/alexis-preller">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
-          <div class="image-caption">Regional Variations (1100 AD)</div>
+          <img alt="South African 1911-1975" src="./assets/alexis-preller.jpg">
+          <div class="image-caption">South African 1911-1975</div>
         </div>
       </div>
     </div>
 
-    <div class="wipe-container" data-index="3">
+    <!-- <div class="wipe-container" data-index="3">
       <div class="slide-view" data-index="3">
         <div class="background-layer"></div>
         <div class="sidebar-content">
@@ -230,7 +163,7 @@
           <div class="image-caption">Legacy Designs (1300 AD)</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="scroll-progress">
       <div class="progress-track">
@@ -239,7 +172,7 @@
       <div class="progress-numbers">
         <span class="current">01</span>
         <span class="separator">/</span>
-        <span class="total">04</span>
+        <span class="total">02</span>
       </div>
     </div>
   </div>
@@ -864,6 +797,21 @@ export default {
       // Call the setup function
       setupImageTransitionSection();
 
+      const el = document.querySelector('.symbolic-element');
+      gsap.to('.symbolic-element', {
+        scrollTrigger: {
+          trigger: '.symbolic-element',
+          start: 'top 60%', // start when element enters viewport
+          toggleActions: 'play reverse play reverse',
+        },
+      scale: 1.05,
+      repeat: 0,
+      yoyo: true,
+      ease: 'sine.inOut',
+      duration: 1.5,
+      boxShadow: '0px 0px 20px 5px rgba(118, 99, 255, 0.9)',
+    });
+
     });
 
     return { title, timelineEvents };
@@ -1008,7 +956,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('./assets/TheSwan.png');
+  /* background-image: url('./assets/TheSwan.png'); */
   background-size: 300px;
   background-position: center;
   opacity: 0.05;
@@ -1357,7 +1305,7 @@ body {
   color: #4e83ff;
   position: relative;
   display: inline-block;
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  text-shadow: 0 0 15px rgba(118, 99, 255, 0.9);
   transition: text-shadow 0.3s ease;
 }
 
@@ -1509,17 +1457,6 @@ h2 {
   font-size: 2rem;
 }
 
-/* .particle-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 5;
-} */
-
 .particle {
   position: absolute;
   width: 6px;
@@ -1572,88 +1509,6 @@ h2 {
   transition: all 0.5s ease;
 }
 
-.spindle-item.top {
-  top: -150px;
-  /* Start above viewport */
-}
-
-.spindle-item.bottom {
-  bottom: -150px;
-  /* Start below viewport */
-}
-
-/* Position each spindle horizontally */
-.spindle-item:nth-child(1) {
-  left: 10%;
-}
-
-.spindle-item:nth-child(2) {
-  left: 30%;
-}
-
-.spindle-item:nth-child(3) {
-  left: 50%;
-}
-
-.spindle-item:nth-child(4) {
-  left: 70%;
-}
-
-.spindle-item:nth-child(5) {
-  left: 90%;
-}
-
-.spindle-item:nth-child(6) {
-  left: 10%;
-}
-
-.spindle-item:nth-child(7) {
-  left: 30%;
-}
-
-.spindle-item:nth-child(8) {
-  left: 50%;
-}
-
-.spindle-item:nth-child(9) {
-  left: 70%;
-}
-
-.spindle-item:nth-child(10) {
-  left: 90%;
-}
-
-.spindle-parallax-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
-}
-
-.parallax-content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  color: white;
-  padding: 2rem;
-  max-width: 800px;
-  opacity: 0;
-  margin-top: 200px;
-  /* Make space for spindles */
-}
-
-.parallax-content h2 {
-  font-size: 3rem;
-  color: #4e83ff;
-  margin-bottom: 1rem;
-}
-
-.parallax-content p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: white;
-}
-
 /* Ripple Effect Section */
 .impact-visualization {
   position: absolute;
@@ -1674,7 +1529,7 @@ h2 {
   width: 200px;
   height: 200px;
   z-index: 25;
-  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.7));
+  filter: drop-shadow(0 0 20px rgba(118, 99, 255, 0.9));
   transform: scale(0.8);
   opacity: 0;
 }
@@ -1690,99 +1545,6 @@ h2 {
   width: 100%;
   height: 100%;
   z-index: 22;
-}
-
-.ripple-circle {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 215, 0, 0.5);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-}
-
-.ripple-circle[data-category="trade"] {
-  width: 300px;
-  height: 300px;
-  border-color: rgba(255, 215, 0, 0.6);
-}
-
-.ripple-circle[data-category="technology"] {
-  width: 500px;
-  height: 500px;
-  border-color: rgba(255, 215, 0, 0.5);
-}
-
-.ripple-circle[data-category="society"] {
-  width: 700px;
-  height: 700px;
-  border-color: rgba(255, 215, 0, 0.4);
-}
-
-.ripple-circle[data-category="art"] {
-  width: 900px;
-  height: 900px;
-  border-color: rgba(255, 215, 0, 0.3);
-}
-
-.impact-cards {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 23;
-}
-
-.impact-card {
-  position: absolute;
-  width: 250px;
-  padding: 20px;
-  background: rgba(45, 30, 15, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 10px;
-  opacity: 0;
-  transform: scale(0.8);
-  pointer-events: auto;
-  /* Make cards clickable */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.impact-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-}
-
-.impact-card[data-category="trade"] {
-  top: calc(50% - 150px);
-  left: calc(50% + 200px);
-}
-
-.impact-card[data-category="technology"] {
-  top: calc(50% + 100px);
-  left: calc(50% + 300px);
-}
-
-.impact-card[data-category="society"] {
-  top: calc(50% - 250px);
-  left: calc(50% - 400px);
-}
-
-.impact-card[data-category="art"] {
-  top: calc(50% + 150px);
-  left: calc(50% - 375px);
-}
-
-.impact-card h3 {
-  color: #ffd700;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-}
-
-.impact-card p {
-  color: white;
-  font-size: 1rem;
-  line-height: 1.5;
 }
 
 /* Responsive adjustments for smaller screens */
@@ -1895,7 +1657,7 @@ h2 {
 /* Make sure this doesn't conflict with the hover effect */
 .impact-card.glow-effect:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  box-shadow: 0 0 25px rgba(118, 99, 255, 0.9);
 }
 
 .project-number {
@@ -2152,9 +1914,9 @@ h2 {
   left: 0;
   right: 0;
   height: 2px;
-  background: rgba(255, 215, 0, 0.8);
+  background: rgba(118, 99, 255, 0.9);
   top: 0;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  box-shadow: 0 0 15px rgba(118, 99, 255, 0.9);
   z-index: 100;
 }
 
@@ -2281,7 +2043,7 @@ h2 {
 
 /* Add a subtle hover effect to the museum info */
 .museum-info:hover {
-  box-shadow: 0 0 15px rgba(255, 239, 0, 0.2);
+  box-shadow: 0 0 15px rgba(118, 99, 255, 0.9);
   transform: translateY(-2px);
   transition: all 0.3s ease;
 }
@@ -2291,4 +2053,28 @@ h2 {
   color: #4e83ff;
   font-weight: 600;
 }
+
+.symbolic-element {
+  width: 120px;
+  height: 120px;
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0.9;
+  transform: scale(7);
+}
+
+.symbolic-element img {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+h1 {
+  text-shadow: 0 2px 8px rgba(118, 99, 255, 0.9) !important;
+  color: #ffffff !important;
+  /* font-weight: 200 !important; */
+}
+
 </style>
