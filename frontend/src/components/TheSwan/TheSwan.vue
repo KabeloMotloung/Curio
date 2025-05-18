@@ -1,6 +1,19 @@
 <template>
-  <div class="relative w-full overflow-hidden h-[500vh] custom-cursor">
-    <!-- Loading overlay removed -->
+  <div class="relative w-full overflow-hidden h-[500vh] custom-cursor">   
+    <!-- Loading overlay -->
+    <div 
+      ref="loaderOverlay"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#111111] transition-opacity duration-1000"
+      :class="{ 'opacity-0 pointer-events-none': !isLoading }"
+    >
+      <div class="flex flex-col items-center">
+        <!-- Sleek spinner loader -->
+        <div class="relative w-16 h-16 mb-5">
+          <div class="absolute inset-0 border-2 border-white/10 rounded-full"></div>
+          <div class="absolute inset-0 border-2 border-transparent border-t-white rounded-full animate-spinner"></div>        </div>
+        <p class="text-white text-base font-raleway uppercase tracking-widest">Loading<span ref="loadingDots">.</span></p>
+      </div>
+    </div>
 
     <!-- Back button -->
     <BackButton />
@@ -53,7 +66,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -146,6 +159,9 @@ const timelineEvents = [
 const scrollPosition = ref(0);
 const currentParchmentIndex = ref(1);
 const contentOpacity = ref(0);
+const isLoading = ref(true);
+const loadingDots = ref(null);
+let loadingDotsInterval;
 
 const swanBackground = ref(null);
 const welcomeView = ref(null);
@@ -155,10 +171,13 @@ const timeline = ref(null);
 const timelineContainer = ref(null);
 const backgroundInfo = ref(null);
 const backgroundInfoContainer = ref(null);
+const loaderOverlay = ref(null);
 
 let ticking = false;
 let lastScrollY = 0;
 const scrollThreshold = 5;
+
+const REFRESH_KEY = "swan_refresh_requested";
 
 const animateOnScroll = () => {
   if (Math.abs(window.scrollY - lastScrollY) < scrollThreshold && ticking) {
@@ -327,13 +346,116 @@ watch(currentParchmentIndex, (newValue) => {
   }
 });
 
+const resetAnimations = () => {
+  window.scrollTo(0, 0);
+  
+  scrollPosition.value = 0;
+  currentParchmentIndex.value = 1;
+  contentOpacity.value = 0;
+  lastScrollY = 0;
+  isLoading.value = true;
+  
+  document.body.style.overflow = 'hidden';
+  
+  nextTick(() => {
+    animateOnScroll();
+    setTimeout(() => {
+      isLoading.value = false;
+      document.body.style.overflow = '';
+    }, 800);
+  });
+};
+
+const manualRefresh = () => {
+  resetAnimations();
+  
+  nextTick(() => {
+    if (timeline.value) {
+      const timelineElement = timeline.value.$el;
+      if (timelineElement) {
+        timelineElement.style.display = 'none';
+        void timelineElement.offsetHeight;
+        timelineElement.style.display = '';
+      }
+    }
+    
+    animateOnScroll();
+  });
+};
+
+const handleBeforeUnload = () => {
+  sessionStorage.setItem(REFRESH_KEY, 'true');
+};
+
+const animateLoadingDots = () => {
+  if (!loadingDots.value) return;
+  
+  const dotPatterns = ['.', '..', '...', '.', '..', '...'];
+  let currentIndex = 0;
+  
+  document.body.style.overflow = 'hidden';
+  
+  loadingDotsInterval = setInterval(() => {
+    loadingDots.value.textContent = dotPatterns[currentIndex];
+    currentIndex = (currentIndex + 1) % dotPatterns.length;
+  }, 400);
+};
+
+const handleAssetsLoaded = () => {
+  setTimeout(() => {
+    isLoading.value = false;
+    if (loadingDotsInterval) {
+      clearInterval(loadingDotsInterval);
+    }
+    document.body.style.overflow = '';
+  }, 1500);
+};
+
 onMounted(() => {
+  const wasRefreshed = sessionStorage.getItem(REFRESH_KEY) === 'true';
+  
+  if (wasRefreshed) {
+    sessionStorage.removeItem(REFRESH_KEY);
+    manualRefresh();
+  } else {
+    resetAnimations();
+  }
+  
+  animateLoadingDots();
+  const imagesToPreload = [
+    './assets/the-swan-painting.jpg', 
+    './assets/parchments/parchment-1.png',
+    './assets/clouds/cloud1.png',
+    './assets/clouds/cloud2.png',
+    './assets/clouds/cloud3.png',
+    './assets/sky-background.jpg'
+  ];
+  
+  const preloadPromises = imagesToPreload.map(src => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve;
+      img.src = src;
+    });
+  });
+  
+  Promise.all(preloadPromises).then(handleAssetsLoaded);
+  
+  window.addEventListener('beforeunload', handleBeforeUnload);
   window.addEventListener('scroll', animateOnScroll);
-  animateOnScroll();
+  animateLoadingDots();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', animateOnScroll);
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+  
+  if (loadingDotsInterval) {
+    clearInterval(loadingDotsInterval);
+  }
+  
+  document.body.style.overflow = '';
 });
 </script>
 
@@ -365,5 +487,25 @@ html, body {
 
 .custom-cursor {
   cursor: url('./assets/quill_cursor.png'), auto;
+}
+
+/* Loading animation */
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spinner {
+  animation: spinner 1s linear infinite;
+}
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.15em;
 }
 </style>
