@@ -87,7 +87,7 @@ const fetchData = async () => {
   error.value = null;
 
   try {
-    const response = await fetch('http://localhost:5000/api/v1/dynamoDB/');
+    const response = await fetch('http://ec2-3-255-244-44.eu-west-1.compute.amazonaws.com:5000/api/v1/dynamoDB/');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

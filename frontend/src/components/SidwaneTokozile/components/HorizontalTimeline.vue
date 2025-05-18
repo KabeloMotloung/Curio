@@ -121,13 +121,13 @@ export default {
 
 <style scoped>
 .container {
-    width: 500%;
-    height: 100vh;
     display: flex;
     flex-wrap: nowrap;
     isolation: isolate;
     position: relative;
     z-index: 1;
+    background: url('../assets/timeline-background.jpeg') fixed center/cover no-repeat;
+    min-width: 100vw;
 }
 
 .timeline-item {
@@ -137,7 +137,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('../assets/timeline-background.jpeg') center/cover no-repeat;
     color: #3a2718;
     text-align: center;
     position: relative;
@@ -154,14 +153,6 @@ export default {
     height: 100%;
     background-color: rgba(20, 12, 8, 0.65);
     z-index: 1;
-}
-
-.timeline-item:nth-child(odd) {
-    background: url('../assets/timeline-background.jpeg') center/cover no-repeat;
-}
-
-.timeline-item:nth-child(even) {
-    background: url('../assets/timeline-background.jpeg') center/cover no-repeat;
 }
 
 .timeline-content {
