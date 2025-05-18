@@ -1,7 +1,7 @@
 <template>
   <div class="sidwane-container">
     <BackButton />
-    <ScrollProgress :totalSections="4" />
+    <ScrollProgress :totalSections="5" />
     
     <section class="section">
       <LandingPage />
@@ -18,6 +18,10 @@
     <section class="section">
       <ImageShowcase />
     </section>
+
+    <section class="section">
+      <Model3D />
+    </section>
     
   </div>
 </template>
@@ -33,6 +37,7 @@ import LandingPage from './components/LandingPage.vue';
 import BackgroundInformation from './components/BackgroundInformation.vue';
 import TimelineScroll from './components/HorizontalTimeline.vue';
 import ImageShowcase from './components/ImageShowcase.vue';
+import Model3D from './components/3dModel.vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
