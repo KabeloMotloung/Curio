@@ -78,6 +78,10 @@ import BackButton from "../UniversalComponents/BackButton.vue";
 import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 import Timeline from "./components/Timeline.vue"; 
 import BackgroundInformation from "./components/BackgroundInformation.vue";
+import swanImage from './assets/TheSwan.png';
+import parchmentImage from './assets/parchments/parchment-1.png';
+import cloudImage from './assets/cloud.png';
+import skyBackground from './assets/sky-background.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -420,15 +424,12 @@ onMounted(() => {
   } else {
     resetAnimations();
   }
-  
-  animateLoadingDots();
+    animateLoadingDots();
   const imagesToPreload = [
-    './assets/the-swan-painting.jpg', 
-    './assets/parchments/parchment-1.png',
-    './assets/clouds/cloud1.png',
-    './assets/clouds/cloud2.png',
-    './assets/clouds/cloud3.png',
-    './assets/sky-background.jpg'
+    swanImage, 
+    parchmentImage,
+    cloudImage,
+    skyBackground
   ];
   
   const preloadPromises = imagesToPreload.map(src => {
