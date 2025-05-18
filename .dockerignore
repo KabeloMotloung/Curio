@@ -1,0 +1,42 @@
+# Node.js
+frontend/node_modules
+frontend/.npm
+frontend/npm-debug.log
+frontend/.pnpm-debug.log
+frontend/pnpm-debug.log
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.yarn-integrity
+frontend/.yarn
+
+# TypeScript
+frontend/*.tsbuildinfo
+
+# Vue.js build output
+frontend/dist
+frontend/dist-ssr
+frontend/.vite
+
+# IDE files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Misc
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.log

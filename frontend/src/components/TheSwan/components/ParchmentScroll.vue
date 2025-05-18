@@ -3,7 +3,7 @@
     <div class="relative p-6 rounded-lg overflow-hidden bg-transparent">
       <img 
         :src="currentParchmentImage" 
-        class="absolute inset-0 w-full h-full object-contain parchment-filter"
+        class="absolute inset-0 w-full h-full object-contain filter contrast-[0.85] brightness-[0.92] saturate-[0.8] sepia-[0.15]"
         alt="Parchment"
       />
       
@@ -83,34 +83,13 @@
 <script setup>
 import { ref, computed, watch, nextTick, onMounted } from 'vue';
 import { gsap } from 'gsap';
-import parchment1 from '../assets/parchments/parchment-1.png';
-import parchment2 from '../assets/parchments/parchment-2.png';
-import parchment3 from '../assets/parchments/parchment-3.png';
-import parchment4 from '../assets/parchments/parchment-4.png';
-import parchment5 from '../assets/parchments/parchment-5.png';
-import parchment6 from '../assets/parchments/parchment-6.png';
-import parchment7 from '../assets/parchments/parchment-7.png';
-
-const isLowResourceDevice = ref(false);
-
-const detectPerformance = () => {
-  if (navigator.deviceMemory && navigator.deviceMemory <= 2) {
-    isLowResourceDevice.value = true;
-  }
-  
-  if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) {
-    isLowResourceDevice.value = true;
-  }
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    const isMobileLowEnd = 
-      (navigator.deviceMemory && navigator.deviceMemory < 4) || 
-      (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4);
-      
-    if (isMobileLowEnd) {
-      isLowResourceDevice.value = true;
-    }
-  }
-};
+import parchment1 from '../assets/parchments/parchment-1-min.png';
+import parchment2 from '../assets/parchments/parchment-2-min.png';
+import parchment3 from '../assets/parchments/parchment-3-min.png';
+import parchment4 from '../assets/parchments/parchment-4-min.png';
+import parchment5 from '../assets/parchments/parchment-5-min.png';
+import parchment6 from '../assets/parchments/parchment-6-min.png';
+import parchment7 from '../assets/parchments/parchment-7-min.png';
 
 const parchmentContainer = ref(null);
 const currentParchmentIndex = ref(1);
@@ -142,91 +121,37 @@ defineProps({
   }
 });
 
-const splitTextIntoWords = (element) => {
-  if (!element) return [];
+const animateElement = (element, delay = 0) => {
+  if (!element) return;
   
-  const text = element.textContent;
-    if (text.length < 10) {
-    const span = document.createElement('span');
-    span.textContent = text;
-    span.style.opacity = '0';
-    span.className = 'word';
-    element.innerHTML = '';
-    element.appendChild(span);
-    return [span];
-  }
-    const words = text.split(' ');
-  const fragment = document.createDocumentFragment();
-  const spans = [];
-    const wordBatchSize = isLowResourceDevice.value ? 3 : 1;
-  const batchCount = Math.ceil(words.length / wordBatchSize);
+  element.style.opacity = '0';
   
-  for (let i = 0; i < batchCount; i++) {
-    const start = i * wordBatchSize;
-    const end = Math.min(start + wordBatchSize, words.length);
-    const batchText = words.slice(start, end).join(' ');
-    
-    const span = document.createElement('span');
-    span.textContent = batchText;
-    span.style.opacity = '0';
-    span.style.display = 'inline-block';
-    span.className = 'word';
-    
-    fragment.appendChild(span);
-    spans.push(span);
-    
-    if (i < batchCount - 1) {
-      fragment.appendChild(document.createTextNode(' '));
-    }
-  }
-  
-  element.innerHTML = '';
-  element.appendChild(fragment);
-  
-  return spans;
-};
-
-const animateWords = (wordSpans, delay = 0) => {
-  if (!wordSpans || wordSpans.length === 0) return;
-  
-  gsap.to(wordSpans, {
+  gsap.to(element, {
     opacity: 1,
-    duration: isLowResourceDevice.value ? 0.15 : 0.2,
-    stagger: isLowResourceDevice.value ? 0.05 : 0.08,
-    delay: delay,    ease: "power2.out",
-    overwrite: true
+    duration: 0.4,
+    delay: delay,
+    ease: "power2.out"
   });
 };
 
-watch(currentParchmentIndex, (newIndex, oldIndex) => {  nextTick(() => {
+watch(currentParchmentIndex, (newIndex, oldIndex) => {
+  nextTick(() => {
     if (newIndex >= 4 && oldIndex < 4) {
-      const titleWords = splitTextIntoWords(section1Title.value);
-      const textWords = splitTextIntoWords(section1Text.value);
-      
-      animateWords(titleWords, 0.3);
-      animateWords(textWords, 0.6);
+      animateElement(section1Title.value, 0.1);
+      animateElement(section1Text.value, 0.3);
     }
     
     if (newIndex >= 5 && oldIndex < 5) {
-      const titleWords = splitTextIntoWords(section2Title.value);
-      const textWords = splitTextIntoWords(section2Text.value);
-      
-      animateWords(titleWords, 0.3);
-      animateWords(textWords, 0.6);
+      animateElement(section2Title.value, 0.1);
+      animateElement(section2Text.value, 0.3);
     }
     
     if (newIndex >= 7 && oldIndex < 7) {
-      const titleWords = splitTextIntoWords(title.value);
-      const subtitleWords = splitTextIntoWords(subtitle.value);
-      const yearWords = splitTextIntoWords(years.value);
-      const sectionTitleWords = splitTextIntoWords(section3Title.value);
-      const sectionTextWords = splitTextIntoWords(section3Text.value);
-      
-      animateWords(titleWords, 0.3);
-      animateWords(subtitleWords, 0.8);
-      animateWords(yearWords, 1.0);
-      animateWords(sectionTitleWords, 1.2);
-      animateWords(sectionTextWords, 1.5);
+      animateElement(title.value, 0.1);
+      animateElement(subtitle.value, 0.3);
+      animateElement(years.value, 0.4);
+      animateElement(section3Title.value, 0.5);
+      animateElement(section3Text.value, 0.7);
     }
   });
 }, { immediate: false });
@@ -235,43 +160,20 @@ const updateParchmentStage = (newStage) => {
   currentParchmentIndex.value = newStage;
 };
 
-const preloadImages = () => {
-  const currentIndex = currentParchmentIndex.value;
-  const highPriorityIndices = isLowResourceDevice.value
-    ? [currentIndex, currentIndex + 1].filter(i => i <= 7)
-    : [currentIndex, currentIndex + 1, currentIndex + 2].filter(i => i <= 7);
-    highPriorityIndices.forEach(index => {
-    const img = new Image();
-    img.src = parchmentImages[index];
-  });
-  
-  if (!isLowResourceDevice.value) {
-    setTimeout(() => {
-      Object.entries(parchmentImages).forEach(([index, src]) => {
-        if (!highPriorityIndices.includes(Number(index))) {
-          const img = new Image();
-          img.src = src;
-        }
-      });
-    }, 3000);
-  }
-};
-
 const currentParchmentImage = computed(() => {
-  try {
-    const img = parchmentImages[currentParchmentIndex.value];
-    if (!img) {
-      return parchmentImages[1];
-    }
-    return img;
-  } catch {
-    return parchmentImages[1];
-  }
+  return parchmentImages[currentParchmentIndex.value];
 });
 
+const preloadImages = () => {
+  const imagesToPreload = Object.values(parchmentImages);
+  
+  imagesToPreload.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+};
 
 onMounted(() => {
-  detectPerformance();
   preloadImages();
 });
 
@@ -310,14 +212,5 @@ h2, h3 {
   color: #2a1f1f;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
   filter: contrast(0.95) brightness(0.98);
-}
-
-.word {
-  opacity: 0;
-  display: inline-block;
-}
-
-.parchment-filter {
-  filter: contrast(0.85) brightness(0.92) saturate(0.8) sepia(0.15);
 }
 </style>
