@@ -35,13 +35,13 @@ export default {
   border: none;
   color: white;
   font-size: 16px;
-  padding: 0;              /* Remove extra padding */
+  padding: 0;              
   cursor: pointer;
   border-radius: 5px;
   transition: transform 0.3s;
-  height: 320px;           /* Increase height */
-  width: 90vw;             /* Responsive width for mobile */
-  max-width: 500px;        /* Limit max width for desktop */
+  height: 40vh;             
+  width: 90vw;             
+  max-width: 500px;        
   display: block;
   margin: 0 auto;
 }
