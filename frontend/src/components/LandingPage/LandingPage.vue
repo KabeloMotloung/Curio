@@ -24,6 +24,9 @@ const sections = ref([])
 const currentSection = ref(-1)
 const animations = ref([])
 const artifactInfo = ref([]);
+const navOpen = ref(false);
+const scrollLocked = ref(false);
+const toggleNav = () => { navOpen.value = !navOpen.value; };
 const artifactInfoFallBack = {
   theDiscovery: {
     title: "The Discovery",
@@ -232,9 +235,17 @@ const navigateToSection = (index) => {
 };
 
 const handleWheel = (e) => {
+  if (scrollLocked.value) return; // Prevent rapid scrolls
+
   if (Math.abs(e.deltaY) < 5) return;
 
   e.preventDefault();
+
+  // Lock scroll for the duration of the animation
+  scrollLocked.value = true;
+  setTimeout(() => {
+    scrollLocked.value = false;
+  }, 700); // Adjust this duration to match your animation speed
 
   const now = Date.now();
   const isRapidScroll = now - lastScrollTime < 150;
@@ -287,20 +298,30 @@ const handleKeydown = (e) => {
     if (currentSection.value > 0) {
       navigateToSection(currentSection.value - 1)
     } else if (currentSection.value === 0) {
-      currentSection.value = -1
-      welcomeMessage.value.style.display = 'flex'
-
-      const welcomeAnim = gsap.fromTo(welcomeMessage.value,
-          {opacity: 0, scale: 0.95},
-          {opacity: 1, scale: 1, duration: 0.5}
-      )
-
-      const promptAnim = gsap.fromTo(scrollPrompt.value,
-          {opacity: 0, y: 20},
-          {opacity: 1, y: 0, duration: 0.5}
-      )
-
-      animations.value.push(welcomeAnim, promptAnim)
+     // Animate the +current section out to the right
+      const sectionAnim = gsap.to(sections.value[0], {
+        autoAlpha: 0,
+        x: "100%",
+        duration: 0.5,
+        ease: "power1.out",
+        onComplete: () => {
+          gsap.set(sections.value[0], {autoAlpha: 0, x: "100%"});
+          // Show and animate the welcome message in
+          welcomeMessage.value.style.display = 'flex';
+          gsap.fromTo(
+            welcomeMessage.value,
+            {opacity: 0, scale: 0.95},
+            {opacity: 1, scale: 1, duration: 0.5, ease: "power2.out"}
+          );
+          gsap.fromTo(
+            scrollPrompt.value,
+            {opacity: 0, y: 20},
+            {opacity: 1, y: 0, duration: 0.5, ease: "power2.out"}
+          );
+          currentSection.value = -1;
+        }
+      });
+      animations.value.push(sectionAnim);
     }
   }
 }
@@ -382,14 +403,21 @@ onBeforeUnmount(() => {
 
   <nav class="top-navigation">
     <div class="nav-container">
-      <div
+      <button class="burger" @click="toggleNav" aria-label="Toggle navigation">
+        <span :class="{ open: navOpen }"></span>
+        <span :class="{ open: navOpen }"></span>
+        <span :class="{ open: navOpen }"></span>
+      </button>
+      <div class="nav-items" :class="{ open: navOpen }">
+        <div
           v-for="(info, index) in artifactInfo"
           :key="info['artifact-id'] || index"
           class="nav-item"
-          @click="navigateToSection(index)"
+          @click="navigateToSection(index); navOpen = false"
           :class="{ active: currentSection === index }"
-      >
-        {{ info.title }}
+        >
+          {{ info.title }}
+        </div>
       </div>
     </div>
   </nav>
@@ -457,6 +485,16 @@ onBeforeUnmount(() => {
 
 
 <style>
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
 @keyframes loading-bar {
   0% { transform: translateX(-100%) }
   100% { transform: translateX(100%) }
@@ -468,8 +506,8 @@ onBeforeUnmount(() => {
 }
 .welcome-message {
   position: fixed;
-  top: 45%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
   color: white;
@@ -478,10 +516,14 @@ onBeforeUnmount(() => {
   transition: opacity 0.3s ease;
   padding: 2rem 3rem;
   border-radius: 15px;
-  max-width: 80%;
+  max-width: 90vw;
+  width: auto;
+  min-width: 250px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Add this for vertical alignment */
 }
 
 .welcome-message h1 {
@@ -538,10 +580,11 @@ onBeforeUnmount(() => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .card-pair {
@@ -654,7 +697,8 @@ body {
 .navigation-controls {
   position: fixed;
   bottom: 40px;
-  left: 47%;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   display: flex;
   gap: 15px;
@@ -724,6 +768,7 @@ body {
   right: 0;
   z-index: 100;
   padding: 0px 0 1rem;
+  background: transparent;
 }
 
 .nav-container {
@@ -731,22 +776,114 @@ body {
   margin: 0 auto;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
   padding: 1rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  background: transparent;
+}
+
+.nav-items {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  transition: none;
+  position: static;
+  background: none;
+  padding: 0;
+  color:white;
 }
 
 .nav-item {
-  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  transition: background-color 0.25s, transform 0.25s;
+  /* Add any other styles you had before */
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 200;
+  margin-right: 1rem;
+}
+.burger span {
+  display: block;
+  height: 4px;
+  width: 100%;
+  background: white;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+.burger span.open:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.burger span.open:nth-child(2) {
+  opacity: 0;
+}
+.burger span.open:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+@media (max-width: 1000px) {
+  .burger {
+    display: flex;
+  }
+  .nav-items {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(30,30,30,0.98);
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    z-index: 150;
+    display: none;
+  }
+  .nav-items.open {
+    display: flex;
+  }
+  .nav-container {
+    justify-content: flex-start;
+    position: relative;
+  }
+}
+
+@media (min-width: 1001px) {
+  .burger {
+    display: none !important;
+  }
+  .nav-items {
+    display: flex !important;
+    position: static !important;
+    background: none !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    gap: 2rem !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .nav-container {
+    border: none;
+    border-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
 }
 
 .nav-item:hover {
