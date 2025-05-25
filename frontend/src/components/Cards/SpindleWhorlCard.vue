@@ -1,5 +1,6 @@
 <template>
-  <button @click="onClick" class="image-button" :style="buttonStyle">
+  <button @click="onClick" class="image-button">
+    <img :src="artifactImage" alt="The Spindle Whorl" />
   </button>
 </template>
 
@@ -12,10 +13,8 @@ export default {
     }
   },
   computed: {
-    buttonStyle() {
-      return {
-        backgroundImage: `url(${this.imageUrl})`
-      };
+    artifactImage() {
+      return this.imageUrl;
     }
   },
   methods: {
@@ -39,7 +38,7 @@ export default {
   cursor: pointer;
   border-radius: 5px;
   transition: transform 0.3s;
-  height: 40vh;          
+  height: auto !important;          
   width: 80vw;             
   max-width: 500px;        
   display: block;

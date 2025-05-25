@@ -606,6 +606,9 @@ body, html {
 
 .artifact-container {
   display: flex;
+  flex-direction: row; /* or column for mobile */
+  height: 70vh; /* or 100% if parent is constrained */
+  min-height: 0;
   width: 60%;
   max-width: 1000px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -617,10 +620,11 @@ body, html {
 }
 
 .artifact-image-container {
-  flex: 1;
-  height: 400px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
 
 .info-card {
   flex: 1;
@@ -838,8 +842,10 @@ body {
   transform: translateY(-9px) rotate(-45deg);
 }
 
+
+/* Hide info-card and show only image + title on mobile */
 @media (max-width: 1000px) {
-  .burger {
+   .burger {
     display: flex;
   }
   .nav-items {
@@ -862,23 +868,6 @@ body {
     justify-content: flex-start;
     position: relative;
   }
-}
-
-@media (min-width: 1001px) {
-  .burger {
-    display: none !important;
-  }
-  .nav-items {
-    display: flex !important;
-    position: static !important;
-    background: none !important;
-    flex-direction: row !important;
-    padding: 0 !important;
-    gap: 2rem !important;
-  }
-}
-
-@media (max-width: 1000px) {
   .nav-container {
     border: none;
     border-radius: 0;
@@ -887,37 +876,25 @@ body {
     background: transparent;
     box-shadow: none;
   }
-}
-
-/* Hide info-card and show only image + title on mobile */
-@media (max-width: 1000px) {
   .artifact-container {
     flex-direction: column;
-    width: 95vw;
-    max-width: 98vw;
-    padding: 16px;
-    align-items: center;
-    justify-content: center;
+    height: auto;
+    min-height: 0;
   }
   .artifact-image-container {
-    width: 100%;
-    min-height: 220px;
-    max-height: 320px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 12px;
+    height: auto;
+    min-height: 0;
+    max-height: 60vh;
   }
+  .artifact-image-container .image-button,
   .artifact-image-container img,
   .artifact-image-container > * {
-    /* This targets the image or the Vue component inside */
-    /* max-width: 90vw;
-    max-height: 300px; */
-    width: auto;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
+    display: block;
   }
   .artifact-title-mobile {
     display: block;
@@ -935,11 +912,89 @@ body {
   }
 }
 
-/* On desktop, hide the mobile title */
 @media (min-width: 1001px) {
-  .artifact-title-mobile {
+  .burger {
     display: none !important;
   }
+  .nav-items {
+    display: flex !important;
+    position: static !important;
+    background: none !important;
+    flex-direction: row !important;
+    padding: 0 !important;
+    gap: 2rem !important;
+  }
+}
+
+/* 1001px to 1500px: Stack image on top, info below */
+@media (min-width: 1001px) and (max-width: 1500px) {
+  .artifact-container {
+    flex-direction: column;
+    width: 70vw;
+    max-width: 900px;
+    min-height: 50vh;
+    max-height: 90vh;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .artifact-image-container {
+    width: 100%;
+    height: auto;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .info-card {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    padding: 24px 12px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+   .artifact-title-mobile{
+    display: none !important;
+   }
+}
+
+/* ≥1501px: Side-by-side layout (default) */
+@media (min-width: 1501px) {
+  .artifact-container {
+    flex-direction: row;
+    width: 60vw;
+    max-width: 1000px;
+    min-height: 40vh;
+    max-height: 80vh;
+    height: 70vh;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+  }
+  .artifact-image-container {
+    flex: 1;
+    height: auto;
+    margin-bottom: 0;
+  }
+  .info-card {
+    flex: 1;
+    margin-left: 30px;
+    margin-top: 0;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .artifact-title-mobile{
+    display: none !important;
+   }
 }
 
 .nav-item:hover {
