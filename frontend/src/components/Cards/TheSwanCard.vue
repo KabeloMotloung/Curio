@@ -29,23 +29,26 @@ export default {
 
 <style scoped>
     .image-button {
-        background-size: contain; 
-        background-position: center; 
-        background-repeat: no-repeat;
-        background-color: rgba(0, 0, 0, 0.2); 
-        border: none; 
-        color: white; 
-        font-size: 16px; 
-        padding: 10px 20px; 
-        cursor: pointer; 
-        width: 100%; 
-        height: 100%; 
-        border-radius: 5px; 
-        transition: transform 0.3s; 
-    }
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 0;              /* Remove extra padding */
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s;
+  height: 320px;           /* Increase height */
+  width: 90vw;             /* Responsive width for mobile */
+  max-width: 500px;        /* Limit max width for desktop */
+  display: block;
+  margin: 0 auto;
+}
 
-    .image-button:hover {
-        transform: scale(1.05); 
-    }
+.image-button:hover {
+    transform: scale(1.05); 
+}
 
 </style>

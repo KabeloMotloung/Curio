@@ -448,6 +448,9 @@ onBeforeUnmount(() => {
             <div class="artifact-image-container">
               <component :is="getComponentName(artifact.title)" v-if="getComponentName(artifact.title)" :image-url="artifact.image_url"/>
             </div>
+            <div class="artifact-title-mobile">
+              {{ artifact.title }}
+            </div>
             <div class="info-card">
               <h2>{{ artifact.title }}</h2>
               <h3>{{ artifact.artist }}</h3>
@@ -883,6 +886,59 @@ body {
     border-bottom-right-radius: 0;
     background: transparent;
     box-shadow: none;
+  }
+}
+
+/* Hide info-card and show only image + title on mobile */
+@media (max-width: 1000px) {
+  .artifact-container {
+    flex-direction: column;
+    width: 95vw;
+    max-width: 98vw;
+    padding: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+  .artifact-image-container {
+    width: 100%;
+    min-height: 220px;
+    max-height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .artifact-image-container img,
+  .artifact-image-container > * {
+    /* This targets the image or the Vue component inside */
+    /* max-width: 90vw;
+    max-height: 300px; */
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+  .artifact-title-mobile {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-top: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .info-card {
+    display: none !important;
+  }
+}
+
+/* On desktop, hide the mobile title */
+@media (min-width: 1001px) {
+  .artifact-title-mobile {
+    display: none !important;
   }
 }
 
