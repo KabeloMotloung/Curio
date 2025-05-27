@@ -13,12 +13,9 @@
       </p>
     </div>
 
-    <div class="scroll-indicator">
-      <p class="scroll-text">Scroll to explore</p>
-      <div class="arrow-container">
-        <div class="arrow"></div>
-      </div>
-    </div>
+
+    <ScrollArrow textColor="text-white" arrowColor="text-white" />
+
   </div>
 
   <div class="container">
@@ -106,7 +103,6 @@
         <p class="slide-description">Beyond their practical function, decorated spindle whorls carried symbolic
           significance tied to female identity and status. The careful selection of materials and decorative patterns
           featuring parallel lines and triangular motifs created visually dynamic effects during spinning.</p>
-        <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
       </div>
       <div class="image-frame-container">
         <img alt="Early Designs" src="./assets/decorated.png">
@@ -129,7 +125,7 @@
             potsherds were shaped into rough circles. Craftspeople would grind and reshape these discs on stone
             surfaces, with some receiving fine smoothing before the crucial central perforation was added to complete
             the functional spindle whorl.</p>
-          <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
+
         </div>
         <div class="image-frame-container">
           <img alt="Regional Variations" src="./assets/stones.png">
@@ -154,7 +150,6 @@
             shape working in harmony. Smaller whorls create finer threads by spinning faster, while heavier ones produce
             thicker materials by rotating more slowly, demonstrating how these tools were precisely calibrated for
             different textile applications.</p>
-          <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
           <img alt="Advanced Designs" src="./assets/spindles.png">
@@ -179,7 +174,6 @@
             like siltstone, sandstone and mudstone. These disc-shaped, flat artifacts were carefully carved or chipped
             and perforated by hand. The laborious process of drilling holes through stone suggests these specialized
             tools may have been produced in limited quantities for specific needs or ritual purposes.</p>
-          <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
         </div>
         <div class="image-frame-container">
           <img alt="Legacy Designs" src="./assets/exhibit.png">
@@ -255,13 +249,15 @@
 import { onMounted, ref } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import BackButton from "../UniversalComponents/BackButton.vue";
 import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
+import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default {
-  components: { ScrollProgress, BackButton },
+  components: { ScrollProgress, BackButton, ScrollArrow },
   setup() {
     const bg = ref(null);
     const title = ref(null);
@@ -297,6 +293,199 @@ export default {
         fact: "Excavations at the royal hill uncovered gold-adorned spindle whorls, suggesting their use in royal ceremonies."
       },
     ];
+
+function setupScrollBreakpoints() {
+  // Define your section boundary points
+  const breakpoints = [
+    {
+      element: '.intro-container',
+      position: 'bottom', // When the bottom of this element reaches viewport bottom
+      reached: false,
+      sectionName: 'Introduction'
+    },
+    {
+      element: '.container',
+      position: 'bottom',
+      reached: false,
+      sectionName: 'Timeline'
+    },
+    {
+      element: '.last-container',
+      position: 'bottom',
+      reached: false,
+      sectionName: 'Artifact Details'
+    },
+    {
+      element: '.image-transition-section',
+      position: 'bottom',
+      reached: false, 
+      sectionName: 'Spindle Whorls Gallery'
+    }
+  ];
+  
+  // Track scroll state
+  let isScrollBlocked = false;
+  let lastScrollPos = window.scrollY;
+  let scrollDirection = 'down';
+  
+  // Function to disable scrolling
+  function disableScroll() {
+    // Store current scroll position
+    const scrollY = window.scrollY;
+    
+    // Define the function that will prevent scrolling
+    const scrollBlocker = function(e) {
+      window.scrollTo(0, scrollY);
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+    
+    // Add event listeners to block scroll
+    window.addEventListener('scroll', scrollBlocker, { passive: false });
+    window.addEventListener('wheel', scrollBlocker, { passive: false });
+    window.addEventListener('touchmove', scrollBlocker, { passive: false });
+    
+    // Return function to re-enable scrolling
+    return function enableScroll() {
+      window.removeEventListener('scroll', scrollBlocker);
+      window.removeEventListener('wheel', scrollBlocker);
+      window.removeEventListener('touchmove', scrollBlocker);
+    };
+  }
+  
+  // Create a pulse effect indicator
+  const indicator = document.createElement('div');
+  indicator.style.cssText = `
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    border: 2px solid #ffd700;
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+  `;
+  document.body.appendChild(indicator);
+  
+  // Check breakpoints on scroll
+  function checkBreakpoints() {
+    if (isScrollBlocked) return;
+    
+    // Update scroll direction
+    scrollDirection = window.scrollY > lastScrollPos ? 'down' : 'up';
+    lastScrollPos = window.scrollY;
+    
+    // Only check on downward scrolls
+    if (scrollDirection !== 'down') return;
+    
+    const viewportHeight = window.innerHeight;
+    
+    breakpoints.forEach((breakpoint, index) => {
+      if (breakpoint.reached) return;
+      
+      const element = document.querySelector(breakpoint.element);
+      if (!element) return;
+      
+      const rect = element.getBoundingClientRect();
+      
+      // Check if we've reached bottom of this section
+      if (breakpoint.position === 'bottom' && 
+          rect.bottom <= viewportHeight + 20 && 
+          rect.bottom >= viewportHeight - 100) {
+        
+        triggerBreakpoint(breakpoint, index);
+      }
+    });
+  }
+  
+  // Trigger effect when hitting a breakpoint
+  function triggerBreakpoint(breakpoint, index) {
+    // Mark as reached to prevent re-triggering
+    breakpoint.reached = true;
+    isScrollBlocked = true;
+    
+    console.log(`Reached ${breakpoint.sectionName}`);
+    
+    // Disable scrolling
+    const enableScroll = disableScroll();
+    
+    // Show ripple effect
+    gsap.set(indicator, { 
+      width: '10px', 
+      height: '10px', 
+      opacity: 0.8 
+    });
+    
+    gsap.to(indicator, {
+      width: '300px',
+      height: '300px',
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.out"
+    });
+    
+    // Play thud sound
+    try {
+      const context = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.value = 80;
+      
+      gain.gain.setValueAtTime(0.5, context.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.5);
+      
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      
+      oscillator.start();
+      oscillator.stop(context.currentTime + 0.5);
+    } catch (e) {
+      console.log('Audio not supported');
+    }
+    
+    // Re-enable scrolling after delay
+    setTimeout(() => {
+      enableScroll();
+      
+      gsap.to(textIndicator, {
+        opacity: 0,
+        duration: 0.3
+      });
+      
+      setTimeout(() => {
+        isScrollBlocked = false;
+        
+        // Reset this breakpoint after some time
+        // to allow re-triggering if user scrolls back up and down again
+        setTimeout(() => {
+          breakpoint.reached = false;
+        }, 5000);
+      }, 300);
+    }, 2000); // Block scrolling for 2 seconds
+  }
+  
+  // Listen for scroll events with throttling
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        checkBreakpoints();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  
+  // Initial check
+  checkBreakpoints();
+}
 
     function setupTimelineAnimations() {
       const container = document.querySelector('.container');
@@ -615,9 +804,9 @@ export default {
     }
 
     onMounted(() => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill(false));
       const sections = gsap.utils.toArray(".panel");
       const timeline = gsap.timeline();
-
       timeline.fromTo(
         title.value,
         {
@@ -653,14 +842,21 @@ export default {
       );
 
       // Horizontal scrolling logic
-      gsap.to(sections, {
-        xPercent: -100 * (sections.length - 1),
+      const timelinePanels = gsap.utils.toArray('.panel');
+      gsap.to(timelinePanels, {
+        xPercent: -100 * (timelinePanels.length - 1),
         ease: "none",
         scrollTrigger: {
           trigger: ".container",
           pin: true,
           scrub: 1,
-          snap: 1 / (sections.length - 1),
+          snap: {
+            snapTo: 1 / (timelinePanels.length - 1),
+            duration: 0.3,
+            delay: 0.1,
+            ease: "power1.inOut",
+            directional: true
+          },
           end: () => "+=" + document.querySelector(".container").offsetWidth,
         },
       });
@@ -886,6 +1082,7 @@ export default {
 
       setupParallaxEffect();
 
+      setupScrollBreakpoints();
     });
 
     return { title, timelineEvents };
