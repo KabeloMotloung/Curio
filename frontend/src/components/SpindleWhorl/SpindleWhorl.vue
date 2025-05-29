@@ -6,8 +6,8 @@
       <div v-for="n in 300" :key="n" class="particle"></div>
     </div>
     <div class="intro-content">
-      <h1 ref="title" class="intro-title">The Spindle Whorl of Mapungubwe</h1>
-      <p class="intro-description">
+      <h1 ref="title" class="intro-title font-raleway">The Spindle Whorl of Mapungubwe</h1>
+      <p class="intro-description font-raleway">
         Discover the rich history and craftsmanship of the ancient kingdom of Mapungubwe through this remarkable
         artifact.
       </p>
@@ -294,69 +294,63 @@ export default {
       },
     ];
 
-function setupScrollBreakpoints() {
-  // Define your section boundary points
-  const breakpoints = [
-    {
-      element: '.intro-container',
-      position: 'bottom', // When the bottom of this element reaches viewport bottom
-      reached: false,
-      sectionName: 'Introduction'
-    },
-    {
-      element: '.container',
-      position: 'bottom',
-      reached: false,
-      sectionName: 'Timeline'
-    },
-    {
-      element: '.last-container',
-      position: 'bottom',
-      reached: false,
-      sectionName: 'Artifact Details'
-    },
-    {
-      element: '.image-transition-section',
-      position: 'bottom',
-      reached: false, 
-      sectionName: 'Spindle Whorls Gallery'
-    }
-  ];
-  
-  // Track scroll state
-  let isScrollBlocked = false;
-  let lastScrollPos = window.scrollY;
-  let scrollDirection = 'down';
-  
-  // Function to disable scrolling
-  function disableScroll() {
-    // Store current scroll position
-    const scrollY = window.scrollY;
-    
-    // Define the function that will prevent scrolling
-    const scrollBlocker = function(e) {
-      window.scrollTo(0, scrollY);
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    };
-    
-    // Add event listeners to block scroll
-    window.addEventListener('scroll', scrollBlocker, { passive: false });
-    window.addEventListener('wheel', scrollBlocker, { passive: false });
-    window.addEventListener('touchmove', scrollBlocker, { passive: false });
-    
-    // Return function to re-enable scrolling
-    return function enableScroll() {
-      window.removeEventListener('scroll', scrollBlocker);
-      window.removeEventListener('wheel', scrollBlocker);
-      window.removeEventListener('touchmove', scrollBlocker);
-    };
-  }
-  
-  // Create a pulse effect indicator
-  const indicator = document.createElement('div');
-  indicator.style.cssText = `
+    function setupScrollBreakpoints() {
+      // Define your section boundary points
+      const breakpoints = [
+        {
+          element: '.container',
+          position: 'bottom',
+          reached: false,
+          sectionName: 'Timeline'
+        },
+        {
+          element: '.last-container',
+          position: 'bottom',
+          reached: false,
+          sectionName: 'Artifact Details'
+        },
+        {
+          element: '.image-transition-section',
+          position: 'bottom',
+          reached: false,
+          sectionName: 'Spindle Whorls Gallery'
+        }
+      ];
+
+      // Track scroll state
+      let isScrollBlocked = false;
+      let lastScrollPos = window.scrollY;
+      let scrollDirection = 'down';
+
+      // Function to disable scrolling
+      function disableScroll() {
+        // Store current scroll position
+        const scrollY = window.scrollY;
+
+        // Define the function that will prevent scrolling
+        const scrollBlocker = function (e) {
+          window.scrollTo(0, scrollY);
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        };
+
+        // Add event listeners to block scroll
+        window.addEventListener('scroll', scrollBlocker, { passive: false });
+        window.addEventListener('wheel', scrollBlocker, { passive: false });
+        window.addEventListener('touchmove', scrollBlocker, { passive: false });
+
+        // Return function to re-enable scrolling
+        return function enableScroll() {
+          window.removeEventListener('scroll', scrollBlocker);
+          window.removeEventListener('wheel', scrollBlocker);
+          window.removeEventListener('touchmove', scrollBlocker);
+        };
+      }
+
+      // Create a pulse effect indicator
+      const indicator = document.createElement('div');
+      indicator.style.cssText = `
     position: fixed;
     bottom: 20%;
     left: 50%;
@@ -370,122 +364,125 @@ function setupScrollBreakpoints() {
     pointer-events: none;
     opacity: 0;
   `;
-  document.body.appendChild(indicator);
-  
-  // Check breakpoints on scroll
-  function checkBreakpoints() {
-    if (isScrollBlocked) return;
-    
-    // Update scroll direction
-    scrollDirection = window.scrollY > lastScrollPos ? 'down' : 'up';
-    lastScrollPos = window.scrollY;
-    
-    // Only check on downward scrolls
-    if (scrollDirection !== 'down') return;
-    
-    const viewportHeight = window.innerHeight;
-    
-    breakpoints.forEach((breakpoint, index) => {
-      if (breakpoint.reached) return;
-      
-      const element = document.querySelector(breakpoint.element);
-      if (!element) return;
-      
-      const rect = element.getBoundingClientRect();
-      
-      // Check if we've reached bottom of this section
-      if (breakpoint.position === 'bottom' && 
-          rect.bottom <= viewportHeight + 20 && 
-          rect.bottom >= viewportHeight - 100) {
-        
-        triggerBreakpoint(breakpoint, index);
+      document.body.appendChild(indicator);
+
+      // Check breakpoints on scroll
+      function checkBreakpoints() {
+        if (isScrollBlocked) return;
+
+        // Update scroll direction
+        scrollDirection = window.scrollY > lastScrollPos ? 'down' : 'up';
+        lastScrollPos = window.scrollY;
+
+        // Only check on downward scrolls
+        if (scrollDirection !== 'down') return;
+
+        const viewportHeight = window.innerHeight;
+
+        breakpoints.forEach((breakpoint, index) => {
+          if (breakpoint.reached) return;
+
+          const element = document.querySelector(breakpoint.element);
+          if (!element) return;
+
+          const rect = element.getBoundingClientRect();
+
+          // Check if we've reached bottom of this section
+          if (breakpoint.position === 'bottom' &&
+            rect.bottom <= viewportHeight + 20 &&
+            rect.bottom >= viewportHeight - 100) {
+
+            triggerBreakpoint(breakpoint, index);
+          }
+        });
       }
-    });
-  }
-  
-  // Trigger effect when hitting a breakpoint
-  function triggerBreakpoint(breakpoint, index) {
-    // Mark as reached to prevent re-triggering
-    breakpoint.reached = true;
-    isScrollBlocked = true;
-    
-    console.log(`Reached ${breakpoint.sectionName}`);
-    
-    // Disable scrolling
-    const enableScroll = disableScroll();
-    
-    // Show ripple effect
-    gsap.set(indicator, { 
-      width: '10px', 
-      height: '10px', 
-      opacity: 0.8 
-    });
-    
-    gsap.to(indicator, {
-      width: '300px',
-      height: '300px',
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out"
-    });
-    
-    // Play thud sound
-    try {
-      const context = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      
-      oscillator.type = 'sine';
-      oscillator.frequency.value = 80;
-      
-      gain.gain.setValueAtTime(0.5, context.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.5);
-      
-      oscillator.connect(gain);
-      gain.connect(context.destination);
-      
-      oscillator.start();
-      oscillator.stop(context.currentTime + 0.5);
-    } catch (e) {
-      console.log('Audio not supported');
-    }
-    
-    // Re-enable scrolling after delay
-    setTimeout(() => {
-      enableScroll();
-      
-      gsap.to(textIndicator, {
-        opacity: 0,
-        duration: 0.3
-      });
-      
-      setTimeout(() => {
-        isScrollBlocked = false;
-        
-        // Reset this breakpoint after some time
-        // to allow re-triggering if user scrolls back up and down again
-        setTimeout(() => {
-          breakpoint.reached = false;
-        }, 5000);
-      }, 300);
-    }, 2000); // Block scrolling for 2 seconds
-  }
-  
-  // Listen for scroll events with throttling
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        checkBreakpoints();
-        ticking = false;
-      });
-      ticking = true;
-    }
+
+      // Trigger effect when hitting a breakpoint
+      function triggerBreakpoint(breakpoint, index) {
+  // Mark as reached to prevent re-triggering
+  breakpoint.reached = true;
+  isScrollBlocked = true;
+
+  console.log(`Reached ${breakpoint.sectionName}`);
+
+  // Disable scrolling
+  const enableScroll = disableScroll();
+
+  // Show ripple effect
+  gsap.set(indicator, { 
+    width: '10px', 
+    height: '10px', 
+    opacity: 0.8 
   });
+
+  gsap.to(indicator, {
+    width: '300px',
+    height: '300px',
+    opacity: 0,
+    duration: 0.8,
+    ease: "power2.out"
+  });
+
+  // Play thud sound
+  try {
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    
+    oscillator.type = 'sine';
+    oscillator.frequency.value = 80;
+    
+    gain.gain.setValueAtTime(0.5, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.5);
+    
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    
+    oscillator.start();
+    oscillator.stop(context.currentTime + 0.5);
+  } catch (e) {
+    console.log('Audio not supported');
+  }
   
-  // Initial check
-  checkBreakpoints();
+  // Re-enable scrolling after delay
+  setTimeout(() => {
+    enableScroll();
+    
+    // REMOVE THIS BLOCK - textIndicator doesn't exist
+    /* 
+    gsap.to(textIndicator, {
+      opacity: 0,
+      duration: 0.3
+    });
+    */
+    
+    setTimeout(() => {
+      isScrollBlocked = false;
+      
+      // Reset this breakpoint after some time
+      // to allow re-triggering if user scrolls back up and down again
+      setTimeout(() => {
+        breakpoint.reached = false;
+      }, 5000);
+    }, 300);
+  }, 2000); // Block scrolling for 2 seconds
 }
+
+      // Listen for scroll events with throttling
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            checkBreakpoints();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Initial check
+      checkBreakpoints();
+    }
 
     function setupTimelineAnimations() {
       const container = document.querySelector('.container');
@@ -1092,6 +1089,39 @@ function setupScrollBreakpoints() {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 200;
+  src: local('Raleway'),
+    url('/fonts/Raleway/static/Raleway-ExtraLight.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Raleway'),
+    url('/fonts/Raleway/static/Raleway-Light.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Raleway'),
+    url('/fonts/Raleway/static/Raleway-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* Add these styles for the Raleway font usage */
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+  letter-spacing: 0.25em;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -1115,7 +1145,7 @@ body {
 
 .intro-title {
   font-size: 3rem;
-  font-weight: bold;
+  font-weight: 200;
   color: #ffd700;
   /* Gold color for the title */
   margin-bottom: 1rem;
@@ -1132,6 +1162,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   opacity: 0;
+  font-weight: 300;
   transition: color 0.3s ease;
 }
 
@@ -1259,13 +1290,14 @@ body {
 }
 
 .timeline-date {
-  font-size: 3.2rem;
+  font-size: 3.5rem;
   font-weight: bold;
   color: #ffd700;
   margin-bottom: 1.5rem;
   position: relative;
   text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
   display: inline-block;
+  font-family: 'Raleway', sans-serif;
 }
 
 .timeline-date::after {
@@ -1280,21 +1312,31 @@ body {
 }
 
 .timeline-description {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.6;
   color: white;
   margin-bottom: 1.5rem;
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8),
+               0 0 15px rgba(0, 0, 0, 0.6);
 }
 
 .timeline-details {
   color: #ccc;
-  font-size: 1.1rem;
-  line-height: 1.5;
+  font-size: 1.15rem;
+  line-height: 1.8;
   margin-top: 1.5rem;
   padding: 0 1rem;
+  font-style: italic;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  opacity: 0.85;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .timeline-fact {
@@ -1309,6 +1351,11 @@ body {
   transform: translateY(10px);
   opacity: 0.7;
   transition: transform 0.4s ease, opacity 0.4s ease;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  position: relative;
 }
 
 .timeline-item:hover .timeline-fact {
@@ -1345,6 +1392,7 @@ body {
   overflow: hidden;
   color: white;
   text-align: center;
+  font-family: 'Raleway', sans-serif;
 }
 
 .content {
@@ -1442,15 +1490,20 @@ body {
 
 .section-title {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 300;
   margin-bottom: 1rem;
   color: white;
+  letter-spacing: 0.15em;
+  font-family: 'Raleway', sans-serif;
 }
 
 .highlight {
   color: white;
   position: relative;
   display: inline-block;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  transition: text-shadow 0.3s ease;
+  font-weight: 400;
 }
 
 .highlight::after {
@@ -1629,6 +1682,9 @@ body {
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.03em;
 }
 
 .info-text:hover .highlight::after {
@@ -1643,6 +1699,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  font-family: 'Raleway', sans-serif;
 }
 
 .feature-list li {
@@ -1667,6 +1724,8 @@ body {
 .feature-text {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.5;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
 }
 
 .feature-text strong {
@@ -1681,6 +1740,7 @@ body {
   border-radius: 8px;
   position: relative;
   border-left: 3px solid #ffd700;
+  font-family: 'Raleway', 'san-serif';
 }
 
 .fact-label {
@@ -1694,6 +1754,7 @@ body {
   padding: 4px 10px;
   border-radius: 4px;
   letter-spacing: 1px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .fun-fact p {
@@ -1702,6 +1763,8 @@ body {
   line-height: 1.6;
   margin: 0;
   margin-top: 10px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
 }
 
 /* Media queries for responsive design */
@@ -1962,8 +2025,8 @@ h2 {
   opacity: 0;
   transform: scale(0.8);
   pointer-events: auto;
-  /* Make cards clickable */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .impact-card:hover {
@@ -1972,7 +2035,7 @@ h2 {
 }
 
 .impact-card[data-category="trade"] {
-  top: calc(50% - 150px);
+  top: calc(50% - 200px);
   left: calc(50% + 200px);
 }
 
@@ -1995,12 +2058,21 @@ h2 {
   color: #ffd700;
   margin-bottom: 10px;
   font-size: 1.5rem;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  text-align: center;
 }
 
 .impact-card p {
   color: white;
   font-size: 1rem;
   line-height: 1.5;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  text-align: center;
 }
 
 /* Responsive adjustments for smaller screens */
@@ -2030,7 +2102,7 @@ h2 {
   }
 
   .impact-card[data-category="trade"] {
-    top: calc(50% - 120px);
+    top: calc(50% - 110px);
     left: calc(50% + 120px);
   }
 
@@ -2064,6 +2136,8 @@ h2 {
 .scroll-hint p {
   color: #ffd700;
   font-size: 0.9rem;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 5px;
@@ -2435,6 +2509,7 @@ h2 {
   border-radius: 8px;
   position: relative;
   border-left: 3px solid #FFEF00;
+  font-family: 'Raleway', sans-serif;
 }
 
 .museum-label {
@@ -2448,6 +2523,7 @@ h2 {
   padding: 4px 10px;
   border-radius: 4px;
   letter-spacing: 1px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .museum-content {
@@ -2459,6 +2535,8 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
 }
 
 .location-text {
