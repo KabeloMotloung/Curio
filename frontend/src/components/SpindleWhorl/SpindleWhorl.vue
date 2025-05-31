@@ -2390,6 +2390,7 @@ h2 {
   width: 100%;
   background-color: #111;
   overflow: hidden;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* Each slide contains a full view */
