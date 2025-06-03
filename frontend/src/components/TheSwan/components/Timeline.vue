@@ -111,7 +111,7 @@ export default {
                         anticipatePin: 1,
                         scrub: 1,
                         snap: 1 / (sections.length - 1),
-                        end: () => "+=" + document.querySelector(".container")?.offsetWidth || 1000,
+                        end: () => "+=" + (document.querySelector(".container")?.offsetWidth * 3),
                         invalidateOnRefresh: true,
                     },
                 });
@@ -129,7 +129,7 @@ export default {
 
 <style scoped>
 .container {
-    width: 500%;
+    width: 3000%;
     height: 100vh;
     display: flex;
     flex-wrap: nowrap;
