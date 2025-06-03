@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+
+const goToRoot = () => {
+  router.replace('/');
+};
 </script>
 
 <template>
   <div class="fixed top-8 left-8 z-50">
     <button 
-      @click="$router.back()" 
+      @click="goToRoot" 
       class="text-white/80 hover:text-white transition-all duration-300 flex items-center gap-2 group backdrop-blur-sm 
       bg-black/60 px-4 py-2 rounded-lg border border-white/20
       shadow-[0_0_10px_rgba(255,255,255,0.2)]
