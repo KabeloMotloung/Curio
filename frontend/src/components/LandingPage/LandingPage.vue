@@ -629,15 +629,16 @@ body, html {
 .info-card {
   flex: 1;
   color: white;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
   padding: 30px;
   border-radius: 10px;
-  backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px); */
   margin-left: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  max-height:95%;
 }
 
 .info-card h2 {
@@ -647,27 +648,28 @@ body, html {
 }
 
 .info-card h3 {
-  font-size: 1.4rem;
+  font-size: 1rem;
   margin-bottom: 20px;
   color: #d0d0d0;
-  font-style: italic;
+  /* font-style: italic; */
 }
 
 .info-card p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 20px;
+  font-weight:lighter;
 }
 
 .info-details {
-  margin-top: 20px;
-  padding-top: 15px;
+  margin-top: 15px;
+  padding-top: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .info-details p {
   margin-bottom: 5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 body {
@@ -978,7 +980,7 @@ body {
   }
   .artifact-image-container {
     flex: 1;
-    height: auto;
+    width: 50%;
     margin-bottom: 0;
   }
   .info-card {
