@@ -1,6 +1,6 @@
 <template>
   <BackButton />
-  <ScrollProgress :totalSections="4" />
+  <ScrollProgress :totalSections="6" />
   <div class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
@@ -243,6 +243,8 @@
       <div class="scroll-arrow"></div>
     </div>
   </div>
+
+  <SpindleWhorlPageEnd @resetAnimations="resetAnimations" />
 </template>
 
 <script>
@@ -253,11 +255,12 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import BackButton from "../UniversalComponents/BackButton.vue";
 import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
+import SpindleWhorlPageEnd from "./SpindleWhorlPageEnd.vue";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default {
-  components: { ScrollProgress, BackButton, ScrollArrow },
+  components: { ScrollProgress, BackButton, ScrollArrow, SpindleWhorlPageEnd },
   setup() {
     const bg = ref(null);
     const title = ref(null);
@@ -399,74 +402,74 @@ export default {
 
       // Trigger effect when hitting a breakpoint
       function triggerBreakpoint(breakpoint, index) {
-  // Mark as reached to prevent re-triggering
-  breakpoint.reached = true;
-  isScrollBlocked = true;
+        // Mark as reached to prevent re-triggering
+        breakpoint.reached = true;
+        isScrollBlocked = true;
 
-  console.log(`Reached ${breakpoint.sectionName}`);
+        console.log(`Reached ${breakpoint.sectionName}`);
 
-  // Disable scrolling
-  const enableScroll = disableScroll();
+        // Disable scrolling
+        const enableScroll = disableScroll();
 
-  // Show ripple effect
-  gsap.set(indicator, { 
-    width: '10px', 
-    height: '10px', 
-    opacity: 0.8 
-  });
+        // Show ripple effect
+        gsap.set(indicator, {
+          width: '10px',
+          height: '10px',
+          opacity: 0.8
+        });
 
-  gsap.to(indicator, {
-    width: '300px',
-    height: '300px',
-    opacity: 0,
-    duration: 0.8,
-    ease: "power2.out"
-  });
+        gsap.to(indicator, {
+          width: '300px',
+          height: '300px',
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out"
+        });
 
-  // Play thud sound
-  try {
-    const context = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    
-    oscillator.type = 'sine';
-    oscillator.frequency.value = 80;
-    
-    gain.gain.setValueAtTime(0.5, context.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.5);
-    
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    
-    oscillator.start();
-    oscillator.stop(context.currentTime + 0.5);
-  } catch (e) {
-    console.log('Audio not supported');
-  }
-  
-  // Re-enable scrolling after delay
-  setTimeout(() => {
-    enableScroll();
-    
-    // REMOVE THIS BLOCK - textIndicator doesn't exist
-    /* 
-    gsap.to(textIndicator, {
-      opacity: 0,
-      duration: 0.3
-    });
-    */
-    
-    setTimeout(() => {
-      isScrollBlocked = false;
-      
-      // Reset this breakpoint after some time
-      // to allow re-triggering if user scrolls back up and down again
-      setTimeout(() => {
-        breakpoint.reached = false;
-      }, 5000);
-    }, 300);
-  }, 2000); // Block scrolling for 2 seconds
-}
+        // Play thud sound
+        try {
+          const context = new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+
+          oscillator.type = 'sine';
+          oscillator.frequency.value = 80;
+
+          gain.gain.setValueAtTime(0.5, context.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 0.5);
+
+          oscillator.connect(gain);
+          gain.connect(context.destination);
+
+          oscillator.start();
+          oscillator.stop(context.currentTime + 0.5);
+        } catch (e) {
+          console.log('Audio not supported');
+        }
+
+        // Re-enable scrolling after delay
+        setTimeout(() => {
+          enableScroll();
+
+          // REMOVE THIS BLOCK - textIndicator doesn't exist
+          /* 
+          gsap.to(textIndicator, {
+            opacity: 0,
+            duration: 0.3
+          });
+          */
+
+          setTimeout(() => {
+            isScrollBlocked = false;
+
+            // Reset this breakpoint after some time
+            // to allow re-triggering if user scrolls back up and down again
+            setTimeout(() => {
+              breakpoint.reached = false;
+            }, 5000);
+          }, 300);
+        }, 2000); // Block scrolling for 2 seconds
+      }
 
       // Listen for scroll events with throttling
       let ticking = false;
@@ -1082,7 +1085,24 @@ export default {
       setupScrollBreakpoints();
     });
 
-    return { title, timelineEvents };
+    function resetAnimations() {
+      // Reset scroll position
+      window.scrollTo(0, 0);
+
+      // Kill any active GSAP animations
+      gsap.killTweensOf("*");
+
+      // Clear any active ScrollTrigger instances
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+
+      // Force a browser repaint
+      document.body.style.display = 'none';
+      document.body.offsetHeight; // Trigger a reflow
+      document.body.style.display = '';
+
+      console.log("Animations reset for navigation");
+    }
+    return { title, timelineEvents, resetAnimations };
   },
 };
 
@@ -1322,7 +1342,7 @@ body {
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8),
-               0 0 15px rgba(0, 0, 0, 0.6);
+    0 0 15px rgba(0, 0, 0, 0.6);
 }
 
 .timeline-details {
@@ -2587,5 +2607,17 @@ h2 {
 .main-description strong {
   color: #FFEF00;
   font-weight: 600;
+}
+
+.page-end-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to bottom, #2d1e0f, #111);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  z-index: 1;
 }
 </style>
