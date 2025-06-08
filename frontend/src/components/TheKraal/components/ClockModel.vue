@@ -14,7 +14,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export default {
-    name: "Clock3D",
+    name: "ClockModel",
     setup() {
       const container = ref(null);
       let scene, camera, renderer, animationFrameId;
