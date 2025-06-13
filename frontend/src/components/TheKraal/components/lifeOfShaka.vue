@@ -65,7 +65,7 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import Background from "./Background.vue";
   import Timeline from "./HorizontalTimeline.vue";
-  import BackButton from "../../UniversalComponents/BackButton.vue";
+  import BackButton from "./BackButton.vue";
   import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
   import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
   import ClockModel from "./ClockModel.vue";
