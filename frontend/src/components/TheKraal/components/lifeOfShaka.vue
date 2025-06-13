@@ -245,7 +245,7 @@
           scrollTrigger: {
             trigger: borderSpiralSection.value,
             start: "top top",
-            end: "+=4000",
+            end: "+=22000",
             scrub: true,
             pin: true,
             anticipatePin: 1,
@@ -270,7 +270,7 @@
           scrollTrigger: {
             trigger: borderSpiralSection.value,
             start: "top top",
-            end: "+=4000",
+            end: "+20000",
             scrub: true,
           }
         });
@@ -297,7 +297,7 @@
         scrollTrigger: {
           trigger: clockSection.value,
           start: "top top",
-          end: "+=3000",
+          end: "+=8000",
           scrub: true,
           pin: true,
           anticipatePin: 1,
