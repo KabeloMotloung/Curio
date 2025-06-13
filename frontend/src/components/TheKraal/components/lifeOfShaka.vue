@@ -16,9 +16,7 @@
       </div>
     </div>
 
-      <!-- Loading overlay -->
-    <div class="tapestry-container">
-
+      <div class="tapestry-container">
       <!-- Landing Screen -->
       <section class="landing-screen" ref="landingScreen">
         <!-- Animated Strings -->
@@ -84,6 +82,7 @@
   import Timeline from "./HorizontalTimeline.vue";
   import BackButton from "./BackButton.vue";
   import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
+  import PageLoad from "../../UniversalComponents/PageLoading.vue"
   import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
   import ClockModel from "./ClockModel.vue";
 
@@ -184,21 +183,11 @@
       ]);
 
       onMounted(() => {
+        isLoading.value = true; // Ensure loading is shown on mount
+        setTimeout(() => {
+          isLoading.value = false;
+        }, 3000); // 3 seconds
 
-        const imagesToPreload = [
-          '../assets/shaka.jpg',
-        ];
-
-      const preloadPromises = imagesToPreload.map(src => {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => resolve();
-          img.onerror = () => resolve();
-          img.src = src;
-        });
-      });
-
-  Promise.all(preloadPromises).then(handleAssetsLoaded);
         // Landing Screen Animation
         const lines = landingScreen.value.querySelectorAll(".line");
         gsap.fromTo(
@@ -413,17 +402,10 @@
       minuteHand,
       clockMessages,
       currentClockMessage,
-      stringPaths
+      stringPaths,
+      isLoading
       };
     },
-  };
-
-  const handleAssetsLoaded = () => {
-    setTimeout(() => {
-      isLoading.value = false;
-      if (loadingDotsInterval) clearInterval(loadingDotsInterval);
-      document.body.style.overflow = '';
-    }, 1500);
   };
   </script>
   
@@ -636,5 +618,13 @@
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-dasharray: 4 8; /* Creates dotted pattern */
+}
+
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spinner {
+  animation: spinner 1s linear infinite;
 }
   </style>
