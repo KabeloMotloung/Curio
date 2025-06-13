@@ -1,7 +1,24 @@
 <template>
     <BackButton />
     <ScrollProgress :totalSections="4" />
+
+    <div 
+      ref="loaderOverlay"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#111111] transition-opacity duration-1000"
+      :class="{ 'opacity-0 pointer-events-none': !isLoading }"
+    >
+      <div class="flex flex-col items-center">
+        <!-- Sleek spinner loader -->
+        <div class="relative w-16 h-16 mb-5">
+          <div class="absolute inset-0 border-2 border-white/10 rounded-full"></div>
+          <div class="absolute inset-0 border-2 border-transparent border-t-white rounded-full animate-spinner"></div>        </div>
+        <p class="text-white text-base font-raleway uppercase tracking-widest">Loading<span ref="loadingDots">.</span></p>
+      </div>
+    </div>
+
+      <!-- Loading overlay -->
     <div class="tapestry-container">
+
       <!-- Landing Screen -->
       <section class="landing-screen" ref="landingScreen">
         <!-- Animated Strings -->
@@ -92,6 +109,8 @@
       const clockSection = ref(null);
     const minuteHand = ref(null);
     const currentClockMessage = ref(0);
+    const loaderOverlay = ref(null);
+    const isLoading = ref(true);
 
     const clockMessages = [
       "Four and a half months",
@@ -165,6 +184,21 @@
       ]);
 
       onMounted(() => {
+
+        const imagesToPreload = [
+          '../assets/shaka.jpg',
+        ];
+
+      const preloadPromises = imagesToPreload.map(src => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+          img.src = src;
+        });
+      });
+
+  Promise.all(preloadPromises).then(handleAssetsLoaded);
         // Landing Screen Animation
         const lines = landingScreen.value.querySelectorAll(".line");
         gsap.fromTo(
@@ -382,6 +416,14 @@
       stringPaths
       };
     },
+  };
+
+  const handleAssetsLoaded = () => {
+    setTimeout(() => {
+      isLoading.value = false;
+      if (loadingDotsInterval) clearInterval(loadingDotsInterval);
+      document.body.style.overflow = '';
+    }, 1500);
   };
   </script>
   
