@@ -82,7 +82,6 @@
   import Timeline from "./HorizontalTimeline.vue";
   import BackButton from "./BackButton.vue";
   import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
-  import PageLoad from "../../UniversalComponents/PageLoading.vue"
   import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
   import ClockModel from "./ClockModel.vue";
 
@@ -186,7 +185,7 @@
         isLoading.value = true; // Ensure loading is shown on mount
         setTimeout(() => {
           isLoading.value = false;
-        }, 3000); // 3 seconds
+        }, 2000); // 2 seconds
 
         // Landing Screen Animation
         const lines = landingScreen.value.querySelectorAll(".line");
