@@ -4,10 +4,20 @@
     <div class="tapestry-container">
       <!-- Landing Screen -->
       <section class="landing-screen" ref="landingScreen">
+        <!-- Animated Strings -->
+        <svg class="animated-strings" ref="stringsSvg">
+          <path v-for="(path, index) in stringPaths" 
+                :key="index" 
+                :d="path.d" 
+                class="string-path"
+                :style="{ '--delay': `${index * 0.5}s` }"
+          />
+        </svg>
+        
         <h1 class="artifact-name">Life of Shaka</h1>
-        <h2>Mary Shabalala and Josephine Memela</h2>
+        <h2 class="artifact-author">Mary Shabalala and Josephine Memela</h2>
         <div class="lines-container">
-          <div class="line" v-for="n in 10" :key="n"></div>
+          <div class="line" v-for="n in 8" :key="n"></div>
         </div>
         <ScrollArrow />
       </section>
@@ -25,24 +35,19 @@
         </div>
       </div>
 
-       <!-- Clock Section -->
-        <div class="clock-section" ref="clockSection">
-          <div class="clock-container">
-            <div>
-              <svg class="clock" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- Clock Circle -->
-                <circle cx="50" cy="50" r="48" stroke="black" stroke-width="2" fill="none" />
-                <!-- Minute Hand -->
-                <line ref="minuteHand" x1="50" y1="55" x2="50" y2="20" stroke="black" stroke-width="1" />
-              </svg>
-            </div>
-            <div class="clock-text">
-              <h3 v-for="(text, index) in clockMessages" :key="index" class="clock-message" :class="{ active: currentClockMessage === index }">
-                {{ text }}
-              </h3>
-            </div>
+      <!-- Clock Section -->
+      <div class="clock-section" ref="clockSection">
+        <div class="clock-container">
+          <div>
+           <ClockModel />
+          </div>
+          <div class="clock-text">
+            <h3 v-for="(text, index) in clockMessages" :key="index" class="clock-message" :class="{ active: currentClockMessage === index }">
+              {{ text }}
+            </h3>
           </div>
         </div>
+      </div>
   
 
       <!-- Black Section -->
@@ -63,6 +68,7 @@
   import BackButton from "../../UniversalComponents/BackButton.vue";
   import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
   import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
+  import ClockModel from "./ClockModel.vue";
 
   gsap.registerPlugin(ScrollTrigger);
   
@@ -74,6 +80,7 @@
      BackButton,
      ScrollProgress,
      ScrollArrow,
+     ClockModel,
     },
     setup() {
       const landingScreen = ref(null);
@@ -104,7 +111,7 @@
         {
           "date": "1974",
           "description": "The weaving begins: Life of Shaka takes form.",
-          "details": "Using a linocut design by artist Caiphas Nxumalo as their guide, the weavers begin the intricate process of translating his imagery into textile. The piece spans over 4.5 meters, and every thread tells part of Shaka’s story.",
+          "details": "Using a linocut design by artist Caiphas Nxumalo as their guide, the weavers begin the intricate process of translating his imagery into textile. The piece spans over 4.5 meters, and every thread tells part of Shaka's story.",
           "fact": "It took four and a half months of dedicated labour to complete, under the direction of master weaver Allina Ndebele."
         },
         {
@@ -123,7 +130,7 @@
           "date": "2024",
           "description": "Return of the king: the tapestry comes home.",
           "details": "After fifty years abroad, the tapestry is returned to South Africa. Its homecoming is both symbolic and historic—a restoration of cultural memory and artistic legacy.",
-          "fact": "Now recognized as a national treasure, the tapestry bridges generations, bringing Shaka’s legacy—and that of the women who wove him—back into the collective South African imagination."
+          "fact": "Now recognized as a national treasure, the tapestry bridges generations, bringing Shaka's legacy—and that of the women who wove him—back into the collective South African imagination."
         }
       
 
@@ -134,13 +141,29 @@
         "Tapestry is slow work — it teaches patience, precision, and how to tell a story without words.",
         "To weave is to resist — especially when your voice is denied, your history erased.",
         "The loom is a place of meditation. Every shuttle pass is a heartbeat, every knot a decision.",
-        "Weaving the Life of Shaka wasn’t just art — it was honouring an ancestor, stitching pride into wool.",
+        "Weaving the Life of Shaka wasn't just art — it was honouring an ancestor, stitching pride into wool.",
         "Tapestry holds weight — not just in wool, but in legacy. It outlives the weaver.",
-        "Even silence has a texture in tapestry. What’s left unwoven is as powerful as what’s shown.",
+        "Even silence has a texture in tapestry. What's left unwoven is as powerful as what's shown.",
         "We don't just weave what we see — we weave what we carry, what we lost, and what we hope for."
       ];
       const currentMessage = ref(0);
   
+      // String paths data
+      const stringPaths = ref([
+        { d: "M-800,50 L-800,50" },
+        { d: "M1800,120 L1800,120" },
+        { d: "M-800,190 L-800,190" },
+        { d: "M1800,260 L1800,260" },
+        { d: "M-800,330 L-800,330" },
+        { d: "M1800,400 L1800,400" },
+        { d: "M-800,470 L-800,470" },
+        { d: "M1800,540 L1800,540" },
+        { d: "M-800,610 L-800,610" },
+        { d: "M1800,680 L1800,680" },
+        { d: "M-800,750 L-800,750" },
+        { d: "M1800,820 L1800,820" }
+      ]);
+
       onMounted(() => {
         // Landing Screen Animation
         const lines = landingScreen.value.querySelectorAll(".line");
@@ -314,6 +337,31 @@
         }
       });
 
+      // Animate strings with growing/shrinking motion
+      const strings = document.querySelectorAll('.string-path');
+      strings.forEach((string, index) => {
+        // Create a timeline for each string
+        const tl = gsap.timeline({
+          repeat: -1,
+          delay: index * 0.2
+        });
+
+        // Determine if string grows from left or right
+        const isLeftToRight = index % 2 === 0;
+        const startX = isLeftToRight ? -800 : 1800;
+        const endX = isLeftToRight ? 1800 : -800;
+
+        // Create growing/shrinking motion
+        tl.to(string, {
+          duration: 4,
+          attr: {
+            d: `M${startX},${50 + index * 70} L${endX},${50 + index * 70}`
+          },
+          ease: "power1.inOut",
+          repeat: -1,
+          yoyo: true
+        });
+      });
   
       });
   
@@ -331,6 +379,7 @@
       minuteHand,
       clockMessages,
       currentClockMessage,
+      stringPaths
       };
     },
   };
@@ -369,6 +418,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
   }
   
   .artifact-name {
@@ -376,6 +426,14 @@
     font-weight: bold;
     color: #333;
     z-index: 2;
+    margin-bottom:0;
+  }
+
+  .artifact-author{
+    font-weight: lighter;
+    color: #6c6c6c;
+    z-index: 2;
+    margin-bottom:2px;
   }
   
   .lines-container {
@@ -517,5 +575,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.animated-strings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+}
+
+.string-path {
+    fill: none;
+    stroke: rgba(200, 160, 120, 0.264);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 4 8; /* Creates dotted pattern */
 }
   </style>

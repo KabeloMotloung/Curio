@@ -143,7 +143,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(145deg, #C8A078, #C8A078);
+    background: #f9f5f2;
     color: white;
     text-align: center;
     position: relative;
@@ -167,21 +167,22 @@ export default {
     transform: rotate(-5deg) scale(1.2);
 }
 
-/* Rest of the CSS remains unchanged */
+/* Rest of the CSS remains unchanged
 .timeline-item:nth-child(odd) {
     background: linear-gradient(135deg, #6e3f3e 40%, #4F2D2C);
 }
 
 .timeline-item:nth-child(even) {
     background: linear-gradient(135deg, #4E513E 40%, #989D81);
-}
+} */
 
 .timeline-content {
     position: relative;
     z-index: 2;
     max-width: 800px;
-    border-left: 3px solid #4F2D2C;
-    padding-left: 2rem;
+    border: 3px double #4F2D2C;
+    border-radius:5px;
+    padding: 2rem;
     transform: translateY(0);
     opacity: 1;
 }
@@ -194,10 +195,10 @@ export default {
 .timeline-date {
     font-size: 3.2rem;
     font-weight: bold;
-    color: #C8A078;
     margin-bottom: 1.5rem;
     position: relative;
-    text-shadow: 0 0 15px #4F2D2C;
+    color: #fff;
+    text-shadow: 0 0 10px #412524;
     display: inline-block;
 }
 
@@ -215,7 +216,7 @@ export default {
 .timeline-description {
     font-size: 1.4rem;
     line-height: 1.6;
-    color: white;
+    color: #4F2D2C;
     margin-bottom: 1.5rem;
     max-width: 80%;
     margin-left: auto;
@@ -223,7 +224,8 @@ export default {
 }
 
 .timeline-details {
-    color: #ccc;
+    font-weight: lighter;
+    color: #6c6c6c;
     font-size: 1.1rem;
     line-height: 1.5;
     margin-top: 1.5rem;
@@ -232,28 +234,27 @@ export default {
 
 .timeline-fact {
     display: inline-block;
-    background: rgba(45, 30, 15, 0.7);
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background:#4F2D2C;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     font-size: 0.9rem;
     margin-top: 1.5rem;
     /* Start visible but with small offset */
-    transform: translateY(10px);
+    /* transform: translateY(10px); */
     opacity: 0.7;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    /* transition: transform 0.4s ease, opacity 0.4s ease; */
 }
 
-.timeline-item:hover .timeline-fact {
+.timeline-item .timeline-fact {
     transform: translateY(0);
     opacity: 1;
 }
 
 /* Add this to create a highlight effect when hovering over timeline items */
-.timeline-item:hover .timeline-date {
+/* .timeline-item:hover .timeline-date {
     color: #fff;
     text-shadow: 0 0 20px #4F2D2C;
-}
+} */
 
 .panel.active .timeline-fact {
     transform: translateY(0);
