@@ -1,25 +1,39 @@
 <template>
   <div class="clock-container">
-    <img src="../assets/clockFace.png" alt="Clock Face" class="clock-face" />
+    <img :src="clockFace" alt="Clock Face" class="clock-face" />
     <div class="clock-hand-wrapper" :style="handStyle">
-      <img src="../assets/clockHand.png" alt="Clock Hand" class="clock-hand" />
+      <img :src="clockHand" alt="Clock Hand" class="clock-hand" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import clockFace from '../assets/clockFace.png'
+import clockHand from '../assets/clockHand.png'
 
-// Angle in degrees (0 = 12 o'clock)
 const angle = ref(0)
-
-// Example: animate the hand (uncomment to see it move)
-// setInterval(() => { angle.value = (angle.value + 6) % 360 }, 1000)
 
 const handStyle = computed(() => ({
   transform: `rotate(${angle.value}deg)`,
   transformOrigin: '50% 100%',
 }))
+
+function updateAngleFromScroll() {
+  const scrollTop = window.scrollY
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight
+  const progress = docHeight > 0 ? scrollTop / docHeight : 0
+  angle.value = progress * 7200
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', updateAngleFromScroll)
+  updateAngleFromScroll()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateAngleFromScroll)
+})
 </script>
 
 <style scoped>
