@@ -71,6 +71,71 @@
           <img src="../assets/shaka.jpg" alt="The Kraal" class="kraal-image" />
         </div>
       </div>
+
+
+    <div class="image-transition-section">
+      <div class="slide-view base-slide" data-index="1">
+        <div class="background-layer" style="background-image: url('./assets/TheDiscoveryPaintingImage.jpg')"></div>
+        <div class="sidebar-content">
+          <div class="project-number">[01]</div>
+          <h2 class="project-title">The Discovery</h2>
+          <div class="project-tags">
+            <!-- <span>CULTURAL SYMBOLISM</span>
+            <span>FEMALE IDENTITY</span>
+            <span>ARTISTIC EXPRESSION</span> -->
+          </div>
+          <p class="slide-description">A monumental triptych mural by South African artist Alexis Preller, originally commissioned for the Transvaal 
+            Provincial Administration. Measuring over 13 meters in width, the painting portrays an imagined encounter between European explorers and 
+            African civilizations during the so-called "Age of Discovery." Rather than glorify colonization, Preller's work blends African and 
+            classical European symbolism to challenge colonial narratives. Rich in surrealist and mythological imagery, it presents Africa as 
+            culturally advanced and spiritually significant, questioning Western assumptions of superiority..</p>
+          <a class="view-project-link" href="https://javettup.art/artworks/discovery">VIEW DETAILS <span class="arrow">→</span></a>
+        </div>
+        <div class="image-frame-container">
+          <img alt="Early Designs" src="./assets/TheDiscoveryPaintingImage.jpg">
+          <div class="image-caption">South African 1959</div>
+        </div>
+      </div>
+
+      <div class="wipe-container" data-index="2">
+        <div class="slide-view" data-index="2">
+          <div class="background-layer"></div>
+          <div class="sidebar-content">
+            <div class="project-number">[02]</div>
+            <h2 class="project-title">Alexis Preller</h2>
+            <div class="project-tags">
+              <!-- <span>PRODUCTION PROCESS</span>
+              <span>CRAFTING TECHNIQUES</span>
+              <span>MATERIAL TRANSFORMATION</span> -->
+            </div>
+            <p class="slide-description">Pretoria-born artist Alexis Preller studied art in London at the Westminster School of Art and expanded 
+              his knowledge of art and art history by reading voraciously and travelling widely in Europe and Africa. He studied Egyptian, 
+              ancient Greek, Etruscan, early Renaissance and southern and central African art and culture, in particular, and created an art 
+              that was of his own place and time rather than a continuation of either traditional European practice or avant-garde Modernism. He
+              visited Ndebele settlements near Pretoria in the late 1940s and early 1950s, and the ‘Mapogga’ women in their distinctive 
+              traditional costume and the colourful geometric wall paintings that decorated the homesteads appear in his work from this time. 
+              His work became progressively more abstract in later years, informed by his interest in space travel and discovery, and his focus
+                shifted from the local and the African to encompass the universal.</p>
+            <a class="view-project-link" href="https://www.straussart.co.za/artists/alexis-preller">VIEW DETAILS <span class="arrow">→</span></a>
+          </div>
+          <div class="image-frame-container">
+            <img alt="South African 1911-1975" src="./assets/alexis-preller.jpg">
+            <div class="image-caption">South African 1911-1975</div>
+          </div>
+        </div>
+      </div>
+
+        <div class="scroll-progress">
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-numbers">
+            <span class="current">01</span>
+            <span class="separator">/</span>
+            <span class="total">02</span>
+          </div>
+        </div>
+      </div>
     </div>
   </template>
   
@@ -626,4 +691,208 @@
 .animate-spinner {
   animation: spinner 1s linear infinite;
 }
+
+.image-transition-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-color: #111;
+  overflow: hidden;
+}
+
+.slide-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  background-color: #111;
+}
+
+.base-slide {
+  z-index: 1;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.2;
+}
+
+.sidebar-content {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  z-index: 10;
+  width: 35%;
+}
+
+.project-number {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 0.8rem;
+  font-family: monospace;
+  margin-top: -40px;
+}
+
+.project-title {
+  font-size: 3.2rem;
+  color: #4e83ff;
+  margin-bottom: 1.8rem;
+  line-height: 1.1;
+}
+
+/* Enhance the transitions to be smoother */
+.project-title {
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transform: translateY(0);
+}
+
+.project-tags {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+}
+
+.project-tags span {
+  font-size: 0.8rem;
+  color: #bbb;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05rem;
+}
+
+.project-tags span {
+  display: inline-block;
+  padding: 3px 0;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transform: translateY(0);
+}
+
+.slide-description {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.view-project-link {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #4e83ff;
+  transition: all 0.3s ease;
+}
+
+.view-project-link:hover {
+  color: #4e83ff;
+}
+
+.view-project-link .arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.view-project-link:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* Image frame styling */
+.image-frame-container {
+  position: absolute;
+  width: 50%;
+  height: 60vh;
+  right: 5%;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  z-index: 5;
+}
+
+.image-frame-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 300;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+}
+
+
+/* Ensure captions stay within their masks */
+.image-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 300;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+  z-index: 5;
+}
+
+/* Wipe containers cover the entire screen */
+.wipe-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Start from bottom (fully hidden) */
+  clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+  z-index: 10;
+  background-color: #111;
+}
+
+.wipe-container[data-index="2"] {
+  z-index: 10;
+}
+
+.wipe-container[data-index="3"] {
+  z-index: 11;
+}
+
+.wipe-container[data-index="4"] {
+  z-index: 12;
+}
+
+/* Create a visible wipe line with glow effect */
+.wipe-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(118, 99, 255, 0.9);
+  top: 0;
+  box-shadow: 0 0 15px rgba(118, 99, 255, 0.9);
+  z-index: 100;
+}
+
   </style>
