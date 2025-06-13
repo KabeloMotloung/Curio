@@ -176,7 +176,7 @@
             scrollTrigger: {
               trigger: landingScreen.value,
               start: "top top",
-              end: "bottom top",
+              end: "+=3000",
               scrub: true,
               pin: true,
             },
@@ -270,7 +270,7 @@
           scrollTrigger: {
             trigger: borderSpiralSection.value,
             start: "top top",
-            end: "+20000",
+            end: "+21000",
             scrub: true,
           }
         });

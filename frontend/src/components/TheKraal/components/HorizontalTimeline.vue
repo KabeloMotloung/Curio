@@ -113,7 +113,7 @@ export default {
                         anticipatePin: 1, // This helps with smoother pinning
                         scrub: 1,
                         snap: 1 / (sections.length - 1),
-                        end: () => "+=" + document.querySelector(".container")?.offsetWidth || 1000,
+                        end: () => "+=" + ((document.querySelector(".container")?.offsetWidth || 1000)),
                         invalidateOnRefresh: true, // Recalculate on window resize
                     },
                 });
