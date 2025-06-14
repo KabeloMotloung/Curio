@@ -40,6 +40,7 @@
 
 <script setup>
 import { onMounted, ref, onUnmounted } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -89,6 +90,9 @@ let isAutoScrolling = ref(false);
 let currentScrollInterval = null;
 let inactivityTimer = null;
 let isManualScrolling = ref(false);
+
+// Store ScrollTrigger instances for cleanup
+const scrollTriggers = ref([]);
 
 const findNearestCheckpoint = (currentPosition, direction) => {
   let nearestCheckpoint = null;
@@ -163,7 +167,7 @@ onMounted(() => {
     // Skip the timeline section (index 1) as it has its own ScrollTrigger setup
     if (i === 1) return;
     
-    ScrollTrigger.create({
+    const st = ScrollTrigger.create({
       trigger: section,
       start: 'top 80%',
       end: 'bottom 20%',
@@ -183,24 +187,49 @@ onMounted(() => {
         });
       }
     });
+    
+    scrollTriggers.value.push(st);
   });
 
   window.addEventListener('scroll', updateScrollPosition);
   updateScrollPosition();
 });
 
-onUnmounted(() => {
-  window.removeEventListener('scroll', updateScrollPosition);
-  if (snapTimeout) clearTimeout(snapTimeout);
-  if (currentScrollInterval) clearInterval(currentScrollInterval);
-  if (inactivityTimer) clearTimeout(inactivityTimer);
-});
-
-const resetAnimations = () => {
+// Cleanup function to be called before route leave
+const cleanupAnimations = () => {
+  // Kill all ScrollTrigger instances
+  scrollTriggers.value.forEach(st => st.kill());
+  scrollTriggers.value = [];
+  
+  // Kill any remaining ScrollTrigger instances
+  ScrollTrigger.getAll().forEach(st => st.kill());
+  
+  // Reset all sections to their initial state
   const sections = gsap.utils.toArray('.section');
   sections.forEach(section => {
     gsap.set(section, { opacity: 0.8 });
   });
+
+  // Reset scroll position to top
+  window.scrollTo({
+    top: 0,
+    behavior: 'instant'
+  });
+};
+
+// Cleanup before route leave
+onBeforeRouteLeave((to, from, next) => {
+  cleanupAnimations();
+  next();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateScrollPosition);
+  cleanupAnimations();
+});
+
+const resetAnimations = () => {
+  cleanupAnimations();
 };
 </script>
 
