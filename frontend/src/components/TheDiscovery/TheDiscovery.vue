@@ -1,7 +1,9 @@
 <template>
   <BackButton />
-  <ScrollProgress :totalSections="4" />
-  <div class="intro-container">
+  <ScrollProgress :totalSections="5"/>
+
+  <!-- Section 1 -->
+  <div id="section-1" class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
     </div>
@@ -12,15 +14,12 @@
       </p>
     </div>
 
-    <div class="scroll-indicator">
-      <p class="scroll-text">Scroll to explore</p>
-      <div class="arrow-container">
-        <div class="arrow"></div>
-      </div>
-    </div>
+    <ScrollArrow textColor="text-purple-500" arrowColor="text-purple-500" />
+   
   </div>
 
-  <div class="container">
+  <!-- Section 2 -->
+  <div id="section-2" class="container">
     <div v-for="(event, index) in timelineEvents" :key="index" class="timeline-item panel">
       <div class="timeline-content">
         <div class="timeline-date">{{ event.date }}</div>
@@ -33,7 +32,8 @@
     </div>
   </div>
 
-  <div class="last-container">
+  <!-- Section 3 -->
+  <div id="section-3" class="last-container">
     <div class="content gradient-yellow">
       <div class="info-wrapper">
         <div class="info-container">
@@ -65,7 +65,8 @@
     </div>
   </div>
 
-  <div class="image-transition-section">
+  <!-- Section 4 -->
+  <div id="section-4" class="image-transition-section">
     <div class="slide-view base-slide" data-index="1">
       <div class="background-layer" style="background-image: url('./assets/TheDiscoveryPaintingImage.jpg')"></div>
       <div class="sidebar-content">
@@ -117,54 +118,6 @@
       </div>
     </div>
 
-    <!-- <div class="wipe-container" data-index="3">
-      <div class="slide-view" data-index="3">
-        <div class="background-layer"></div>
-        <div class="sidebar-content">
-          <div class="project-number">[03]</div>
-          <h2 class="project-title">The Mechanics of Spinning</h2>
-          <div class="project-tags">
-            <span>FUNCTIONAL DESIGN</span>
-            <span>TECHNOLOGICAL INNOVATION</span>
-            <span>MATERIAL SCIENCE</span>
-          </div>
-          <p class="slide-description">The spindle whorl functions as a flywheel, maintaining spin momentum and twisting
-            fibers into yarn. Its effectiveness depends on precise engineering attributes—size, weight, diameter, and
-            shape working in harmony. Smaller whorls create finer threads by spinning faster, while heavier ones produce
-            thicker materials by rotating more slowly, demonstrating how these tools were precisely calibrated for
-            different textile applications.</p>
-          <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
-        </div>
-        <div class="image-frame-container">
-          <div class="image-caption">Advanced Designs (1200 AD)</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="wipe-container" data-index="4">
-      <div class="slide-view" data-index="4">
-        <div class="background-layer"></div>
-        <div class="sidebar-content">
-          <div class="project-number">[04]</div>
-          <h2 class="project-title">Stone Spindle Whorls</h2>
-          <div class="project-tags">
-            <span>RARE ARTIFACTS</span>
-            <span>SPECIALIZED CRAFTSMANSHIP</span>
-            <span>RITUAL SIGNIFICANCE</span>
-          </div>
-          <p class="slide-description">Stone whorls are relatively uncommon in the archaeological record of southern
-            Africa compared to clay versions. They were difficult to break as well as to manufacture, using materials
-            like siltstone, sandstone and mudstone. These disc-shaped, flat artifacts were carefully carved or chipped
-            and perforated by hand. The laborious process of drilling holes through stone suggests these specialized
-            tools may have been produced in limited quantities for specific needs or ritual purposes.</p>
-          <a class="view-project-link" href="#">VIEW DETAILS <span class="arrow">→</span></a>
-        </div>
-        <div class="image-frame-container">
-          <div class="image-caption">Legacy Designs (1300 AD)</div>
-        </div>
-      </div>
-    </div> -->
-
     <div class="scroll-progress">
       <div class="progress-track">
         <div class="progress-fill"></div>
@@ -176,6 +129,24 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Section 5 -->
+   <TheDiscoveryPageEnd @resetAnimations="resetAnimations" />
+  <!-- <div id="section-5" class="min-h-screen flex items-center justify-center bg-cover bg-center bg-[#313550]" >
+    <button @click="onClick" class="relative group w-[600px] h-[650px] rounded-xl bg-black/70 backdrop-blur-md shadow-2xl text-white flex flex-col items-center justify-center transition hover:scale-105 duration-300">
+      
+   
+      <img src="../Cards/assets/BattleOfTorquayImage.png" alt="Artifact" class="w-48 h-auto mb-6 transition group-hover:scale-105 duration-300" />
+
+      <div class="text-center">
+        <h3 class="text-sm tracking-widest text-gray-300">NEXT ARTIFACT</h3>
+        <h2 class="text-2xl font-semibold mt-1">Sidwane Tokozile</h2>
+        <p class="text-sm mt-4 tracking-wide text-gray-400">CLICK TO EXPLORE</p>
+      </div>
+    </button>
+  </div> -->
+
 </template>
 
 <script>
@@ -184,11 +155,20 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import BackButton from "../UniversalComponents/BackButton.vue";
 import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
+import TheDiscoveryPageEnd from "./components/TheDiscoveryPageEnd.vue";
+import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
-  components: {ScrollProgress, BackButton},
+
+  methods: {
+    onClick() {
+      this.$router.push('/battle-of-torquay');
+    }
+  },
+
+  components: {ScrollProgress, BackButton, TheDiscoveryPageEnd, ScrollArrow},
   setup() {
     const bg = ref(null);
     const title = ref(null);
@@ -224,6 +204,13 @@ export default {
         "fact": "It remains one of Alexis Preller's most significant and monumental works."
       }
     ];
+
+    function scrollToSection(index) {
+    const section = document.getElementById(`section-${index}`)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+}
 
     function setupTimelineAnimations() {
       const container = document.querySelector('.container');
@@ -268,6 +255,7 @@ export default {
         );
       });
     }
+    
 
 
     function setupParallaxEffect() {
@@ -821,6 +809,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 html,
 body {
   overflow-x: hidden;
@@ -881,10 +872,9 @@ body {
 }
 
 .scroll-text {
-  font-size: 1rem;
+
   color: #3c63c0;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
+ 
 }
 
 /* Arrow Animation */
@@ -1068,7 +1058,7 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-color: #333;
+  background-color: #201a25;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1972,38 +1962,6 @@ h2 {
   /* Above all wipe effects */
 }
 
-.museum-info {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: rgba(98, 96, 119, 0.1);
-  border-radius: 8px;
-  position: relative;
-  border-left: 3px solid #4e83ff;
-}
-
-.museum-label {
-  position: absolute;
-  top: -10px;
-  left: 15px;
-  background: #4e83ff;
-  color: #313550;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 4px;
-  letter-spacing: 1px;
-}
-
-.museum-content {
-  color: white;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 0;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
 
 .location-text {
   position: relative;
@@ -2039,13 +1997,6 @@ h2 {
   position: absolute;
   left: 0;
   color: #4e83ff;
-}
-
-/* Add a subtle hover effect to the museum info */
-.museum-info:hover {
-  box-shadow: 0 0 15px rgba(118, 99, 255, 0.9);
-  transform: translateY(-2px);
-  transition: all 0.3s ease;
 }
 
 /* Enhance the main description to highlight the dating information */
