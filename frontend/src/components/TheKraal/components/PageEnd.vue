@@ -101,8 +101,6 @@ const props = defineProps({
 
 const router = useRouter();
 
-const emit = defineEmits(["resetAnimations"]);
-
 const artifactImageMap = {
   "The Swan": theSwanImage,
   "The Kraal": theKraalImage,
@@ -118,7 +116,6 @@ const artifactImage = computed(() => {
 });
 
 const navigateToNext = () => {
-  emit("resetAnimations");
   router.replace(props.nextArtifactPath);
 };
 </script>

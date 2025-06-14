@@ -79,7 +79,6 @@
             bgColor="#1a1a1a"
             textColor="#ffffff"
             :isVisible="true"
-            @resetAnimations="resetAnimations"
           />
         </div>
       </div>
@@ -195,41 +194,6 @@
         { d: "M1800,820 L1800,820" }
       ]);
 
-      const resetAnimations = () => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        
-        scrollPosition.value = 0;
-        currentParchmentIndex.value = 1;
-        contentOpacity.value = 0;
-        lastScrollY = 0;
-        isLoading.value = true;
-        isManualScrolling.value = false;
-        
-        document.body.style.overflow = 'hidden';
-        
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-        }, 50);
-        
-        nextTick(() => {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-          
-          animateOnScroll();
-          setTimeout(() => {
-            isLoading.value = false;
-            document.body.style.overflow = '';
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-          }, 800);
-        });
-      };
 
       onMounted(() => {
         isLoading.value = true; // Ensure loading is shown on mount
@@ -549,7 +513,7 @@
   .black-section {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(to bottom, #ffffff, #99724B);
+    background-color: #99724B;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -644,7 +608,7 @@
 .black-section {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to bottom, #ffffff, #99724b);
+  background-color: #99724b;
   display: flex;
   align-items: center;
   justify-content: center;
