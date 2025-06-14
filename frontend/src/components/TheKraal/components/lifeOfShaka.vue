@@ -513,7 +513,7 @@
   .black-section {
     width: 100vw;
     height: 100vh;
-    background-color: #99724B;
+    background: linear-gradient(to bottom, #ffffff, rgb(220, 185, 151));
     display:flex;
     align-items: center;
     justify-content: center;
@@ -608,7 +608,7 @@
 .black-section {
   width: 100vw;
   height: 100vh;
-  background-color: #99724b;
+  background: linear-gradient(to bottom, #ffffff, rgb(220, 185, 151));
   display: flex;
   align-items: center;
   justify-content: center;
