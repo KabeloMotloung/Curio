@@ -57,6 +57,64 @@ gsap.registerPlugin(ScrollTrigger);
 const scrollPosition = ref(0);
 const PAGE_END_START = 0.98;
 
+// Animation constants for non-timeline sections
+const SECTION_TRANSITIONS = {
+  landing: { start: 0.0, end: 0.2 },
+  backgroundInfo: { start: 0.4, end: 0.6 },
+  imageShowcase: { start: 0.6, end: 0.8 },
+  model3d: { start: 0.8, end: 0.9 }
+};
+
+const SCROLL_CHECKPOINTS = [
+  { position: 0.00, name: 'Landing' },
+  { position: 0.20, name: 'Timeline Start' },
+  { position: 0.40, name: 'Timeline End' },
+  { position: 0.50, name: 'Background Info' },
+  { position: 0.70, name: 'Image Showcase' },
+  { position: 0.85, name: '3D Model' },
+  { position: 0.98, name: 'Page End' }
+];
+
+const SCROLL_STEP = 8;
+const SCROLL_INTERVAL = 8;
+const INACTIVITY_DELAY = 1000;
+
+let isSnapping = ref(false);
+let snapTimeout = null;
+let lastSnapPosition = ref(null);
+let lastScrollDirection = ref(null);
+let lastScrollTime = ref(Date.now());
+let hasAutoScrolled = ref(false);
+let isAutoScrolling = ref(false);
+let currentScrollInterval = null;
+let inactivityTimer = null;
+let isManualScrolling = ref(false);
+
+const findNearestCheckpoint = (currentPosition, direction) => {
+  let nearestCheckpoint = null;
+  let minDistance = Infinity;
+
+  for (const checkpoint of SCROLL_CHECKPOINTS) {
+    const distance = checkpoint.position - currentPosition;
+    
+    if ((direction === 'up' && distance < 0) || (direction === 'down' && distance > 0)) {
+      const absDistance = Math.abs(distance);
+      if (absDistance < minDistance) {
+        minDistance = absDistance;
+        nearestCheckpoint = checkpoint;
+      }
+    }
+  }
+
+  return nearestCheckpoint;
+};
+
+const isAtCheckpoint = (position) => {
+  return SCROLL_CHECKPOINTS.some(checkpoint => 
+    Math.abs(checkpoint.position - position) < 0.001
+  );
+};
+
 const updateScrollPosition = () => {
   const windowHeight = window.innerHeight;
   const documentHeight = document.documentElement.scrollHeight;
@@ -102,12 +160,28 @@ onMounted(() => {
   const sections = gsap.utils.toArray('.section');
   
   sections.forEach((section, i) => {
+    // Skip the timeline section (index 1) as it has its own ScrollTrigger setup
+    if (i === 1) return;
+    
     ScrollTrigger.create({
       trigger: section,
       start: 'top 80%',
       end: 'bottom 20%',
       toggleClass: {targets: section, className: 'active'},
-      once: false
+      onEnter: () => {
+        gsap.to(section, {
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(section, {
+          opacity: 0.8,
+          duration: 0.8,
+          ease: 'power2.in'
+        });
+      }
     });
   });
 
@@ -117,6 +191,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', updateScrollPosition);
+  if (snapTimeout) clearTimeout(snapTimeout);
+  if (currentScrollInterval) clearInterval(currentScrollInterval);
+  if (inactivityTimer) clearTimeout(inactivityTimer);
 });
 
 const resetAnimations = () => {
