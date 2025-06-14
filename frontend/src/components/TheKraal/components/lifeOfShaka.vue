@@ -52,6 +52,11 @@
 
       <!-- Clock Section -->
       <div class="clock-section" ref="clockSection">
+        <div>
+          <div class = "kraal">
+            <img src="../assets/shaka.jpg" alt="The Kraal" class="kraal-image" />
+          </div>
+        </div>
         <div class="clock-container">
           <div>
            <ClockModel />
@@ -67,8 +72,15 @@
 
       <!-- Black Section -->
       <div class="black-section">
-        <div class = "kraal">
-          <img src="../assets/shaka.jpg" alt="The Kraal" class="kraal-image" />
+        <div class = 'kraal'>
+          <PageEnd
+            nextArtifactTitle="Spindle Whorl"
+            nextArtifactPath="/spindle-whorl"
+            bgColor="#1a1a1a"
+            textColor="#ffffff"
+            :isVisible="true"
+            @resetAnimations="resetAnimations"
+          />
         </div>
       </div>
     </div>
@@ -83,6 +95,7 @@
   import BackButton from "./BackButton.vue";
   import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
   import ScrollArrow from '../../UniversalComponents/ScrollArrow.vue';
+  import PageEnd from './PageEnd.vue';
   import ClockModel from "./ClockModel.vue";
 
   gsap.registerPlugin(ScrollTrigger);
@@ -96,6 +109,7 @@
      ScrollProgress,
      ScrollArrow,
      ClockModel,
+     PageEnd
     },
     setup() {
       const landingScreen = ref(null);
@@ -180,6 +194,42 @@
         { d: "M-800,750 L-800,750" },
         { d: "M1800,820 L1800,820" }
       ]);
+
+      const resetAnimations = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        scrollPosition.value = 0;
+        currentParchmentIndex.value = 1;
+        contentOpacity.value = 0;
+        lastScrollY = 0;
+        isLoading.value = true;
+        isManualScrolling.value = false;
+        
+        document.body.style.overflow = 'hidden';
+        
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }, 50);
+        
+        nextTick(() => {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          
+          animateOnScroll();
+          setTimeout(() => {
+            isLoading.value = false;
+            document.body.style.overflow = '';
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          }, 800);
+        });
+      };
 
       onMounted(() => {
         isLoading.value = true; // Ensure loading is shown on mount
