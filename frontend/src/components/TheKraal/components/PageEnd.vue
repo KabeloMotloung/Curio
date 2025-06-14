@@ -28,19 +28,19 @@
             </div>
             <div class="flex flex-col items-center text-center mb-8">
               <h3
-                class="text-2xl font-raleway font-light tracking-[0.25em] uppercase mb-3 text-white/80 group-hover:text-white transition-colors duration-300"
+                class="text-sm font-raleway font-light tracking-[0.25em] uppercase mb-3 text-white/80 group-hover:text-white transition-colors duration-300"
               >
                 Next Artifact
               </h3>
               <p
-                class="text-xl font-raleway font-light tracking-[0.15em] text-white/90 group-hover:text-white transition-colors duration-300"
+                class="text-3xl font-raleway font-light tracking-[0.15em] text-white/90 group-hover:text-white transition-colors duration-300"
               >
                 {{ nextArtifactTitle }}
               </p>
             </div>
             <div class="flex items-center justify-center">
               <span
-                class="text-sm font-raleway font-light tracking-[0.25em] uppercase text-white/60 group-hover:text-white/80 transition-colors duration-300"
+                class="text-xs font-raleway font-light tracking-[0.25em] uppercase text-white/60 group-hover:text-white/80 transition-colors duration-300"
                 >Click to explore</span
               >
               <svg
