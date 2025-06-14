@@ -160,41 +160,35 @@ export default {
 
     const timelineEvents = [
       {
-        date: "1973",
-        description: "A vision woven in Rorke's Drift.",
+        date: "1947",
+        description: "Mary Shabalala born in Amoibe.",
         details:
-          "At the Evangelical Lutheran Church Art and Craft Centre in Rorke's Drift, artists Mary Shabalala and Josephine Memela begin conceptualizing a tapestry that would honour one of Africa's most legendary figures: King Shaka Zulu.",
-        fact: "This centre had become a powerful incubator of Black South African creativity during apartheid, giving rural women the tools to tell their stories through wool and weave.",
+          "Mary Shabalala, born around 1947 in Amoibe near Rorke's Drift, begins her journey as a tapestry weaver linked to the local Lutheran mission.",
+        fact: "Recorded as Mary Shabalala (Amoibe, 1947), she later trained at Rorke's Drift weaving studio."
+      },
+      {
+        date: "mid-1960s",
+        description: "Josephine Memela joins the weaving studio.",
+        details:
+          "Josephine Memela, from Vant's Drift, starts assisting and training in tapestry weaving at the Evangelical Lutheran Church Art & Craft Centre.",
+        fact: "Production records from March 1966 list Josephine Memela as assisting in the studio's tapestry work."
       },
       {
         date: "1974",
-        description: "The weaving begins: Life of Shaka takes form.",
+        description: "Major collaborative tapestry completed.",
         details:
-          "Using a linocut design by artist Caiphas Nxumalo as their guide, the weavers begin the intricate process of translating his imagery into textile. The piece spans over 4.5 meters, and every thread tells part of Shaka's story.",
-        fact: "It took four and a half months of dedicated labour to complete, under the direction of master weaver Allina Ndebele.",
+          "Mary Shabalala and the younger Josephine Memela jointly weave a large-scale tapestry under master-weaver Allina Ndebele's guidance, using hand-spun karakul wool and linen on a Swedish loom.",
+        fact: "They co-wove the piece over 4½ months under Allina Ndebele's supervision."
       },
       {
-        date: "1974 (late)",
-        description: "Threads of resistance and remembrance.",
+        date: "1974-1976",
+        description: "Continued weaving practice at Rorke's Drift.",
         details:
-          "The tapestry narrates the birth, rise, and tragic death of Shaka — scenes of military strategy, royal lineage, and betrayal are frozen in wool. Yet it also speaks to a broader African legacy: pride, power, and perseverance in the face of erasure.",
-        fact: "The use of pure karakul wool and linen symbolized a reclaiming of indigenous craft at a time when Black South African expression was tightly controlled.",
-      },
-      {
-        date: "Mid-1970s",
-        description: "A journey abroad: the tapestry leaves South Africa.",
-        details:
-          "Shortly after its creation, the Life of Shaka tapestry becomes part of a private collection in Sweden. For decades, it remains there—far from the land and people whose history it honors.",
-        fact: "Despite its displacement, the tapestry continued to speak silently of Zulu resistance and the artistry of rural South African women.",
-      },
-      {
-        date: "2024",
-        description: "Return of the king: the tapestry comes home.",
-        details:
-          "After fifty years abroad, the tapestry is returned to South Africa. Its homecoming is both symbolic and historic—a restoration of cultural memory and artistic legacy.",
-        fact: "Now recognized as a national treasure, the tapestry bridges generations, bringing Shaka's legacy—and that of the women who wove him—back into the collective South African imagination.",
-      },
+          "Both women remain active in the studio's tapestry production during a pivotal era for the Centre's creative output.",
+        fact: "They are mentioned among Rorke's Drift weavers during exhibitions and sales in this period."
+      }
     ];
+
 
     const messages = [
       "Each thread is a memory — not just of history, but of the hands that spun it.",

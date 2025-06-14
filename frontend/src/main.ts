@@ -5,7 +5,7 @@ import App from './App.vue'
 import TheSwan from "./components/TheSwan/TheSwan.vue";
 import PangolinAndCrocodile from "./components/PangolinAndCrocodile/PangolinAndCrocodile.vue";
 import SidwaneTokozile from "./components/SidwaneTokozile/SidwaneTokozile.vue";
-import TheKraal from "./components/TheKraal/components/theKraal .vue";
+import TheKraal from "./components/TheKraal/components/theKraal.vue";
 import TheDiscovery from "./components/TheDiscovery/TheDiscovery.vue";
 import SpindleWhorl from "./components/SpindleWhorl/SpindleWhorl.vue";
 import BattleOfTorquay from "./components/BattleOfTorquay/BattleOfTorquay.vue";
