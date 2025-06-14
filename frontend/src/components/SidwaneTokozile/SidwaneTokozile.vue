@@ -1,7 +1,7 @@
 <template>
   <div class="sidwane-container">
     <BackButton />
-    <ScrollProgress :totalSections="5" />
+    <ScrollProgress :totalSections="6" />
     
     <section class="section">
       <LandingPage />
@@ -22,12 +22,24 @@
     <section class="section">
       <Model3D />
     </section>
+
+    <section class="section">
+      <PageEnd 
+        v-if="scrollPosition >= PAGE_END_START"
+        nextArtifactTitle="Pangolin and Crocodile"
+        nextArtifactPath="/pangolin-and-crocodile"
+        bgColor="#111"
+        textColor="#ffffff"
+        :isVisible="true"
+        @resetAnimations="resetAnimations"
+      />
+    </section>
     
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -38,8 +50,20 @@ import BackgroundInformation from './components/BackgroundInformation.vue';
 import TimelineScroll from './components/HorizontalTimeline.vue';
 import ImageShowcase from './components/ImageShowcase.vue';
 import Model3D from './components/3dModel.vue';
+import PageEnd from '../UniversalComponents/PageEnd.vue';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const scrollPosition = ref(0);
+const PAGE_END_START = 0.98;
+
+const updateScrollPosition = () => {
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.scrollY;
+  
+  scrollPosition.value = scrollTop / (documentHeight - windowHeight);
+};
 
 const timelineEvents = [
   {
@@ -86,7 +110,21 @@ onMounted(() => {
       once: false
     });
   });
+
+  window.addEventListener('scroll', updateScrollPosition);
+  updateScrollPosition();
 });
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateScrollPosition);
+});
+
+const resetAnimations = () => {
+  const sections = gsap.utils.toArray('.section');
+  sections.forEach(section => {
+    gsap.set(section, { opacity: 0.8 });
+  });
+};
 </script>
 
 <style scoped>
