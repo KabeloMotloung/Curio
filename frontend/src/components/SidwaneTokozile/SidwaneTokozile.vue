@@ -1,7 +1,7 @@
 <template>
   <div class="sidwane-container">
     <BackButton />
-    <ScrollProgress :totalSections="5" />
+    <ScrollProgress :totalSections="6" />
     
     <section class="section">
       <LandingPage />
@@ -22,12 +22,25 @@
     <section class="section">
       <Model3D />
     </section>
+
+    <section class="section">
+      <PageEnd 
+        v-if="scrollPosition >= PAGE_END_START"
+        nextArtifactTitle="Pangolin and Crocodile"
+        nextArtifactPath="/pangolin-and-crocodile"
+        bgColor="#111"
+        textColor="#ffffff"
+        :isVisible="true"
+        @resetAnimations="resetAnimations"
+      />
+    </section>
     
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, onUnmounted } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -38,8 +51,81 @@ import BackgroundInformation from './components/BackgroundInformation.vue';
 import TimelineScroll from './components/HorizontalTimeline.vue';
 import ImageShowcase from './components/ImageShowcase.vue';
 import Model3D from './components/3dModel.vue';
+import PageEnd from '../UniversalComponents/PageEnd.vue';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const scrollPosition = ref(0);
+const PAGE_END_START = 0.98;
+
+// Animation constants for non-timeline sections
+const SECTION_TRANSITIONS = {
+  landing: { start: 0.0, end: 0.2 },
+  backgroundInfo: { start: 0.4, end: 0.6 },
+  imageShowcase: { start: 0.6, end: 0.8 },
+  model3d: { start: 0.8, end: 0.9 }
+};
+
+const SCROLL_CHECKPOINTS = [
+  { position: 0.00, name: 'Landing' },
+  { position: 0.20, name: 'Timeline Start' },
+  { position: 0.40, name: 'Timeline End' },
+  { position: 0.50, name: 'Background Info' },
+  { position: 0.70, name: 'Image Showcase' },
+  { position: 0.85, name: '3D Model' },
+  { position: 0.98, name: 'Page End' }
+];
+
+const SCROLL_STEP = 8;
+const SCROLL_INTERVAL = 8;
+const INACTIVITY_DELAY = 1000;
+
+let isSnapping = ref(false);
+let snapTimeout = null;
+let lastSnapPosition = ref(null);
+let lastScrollDirection = ref(null);
+let lastScrollTime = ref(Date.now());
+let hasAutoScrolled = ref(false);
+let isAutoScrolling = ref(false);
+let currentScrollInterval = null;
+let inactivityTimer = null;
+let isManualScrolling = ref(false);
+
+// Store ScrollTrigger instances for cleanup
+const scrollTriggers = ref([]);
+
+const findNearestCheckpoint = (currentPosition, direction) => {
+  let nearestCheckpoint = null;
+  let minDistance = Infinity;
+
+  for (const checkpoint of SCROLL_CHECKPOINTS) {
+    const distance = checkpoint.position - currentPosition;
+    
+    if ((direction === 'up' && distance < 0) || (direction === 'down' && distance > 0)) {
+      const absDistance = Math.abs(distance);
+      if (absDistance < minDistance) {
+        minDistance = absDistance;
+        nearestCheckpoint = checkpoint;
+      }
+    }
+  }
+
+  return nearestCheckpoint;
+};
+
+const isAtCheckpoint = (position) => {
+  return SCROLL_CHECKPOINTS.some(checkpoint => 
+    Math.abs(checkpoint.position - position) < 0.001
+  );
+};
+
+const updateScrollPosition = () => {
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.scrollY;
+  
+  scrollPosition.value = scrollTop / (documentHeight - windowHeight);
+};
 
 const timelineEvents = [
   {
@@ -78,15 +164,73 @@ onMounted(() => {
   const sections = gsap.utils.toArray('.section');
   
   sections.forEach((section, i) => {
-    ScrollTrigger.create({
+    // Skip the timeline section (index 1) as it has its own ScrollTrigger setup
+    if (i === 1) return;
+    
+    const st = ScrollTrigger.create({
       trigger: section,
       start: 'top 80%',
       end: 'bottom 20%',
       toggleClass: {targets: section, className: 'active'},
-      once: false
+      onEnter: () => {
+        gsap.to(section, {
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(section, {
+          opacity: 0.8,
+          duration: 0.8,
+          ease: 'power2.in'
+        });
+      }
     });
+    
+    scrollTriggers.value.push(st);
   });
+
+  window.addEventListener('scroll', updateScrollPosition);
+  updateScrollPosition();
 });
+
+// Cleanup function to be called before route leave
+const cleanupAnimations = () => {
+  // Kill all ScrollTrigger instances
+  scrollTriggers.value.forEach(st => st.kill());
+  scrollTriggers.value = [];
+  
+  // Kill any remaining ScrollTrigger instances
+  ScrollTrigger.getAll().forEach(st => st.kill());
+  
+  // Reset all sections to their initial state
+  const sections = gsap.utils.toArray('.section');
+  sections.forEach(section => {
+    gsap.set(section, { opacity: 0.8 });
+  });
+
+  // Reset scroll position to top
+  window.scrollTo({
+    top: 0,
+    behavior: 'instant'
+  });
+};
+
+// Cleanup before route leave
+onBeforeRouteLeave((to, from, next) => {
+  cleanupAnimations();
+  next();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateScrollPosition);
+  cleanupAnimations();
+});
+
+const resetAnimations = () => {
+  cleanupAnimations();
+};
 </script>
 
 <style scoped>
