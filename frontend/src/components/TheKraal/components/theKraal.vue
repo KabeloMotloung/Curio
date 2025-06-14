@@ -37,7 +37,7 @@
         />
       </svg>
 
-      <h1 class="artifact-name">Life of Shaka</h1>
+      <h1 class="artifact-name">The Kraal</h1>
       <h2 class="artifact-author">Mary Shabalala and Josephine Memela</h2>
       <div class="lines-container">
         <div class="line" v-for="n in 8" :key="n"></div>
@@ -154,7 +154,7 @@ export default {
     const clockMessages = [
       "Four and a half months",
       "Can you imagine?",
-      "It Took  four and a half months to create the Life of Shaka",
+      "It Took  four and a half months to create The Kraal",
       "A testament to time, patience and dedication",
     ];
 
@@ -201,7 +201,7 @@ export default {
       "Tapestry is slow work — it teaches patience, precision, and how to tell a story without words.",
       "To weave is to resist — especially when your voice is denied, your history erased.",
       "The loom is a place of meditation. Every shuttle pass is a heartbeat, every knot a decision.",
-      "Weaving the Life of Shaka wasn't just art — it was honouring an ancestor, stitching pride into wool.",
+      "Weaving The Kraal wasn't just art — it was honouring an ancestor, stitching pride into wool.",
       "Tapestry holds weight — not just in wool, but in legacy. It outlives the weaver.",
       "Even silence has a texture in tapestry. What's left unwoven is as powerful as what's shown.",
       "We don't just weave what we see — we weave what we carry, what we lost, and what we hope for.",
