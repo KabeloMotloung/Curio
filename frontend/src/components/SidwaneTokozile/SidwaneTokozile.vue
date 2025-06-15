@@ -1,7 +1,7 @@
 <template>
   <div class="sidwane-container">
     <BackButton />
-    <ScrollProgress :totalSections="6" />
+    <ScrollProgress :sections="SECTIONS" />
     
     <section class="section">
       <LandingPage />
@@ -65,7 +65,14 @@ const SECTION_TRANSITIONS = {
   imageShowcase: { start: 0.6, end: 0.8 },
   model3d: { start: 0.8, end: 0.9 }
 };
-
+const SECTIONS = [
+  { position: 0.00, name: 'Landing' },
+  { position: 0.20, name: 'Timeline Start' },
+  { position: 0.50, name: 'Background Info' },
+  { position: 0.70, name: 'Image Showcase' },
+  { position: 0.85, name: '3D Model' },
+  { position: 0.98, name: 'Page End' }
+];
 const SCROLL_CHECKPOINTS = [
   { position: 0.00, name: 'Landing' },
   { position: 0.20, name: 'Timeline Start' },

@@ -8,6 +8,7 @@ import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
 import HorizontalTimeline from "../PangolinAndCrocodile/components/HorizontalTimeline.vue";
 import Background from "../PangolinAndCrocodile/components/Background.vue";
 import ImageTextSection from "./components/ImageTextSection.vue";
+import PageEnd from "../UniversalComponents/PageEnd.vue";
 import Model from "../PangolinAndCrocodile/components/3dModel.vue";
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,12 +56,216 @@ const pangolinTimelineItems = [
     fact: 'In the wild, pangolins can live up to 20 years—if we give them the chance.'
   }
 ];
+const SECTIONS = [
+  { position: 0.00, name: 'Welcome' },
+  { position: 0.1579, name: 'Timeline Start' },
+  { position: 0.365, name: 'Background' },
+  { position: 0.454, name: 'ImageSection1' },
+  { position: 0.862, name: '3d-Animation' },
+  { position: 0.98, name: 'Next' }
+];
+const SCROLL_CHECKPOINTS = [
+  { position: 0.00, name: 'Welcome' },
+  { position: 0.1579, name: 'Timeline Start' },
+  { position: 0.18, name: 'Timeline 1' },
+  { position: 0.2, name: 'Timeline 2' },
+  { position: 0.2261, name: 'Timeline 3' },
+  { position: 0.2489, name: 'Timeline 4' },
+  { position: 0.271, name: 'Timeline 5' },
+  { position: 0.294, name: 'Timeline6' },
+  { position: 0.365, name: 'Background' },
+  { position: 0.454, name: 'ImageSection1' },
+  { position: 0.507, name: 'ImageSection2' },
+  { position: 0.587, name: 'ImageSection3' },
+  { position: 0.658, name: 'ImageSection4' },
+  { position: 0.7295, name: 'ImageSection5' },
+  { position: 0.7916, name: 'ImageSection6' },
+  { position: 0.862, name: '3d-Animation' },
+  { position: 0.98, name: 'Next' }
+];
+const INACTIVITY_DELAY = 1000;
+const SCROLL_STEP = 8;
+const SCROLL_INTERVAL = 8;
+let isSnapping = ref(false);
+let snapTimeout = null;
+let lastSnapPosition = ref(null);
+let lastScrollDirection = ref(null);
+let lastScrollTime = ref(Date.now());
+let hasAutoScrolled = ref(false);
+let isAutoScrolling = ref(false);
+let currentScrollInterval = null;
+let inactivityTimer = null;
+let isManualScrolling = ref(false);
+let lastScrollY = 0;
+let ticking = false;
+const scrollThreshold = 5;
+
+const findNearestCheckpoint = (currentPosition, direction) => {
+  let nearestCheckpoint = null;
+  let minDistance = Infinity;
+
+  for (const checkpoint of SCROLL_CHECKPOINTS) {
+    const distance = checkpoint.position - currentPosition;
+    
+    if ((direction === 'up' && distance < 0) || (direction === 'down' && distance > 0)) {
+      const absDistance = Math.abs(distance);
+      if (absDistance < minDistance) {
+        minDistance = absDistance;
+        nearestCheckpoint = checkpoint;
+      }
+    }
+  }
+
+  return nearestCheckpoint;
+};
+
+const isAtCheckpoint = (position) => {
+  return SCROLL_CHECKPOINTS.some(checkpoint => 
+    Math.abs(checkpoint.position - position) < 0.001
+  );
+};
+
+const resetInactivityTimer = () => {
+  if (inactivityTimer) {
+    clearTimeout(inactivityTimer);
+  }
+  inactivityTimer = null;
+};
+
+const stopAutoScroll = () => {
+  if (currentScrollInterval) {
+    clearInterval(currentScrollInterval);
+    currentScrollInterval = null;
+  }
+  isSnapping.value = false;
+  isAutoScrolling.value = false;
+  hasAutoScrolled.value = false;
+};
+
+const autoScrollToCheckpoint = (targetPosition) => {
+  if (isSnapping.value || hasAutoScrolled.value || isAutoScrolling.value || isManualScrolling.value) return;
+  
+  isSnapping.value = true;
+  isAutoScrolling.value = true;
+  hasAutoScrolled.value = true;
+  
+  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  const targetScroll = maxScroll * targetPosition;
+  const startScroll = window.scrollY;
+  const distance = targetScroll - startScroll;
+  const direction = distance > 0 ? 1 : -1;
+  
+  stopAutoScroll();
+  
+  currentScrollInterval = setInterval(() => {
+    if (isManualScrolling.value) {
+      stopAutoScroll();
+      return;
+    }
+
+    const currentScroll = window.scrollY;
+    const remainingDistance = targetScroll - currentScroll;
+    const absRemainingDistance = Math.abs(remainingDistance);
+    
+    const decelerationZone = 100;
+    let currentStep = SCROLL_STEP;
+    
+    if (absRemainingDistance < decelerationZone) {
+      currentStep = Math.max(1, Math.floor(SCROLL_STEP * (absRemainingDistance / decelerationZone)));
+    }
+    
+    if (absRemainingDistance <= currentStep) {
+      window.scrollTo(0, targetScroll);
+      stopAutoScroll();
+      lastSnapPosition.value = targetPosition;
+      return;
+    }
+    
+    window.scrollBy(0, direction * currentStep);
+    
+  }, SCROLL_INTERVAL);
+};
+
+const checkForAutoScroll = () => {
+  resetInactivityTimer();
+  
+  if (isManualScrolling.value) return;
+  
+  inactivityTimer = setTimeout(() => {
+    if (!isSnapping.value && lastScrollDirection.value && !hasAutoScrolled.value && !isAutoScrolling.value) {
+      if (isAtCheckpoint(scrollPosition.value)) {
+        return;
+      }
+      
+      const nearestCheckpoint = findNearestCheckpoint(scrollPosition.value, lastScrollDirection.value);
+      if (nearestCheckpoint) {
+        autoScrollToCheckpoint(nearestCheckpoint.position);
+      }
+    }
+  }, INACTIVITY_DELAY);
+};
+const autoScrollLoop = () => {
+  const loop = () => {
+    if (isAutoScrolling.value) {
+      stopAutoScroll();
+      isManualScrolling.value = true;
+      return;
+    }
+
+    if (isSnapping.value) {
+      requestAnimationFrame(loop);
+      return;
+    }
+
+    const currentTime = Date.now();
+    const currentScrollY = window.scrollY;
+
+    if (Math.abs(currentScrollY - lastScrollY) < scrollThreshold && ticking) {
+      requestAnimationFrame(loop);
+      return;
+    }
+
+    if (currentScrollY !== lastScrollY) {
+      hasAutoScrolled.value = false;
+      isAutoScrolling.value = false;
+      lastScrollDirection.value = currentScrollY > lastScrollY ? 'down' : 'up';
+      lastScrollTime.value = currentTime;
+      resetInactivityTimer();
+      checkForAutoScroll();
+    }
+
+    lastScrollY = currentScrollY;
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    scrollPosition.value = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    scrollPosition.value = Math.max(0, Math.min(1, scrollPosition.value));
+
+    requestAnimationFrame(loop);
+  };
+
+  requestAnimationFrame(loop);
+};
+const updateScrollPosition = () => {
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.scrollY;
+  
+  scrollPosition.value = scrollTop / (documentHeight - windowHeight);
+  console.log(scrollPosition.value )
+};
+const scrollPosition = ref(0);
+const PAGE_END_START = 0.98;
+const resetAnimations = () => {
+  ctx.revert();
+}
 const main = ref();
 let ctx: gsap.Context;
 const isLoading = ref(true);
 const loadingDots = ref(null);
 let loadingDotsInterval: number | null = null;
 onMounted(() => {
+  window.addEventListener('scroll', updateScrollPosition);
+  autoScrollLoop()
+  updateScrollPosition();
   document.body.style.overflow = 'hidden';
   animateLoadingDots();
 
@@ -118,6 +323,8 @@ onMounted(() => {
 onUnmounted(() => {
   if (loadingDotsInterval) clearInterval(loadingDotsInterval);
   document.body.style.overflow = '';
+  window.removeEventListener('scroll', updateScrollPosition);
+  stopAutoScroll();
   ctx.revert();
 });
 const animateLoadingDots = () => {
@@ -160,7 +367,7 @@ const handleAssetsLoaded = () => {
   </div>
 </div>
   <BackButton />
-  <ScrollProgress :totalSections="4" />
+  <ScrollProgress :sections="SECTIONS"/>
   <div id="smooth-content">
     <header class="header h-screen flex flex-col justify-center items-center text-center p-8 relative">
       <video autoplay muted loop playsinline class="background-video w-full h-full object-cover absolute top-0 left-0">
@@ -192,6 +399,20 @@ const handleAssetsLoaded = () => {
       <div>
           <ImageTextSection/>
       </div>
+      <section class="section">
+        <Model />
+      </section>
+      <section class="section"></section>
+        <PageEnd 
+          v-if="scrollPosition >= PAGE_END_START"
+          nextArtifactTitle="The Kraal"
+          nextArtifactPath="/the-kraal"
+          bgColor="#111"
+          textColor="#ffffff"
+          :isVisible="true"
+          @resetAnimations="resetAnimations"
+        />
+      <section class="section"></section>
     </div>
   </div>
 </template>
