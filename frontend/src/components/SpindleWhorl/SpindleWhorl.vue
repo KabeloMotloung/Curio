@@ -1,6 +1,6 @@
 <template>
   <BackButton />
-  <ScrollProgress :totalSections="6" />
+  <ScrollProgress :sections="SECTIONS" />
   <div class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
@@ -296,7 +296,13 @@ export default {
         fact: "Excavations at the royal hill uncovered gold-adorned spindle whorls, suggesting their use in royal ceremonies."
       },
     ];
-
+    const SECTIONS = [
+      { position: 0.00, name: 'Landing' },
+      { position: 0.07, name: 'Timeline Start' },
+      { position: 0.20, name: 'Background Info' },
+      { position: 0.7, name: 'Image Showcase' },
+      { position: 1, name: 'Page End' }
+    ];
     function setupScrollBreakpoints() {
       // Define your section boundary points
       const breakpoints = [
@@ -1102,7 +1108,7 @@ export default {
 
       console.log("Animations reset for navigation");
     }
-    return { title, timelineEvents, resetAnimations };
+    return { title, timelineEvents, resetAnimations ,SECTIONS};
   },
 };
 

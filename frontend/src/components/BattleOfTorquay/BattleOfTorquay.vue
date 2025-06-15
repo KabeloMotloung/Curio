@@ -3,7 +3,7 @@
   <div class="w-full min-h-screen bg-gray-900 text-white overflow-x-hidden font-serif">
     <BackButton />
 
-    <ScrollProgress :totalSections="4" />
+    <ScrollProgress :sections="SECTIONS" />
     <!-- Hero Section -->
     <section
       ref="section1"
@@ -208,6 +208,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BackButton from "../UniversalComponents/BackButton.vue";
 import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
 import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
+
+const SECTIONS = [
+      { position: 0.00, name: 'Landing' },
+      { position: 0.16, name: 'Timeline Start' },
+      { position: 0.62, name: 'Background Info' },
+      { position: 0.80, name: 'Image Showcase' },
+      { position: 0.95, name: 'Image Showcase' },
+      { position: 1, name: 'Page End' }
+    ];
 
 gsap.registerPlugin(ScrollTrigger)
 

@@ -1,6 +1,6 @@
 <template>
   <BackButton />
-  <ScrollProgress :totalSections="5"/>
+  <ScrollProgress :sections="SECTIONS"/>
 
   <!-- Section 1 -->
   <div id="section-1" class="intro-container">
@@ -170,6 +170,13 @@ export default {
 
   components: {ScrollProgress, BackButton, TheDiscoveryPageEnd, ScrollArrow},
   setup() {
+    const SECTIONS = [
+      { position: 0.00, name: 'Landing' },
+      { position: 0.07, name: 'Timeline Start' },
+      { position: 0.35, name: 'Background Info' },
+      { position: 0.72, name: 'Image Showcase' },
+      { position: 1, name: 'Page End' }
+    ];
     const bg = ref(null);
     const title = ref(null);
     const timelineEvents = [
@@ -802,7 +809,7 @@ export default {
 
     });
 
-    return { title, timelineEvents };
+    return { title, timelineEvents , SECTIONS};
   },
 };
 

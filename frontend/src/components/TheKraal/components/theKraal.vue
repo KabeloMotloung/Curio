@@ -1,6 +1,6 @@
 <template>
   <BackButton />
-  <ScrollProgress :totalSections="4" />
+  <ScrollProgress :sections="SECTIONS"/>
 
   <div
     ref="loaderOverlay"
@@ -139,6 +139,15 @@ export default {
     PageEnd,
   },
   setup() {
+    const SECTIONS = [
+      { position: 0.00, name: 'Landing' },
+      { position: 0.10, name: 'Timeline Start' },
+      { position: 0.20, name: 'Background Info' },
+      { position: 0.7, name: 'Image Showcase' },
+      { position: 1, name: 'Page End' }
+    ];
+
+
     const landingScreen = ref(null);
     const backgroundSection = ref(null);
     const timelineSection = ref(null);
@@ -460,6 +469,7 @@ export default {
       currentClockMessage,
       stringPaths,
       isLoading,
+      SECTIONS,
     };
   },
 };
