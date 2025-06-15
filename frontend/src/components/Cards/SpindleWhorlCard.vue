@@ -1,5 +1,6 @@
 <template>
-  <button @click="onClick" class="image-button" :style="buttonStyle">
+  <button @click="onClick" class="image-button">
+    <img :src="artifactImage" alt="The Spindle Whorl" />
   </button>
 </template>
 
@@ -12,10 +13,8 @@ export default {
     }
   },
   computed: {
-    buttonStyle() {
-      return {
-        backgroundImage: `url(${this.imageUrl})`
-      };
+    artifactImage() {
+      return this.imageUrl;
     }
   },
   methods: {
@@ -35,37 +34,18 @@ export default {
   border: none;
   color: white;
   font-size: 16px;
-  padding: 10px 20px;
+  padding: 0;              
   cursor: pointer;
-  width: 100%;
-  height: 100%;
   border-radius: 5px;
   transition: transform 0.3s;
+  height: auto !important;          
+  width: 80vw;             
+  max-width: 500px;        
+  display: block;
+  margin: 0 auto;
 }
 
 .image-button:hover {
   transform: scale(1.05);
 }
-</style>
-<style scoped>
-.image-button {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: none;
-  color: white;
-  font-size: 16px;
-  padding: 10px 20px;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  transition: transform 0.3s;
-}
-
-.image-button:hover {
-  transform: scale(1.05);
-}
-
 </style>
