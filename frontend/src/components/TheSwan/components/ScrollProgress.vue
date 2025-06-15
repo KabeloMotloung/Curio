@@ -19,6 +19,11 @@ const updateCurrentSection = () => {
   const windowHeight = window.innerHeight
   const maxScroll = document.documentElement.scrollHeight - windowHeight
 
+  if (scrollPosition >= maxScroll * 0.95) {
+    currentSection.value = SECTIONS.length - 1
+    return
+  }
+
   let maxVisibility = 0
   let mostVisibleSection = 0
 
