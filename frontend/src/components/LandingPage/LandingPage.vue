@@ -488,6 +488,10 @@ onBeforeUnmount(() => {
 
 
 <style>
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
 body, html {
   margin: 0;
   padding: 0;
