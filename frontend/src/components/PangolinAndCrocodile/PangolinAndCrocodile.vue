@@ -133,116 +133,116 @@ const resetInactivityTimer = () => {
 };
 
 const stopAutoScroll = () => {
-  if (currentScrollInterval) {
-    clearInterval(currentScrollInterval);
-    currentScrollInterval = null;
-  }
-  isSnapping.value = false;
-  isAutoScrolling.value = false;
-  hasAutoScrolled.value = false;
+  // if (currentScrollInterval) {
+  //   clearInterval(currentScrollInterval);
+  //   currentScrollInterval = null;
+  // }
+  // isSnapping.value = false;
+  // isAutoScrolling.value = false;
+  // hasAutoScrolled.value = false;
 };
 
 const autoScrollToCheckpoint = (targetPosition) => {
-  if (isSnapping.value || hasAutoScrolled.value || isAutoScrolling.value || isManualScrolling.value) return;
+  // if (isSnapping.value || hasAutoScrolled.value || isAutoScrolling.value || isManualScrolling.value) return;
   
-  isSnapping.value = true;
-  isAutoScrolling.value = true;
-  hasAutoScrolled.value = true;
+  // isSnapping.value = true;
+  // isAutoScrolling.value = true;
+  // hasAutoScrolled.value = true;
   
-  const maxScroll = document.body.scrollHeight - window.innerHeight;
-  const targetScroll = maxScroll * targetPosition;
-  const startScroll = window.scrollY;
-  const distance = targetScroll - startScroll;
-  const direction = distance > 0 ? 1 : -1;
+  // const maxScroll = document.body.scrollHeight - window.innerHeight;
+  // const targetScroll = maxScroll * targetPosition;
+  // const startScroll = window.scrollY;
+  // const distance = targetScroll - startScroll;
+  // const direction = distance > 0 ? 1 : -1;
   
-  stopAutoScroll();
+  // stopAutoScroll();
   
-  currentScrollInterval = setInterval(() => {
-    if (isManualScrolling.value) {
-      stopAutoScroll();
-      return;
-    }
+  // currentScrollInterval = setInterval(() => {
+  //   if (isManualScrolling.value) {
+  //     stopAutoScroll();
+  //     return;
+  //   }
 
-    const currentScroll = window.scrollY;
-    const remainingDistance = targetScroll - currentScroll;
-    const absRemainingDistance = Math.abs(remainingDistance);
+  //   const currentScroll = window.scrollY;
+  //   const remainingDistance = targetScroll - currentScroll;
+  //   const absRemainingDistance = Math.abs(remainingDistance);
     
-    const decelerationZone = 100;
-    let currentStep = SCROLL_STEP;
+  //   const decelerationZone = 100;
+  //   let currentStep = SCROLL_STEP;
     
-    if (absRemainingDistance < decelerationZone) {
-      currentStep = Math.max(1, Math.floor(SCROLL_STEP * (absRemainingDistance / decelerationZone)));
-    }
+  //   if (absRemainingDistance < decelerationZone) {
+  //     currentStep = Math.max(1, Math.floor(SCROLL_STEP * (absRemainingDistance / decelerationZone)));
+  //   }
     
-    if (absRemainingDistance <= currentStep) {
-      window.scrollTo(0, targetScroll);
-      stopAutoScroll();
-      lastSnapPosition.value = targetPosition;
-      return;
-    }
+  //   if (absRemainingDistance <= currentStep) {
+  //     window.scrollTo(0, targetScroll);
+  //     stopAutoScroll();
+  //     lastSnapPosition.value = targetPosition;
+  //     return;
+  //   }
     
-    window.scrollBy(0, direction * currentStep);
+  //   window.scrollBy(0, direction * currentStep);
     
-  }, SCROLL_INTERVAL);
+  // }, SCROLL_INTERVAL);
 };
 
 const checkForAutoScroll = () => {
-  resetInactivityTimer();
+  // resetInactivityTimer();
   
-  if (isManualScrolling.value) return;
+  // if (isManualScrolling.value) return;
   
-  inactivityTimer = setTimeout(() => {
-    if (!isSnapping.value && lastScrollDirection.value && !hasAutoScrolled.value && !isAutoScrolling.value) {
-      if (isAtCheckpoint(scrollPosition.value)) {
-        return;
-      }
+  // inactivityTimer = setTimeout(() => {
+  //   if (!isSnapping.value && lastScrollDirection.value && !hasAutoScrolled.value && !isAutoScrolling.value) {
+  //     if (isAtCheckpoint(scrollPosition.value)) {
+  //       return;
+  //     }
       
-      const nearestCheckpoint = findNearestCheckpoint(scrollPosition.value, lastScrollDirection.value);
-      if (nearestCheckpoint) {
-        autoScrollToCheckpoint(nearestCheckpoint.position);
-      }
-    }
-  }, INACTIVITY_DELAY);
+  //     const nearestCheckpoint = findNearestCheckpoint(scrollPosition.value, lastScrollDirection.value);
+  //     if (nearestCheckpoint) {
+  //       autoScrollToCheckpoint(nearestCheckpoint.position);
+  //     }
+  //   }
+  // }, INACTIVITY_DELAY);
 };
 const autoScrollLoop = () => {
-  const loop = () => {
-    if (isAutoScrolling.value) {
-      stopAutoScroll();
-      isManualScrolling.value = true;
-      return;
-    }
+  // const loop = () => {
+  //   if (isAutoScrolling.value) {
+  //     stopAutoScroll();
+  //     isManualScrolling.value = true;
+  //     return;
+  //   }
 
-    if (isSnapping.value) {
-      requestAnimationFrame(loop);
-      return;
-    }
+  //   if (isSnapping.value) {
+  //     requestAnimationFrame(loop);
+  //     return;
+  //   }
 
-    const currentTime = Date.now();
-    const currentScrollY = window.scrollY;
+  //   const currentTime = Date.now();
+  //   const currentScrollY = window.scrollY;
 
-    if (Math.abs(currentScrollY - lastScrollY) < scrollThreshold && ticking) {
-      requestAnimationFrame(loop);
-      return;
-    }
+  //   if (Math.abs(currentScrollY - lastScrollY) < scrollThreshold && ticking) {
+  //     requestAnimationFrame(loop);
+  //     return;
+  //   }
 
-    if (currentScrollY !== lastScrollY) {
-      hasAutoScrolled.value = false;
-      isAutoScrolling.value = false;
-      lastScrollDirection.value = currentScrollY > lastScrollY ? 'down' : 'up';
-      lastScrollTime.value = currentTime;
-      resetInactivityTimer();
-      checkForAutoScroll();
-    }
+  //   if (currentScrollY !== lastScrollY) {
+  //     hasAutoScrolled.value = false;
+  //     isAutoScrolling.value = false;
+  //     lastScrollDirection.value = currentScrollY > lastScrollY ? 'down' : 'up';
+  //     lastScrollTime.value = currentTime;
+  //     resetInactivityTimer();
+  //     checkForAutoScroll();
+  //   }
 
-    lastScrollY = currentScrollY;
-    const maxScroll = document.body.scrollHeight - window.innerHeight;
-    scrollPosition.value = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-    scrollPosition.value = Math.max(0, Math.min(1, scrollPosition.value));
+  //   lastScrollY = currentScrollY;
+  //   const maxScroll = document.body.scrollHeight - window.innerHeight;
+  //   scrollPosition.value = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+  //   scrollPosition.value = Math.max(0, Math.min(1, scrollPosition.value));
 
-    requestAnimationFrame(loop);
-  };
+  //   requestAnimationFrame(loop);
+  // };
 
-  requestAnimationFrame(loop);
+  // requestAnimationFrame(loop);
 };
 const updateScrollPosition = () => {
   const windowHeight = window.innerHeight;
@@ -250,7 +250,6 @@ const updateScrollPosition = () => {
   const scrollTop = window.scrollY;
   
   scrollPosition.value = scrollTop / (documentHeight - windowHeight);
-  console.log(scrollPosition.value )
 };
 const scrollPosition = ref(0);
 const PAGE_END_START = 0.98;
@@ -321,6 +320,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  stopAutoScroll();
   if (loadingDotsInterval) clearInterval(loadingDotsInterval);
   document.body.style.overflow = '';
   window.removeEventListener('scroll', updateScrollPosition);
@@ -402,7 +402,7 @@ const handleAssetsLoaded = () => {
       <section class="section">
         <Model />
       </section>
-      <section class="section"></section>
+      <section class="section bg-[#e4f4ec]"></section>
         <PageEnd 
           v-if="scrollPosition >= PAGE_END_START"
           nextArtifactTitle="The Kraal"
@@ -412,7 +412,7 @@ const handleAssetsLoaded = () => {
           :isVisible="true"
           @resetAnimations="resetAnimations"
         />
-      <section class="section"></section>
+      <section class="section bg-[#e4f4ec]"></section>
     </div>
   </div>
 </template>

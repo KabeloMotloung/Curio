@@ -35,12 +35,7 @@ const updateCurrentSection = () => {
 }
 
 const scrollToSection = (index: number) => {
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-  const targetScroll = maxScroll * props.sections[index].position
-  window.scrollTo({
-    top: targetScroll,
-    behavior: 'smooth'
-  })
+ 
 }
 
 onMounted(() => {

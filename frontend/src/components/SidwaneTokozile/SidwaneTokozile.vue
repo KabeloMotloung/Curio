@@ -44,7 +44,7 @@
       <Model3D />
     </section>
 
-    <section class="section">
+    <section class="section bg-[#d8bca4]">
       <PageEnd 
         v-if="scrollPosition >= PAGE_END_START"
         nextArtifactTitle="Pangolin and Crocodile"

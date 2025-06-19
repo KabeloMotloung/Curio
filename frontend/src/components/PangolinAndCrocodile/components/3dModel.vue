@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center h-screen bg-[#f5e9d9]">
+  <div class="flex justify-center items-center h-screen bg-[#e4f4ec]">
     <div class="relative w-3/4 max-w-lg h-3/4 bg-white shadow-lg rounded-lg overflow-hidden border border-[#33261e]">
       <div ref="container" class="w-full h-full"></div>
       

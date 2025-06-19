@@ -358,28 +358,28 @@ export default {
 
       // Function to disable scrolling
       function disableScroll() {
-        // Store current scroll position
-        const scrollY = window.scrollY;
+        // // Store current scroll position
+        // const scrollY = window.scrollY;
 
-        // Define the function that will prevent scrolling
-        const scrollBlocker = function (e) {
-          window.scrollTo(0, scrollY);
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        };
+        // // Define the function that will prevent scrolling
+        // const scrollBlocker = function (e) {
+        //   window.scrollTo(0, scrollY);
+        //   e.preventDefault();
+        //   e.stopPropagation();
+        //   return false;
+        // };
 
-        // Add event listeners to block scroll
-        window.addEventListener('scroll', scrollBlocker, { passive: false });
-        window.addEventListener('wheel', scrollBlocker, { passive: false });
-        window.addEventListener('touchmove', scrollBlocker, { passive: false });
+        // // Add event listeners to block scroll
+        // window.addEventListener('scroll', scrollBlocker, { passive: false });
+        // window.addEventListener('wheel', scrollBlocker, { passive: false });
+        // window.addEventListener('touchmove', scrollBlocker, { passive: false });
 
-        // Return function to re-enable scrolling
-        return function enableScroll() {
-          window.removeEventListener('scroll', scrollBlocker);
-          window.removeEventListener('wheel', scrollBlocker);
-          window.removeEventListener('touchmove', scrollBlocker);
-        };
+        // // Return function to re-enable scrolling
+        // return function enableScroll() {
+        //   window.removeEventListener('scroll', scrollBlocker);
+        //   window.removeEventListener('wheel', scrollBlocker);
+        //   window.removeEventListener('touchmove', scrollBlocker);
+        // };
       }
 
       // Create a pulse effect indicator
@@ -436,8 +436,6 @@ export default {
         // Mark as reached to prevent re-triggering
         breakpoint.reached = true;
         isScrollBlocked = true;
-
-        console.log(`Reached ${breakpoint.sectionName}`);
 
         // Disable scrolling
         const enableScroll = disableScroll();
