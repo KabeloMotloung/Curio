@@ -339,6 +339,7 @@ export default {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   backdrop-filter: blur(8px);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+  padding: 30px;
 }
 
 .info-text:hover {
