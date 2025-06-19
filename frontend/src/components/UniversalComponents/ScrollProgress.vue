@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref} from 'vue'
 
+interface Section {
+  position: number;
+  name: string;
+}
+
 interface ScrollProgressProps {
-  totalSections: number;
+  sections: Section[];
   activeColor?: string;
   inactiveColor?: string;
 }
@@ -20,11 +25,22 @@ const updateCurrentSection = () => {
   const scrollPosition = window.scrollY
   const scrollPercentage = scrollPosition / scrollHeight
 
-  const sectionHeight = 1 / props.totalSections
-  currentSection.value = Math.min(
-      Math.floor(scrollPercentage / sectionHeight),
-      props.totalSections - 1
+  // Find the last section that is before or at the current scroll position
+  const index = props.sections.findIndex(section => 
+    scrollPercentage <= section.position
   )
+  
+  // If we're past all sections, use the last section
+  currentSection.value = index === -1 ? props.sections.length - 1 : index
+}
+
+const scrollToSection = (index: number) => {
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+  const targetScroll = maxScroll * props.sections[index].position
+  window.scrollTo({
+    top: targetScroll,
+    behavior: 'smooth'
+  })
 }
 
 onMounted(() => {
@@ -44,11 +60,12 @@ onUnmounted(() => {
       shadow-[0_0_10px_rgba(255,255,255,0.2)] border border-white/20 transition-all duration-300"
     >
       <div
-          v-for="(_, index) in totalSections"
+          v-for="(section, index) in sections"
           :key="index"
           class="w-2.5 h-2.5 rounded-full transition-all duration-500 relative"
           :class="currentSection === index ? `${activeColor} scale-125 shadow-[0_0_8px_rgba(255,255,255,0.6)]` : inactiveColor"
-      >
+          @click="scrollToSection(index)"
+          >   
         <div 
           v-if="currentSection === index"
           class="absolute inset-0 rounded-full animate-ping opacity-50"

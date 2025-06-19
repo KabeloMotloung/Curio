@@ -1,20 +1,42 @@
 <template>
-  <div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="relative w-3/4 max-w-lg h-3/4 bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300">
+  <div class="flex justify-center items-center h-screen bg-[#f5e9d9]">
+    <div class="relative w-3/4 max-w-lg h-3/4 bg-white shadow-lg rounded-lg overflow-hidden border border-[#33261e]">
       <div ref="container" class="w-full h-full"></div>
-      <div v-if="status" class="absolute top-2 left-2 bg-black bg-opacity-50 text-white p-2 rounded">
-        {{ status }}
+      
+      <!-- Control Instructions -->
+      <div class="absolute bottom-4 left-4 right-4 bg-white/90 p-4 rounded-lg shadow-lg border border-[#33261e]/20">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-[#33261e] font-semibold">Model Controls</h3>
+          <button @click="toggleInstructions" class="text-[#33261e] hover:text-[#6b4226] transition-colors">
+            <span v-if="showInstructions">▼</span>
+            <span v-else>▲</span>
+          </button>
+        </div>
+        <div v-if="showInstructions" class="space-y-2 text-sm text-[#33261e]">
+          <div class="flex items-center gap-2">
+            <span class="control-icon">🖱️</span>
+            <span>Click & drag to rotate</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="control-icon">⌨️</span>
+            <span>Scroll to zoom in/out</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="control-icon">🖱️</span>
+            <span>Right-click & drag to pan</span>
+          </div>
+        </div>
       </div>
-      <div v-if="error" class="absolute bottom-2 left-2 bg-red-500 text-white p-2 rounded max-w-full overflow-auto">
-        {{ error }}
-      </div>
-      <div class="absolute top-2 right-2 flex gap-2">
-        <button @click="toggleWireframe" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-          {{ wireframe ? 'Hide' : 'Show' }} Wireframe
-        </button>
-        <button @click="toggleGrid" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-          {{ showGrid ? 'Hide' : 'Show' }} Grid
-        </button>
+
+      <!-- Interaction Hint -->
+      <div v-if="showInteractionHint" 
+           class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                  bg-white/90 p-4 rounded-lg shadow-lg border border-[#33261e]/20
+                  animate-fade-out">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">👆</span>
+          <span class="text-[#33261e]">Try moving the model</span>
+        </div>
       </div>
     </div>
   </div>
@@ -23,8 +45,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const container = ref(null);
@@ -34,7 +55,13 @@ const wireframe = ref(false);
 const showGrid = ref(true);
 let scene, camera, renderer, controls, animationFrameId;
 let model = null;
-let gridHelper, axesHelper;
+
+const showInstructions = ref(true);
+const showInteractionHint = ref(true);
+
+const toggleInstructions = () => {
+  showInstructions.value = !showInstructions.value;
+};
 
 onMounted(() => {
   initScene();
@@ -72,7 +99,7 @@ function initScene() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(container.value.clientWidth, container.value.clientHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.outputEncoding = THREE.sRGBEncoding; // Important for correct texture rendering
+  renderer.outputEncoding = THREE.sRGBEncoding;
   container.value.appendChild(renderer.domElement);
   
   // Add lights
@@ -87,14 +114,6 @@ function initScene() {
   bottomLight.position.set(0, -10, 0);
   scene.add(bottomLight);
   
-  // Add grid helper
-  gridHelper = new THREE.GridHelper(20, 20);
-  scene.add(gridHelper);
-  
-  // Add axes helper
-  axesHelper = new THREE.AxesHelper(5);
-  scene.add(axesHelper);
-  
   // Add controls
   controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
@@ -108,129 +127,68 @@ function initScene() {
 function loadModel() {
   status.value = 'Loading model...';
   
-  // Create placeholder cube
   const geometry = new THREE.BoxGeometry(1, 1, 1);
   const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
   
-  // Debug model path
-  const modelPath = '/models/pangolin/';
-  console.log(`Loading model from: ${modelPath}`);
+  const modelPath = '/models/pangolin/pangolin.glb';
   
-  // Set up texture loading manager to catch errors
+
   const loadingManager = new THREE.LoadingManager();
   loadingManager.onError = function(url) {
-    error.value = `Error loading texture: ${url}`;
-    console.error('Error loading texture:', url);
+    error.value = `Error loading model: ${url}`;
+    console.error('Error loading model:', url);
   };
   
-  // Load materials with the manager
-  const mtlLoader = new MTLLoader(loadingManager);
-  mtlLoader.setPath(modelPath);
+  const gltfLoader = new GLTFLoader(loadingManager);
   
-  // Modify texture path if needed - this is critical for finding textures
-  mtlLoader.setMaterialOptions({
-    ignoreZeroRGBs: true,
-    side: THREE.DoubleSide // Show both sides of faces
-  });
-  
-  // Log the MTL file URL for debugging
-  console.log(`Loading MTL from: ${modelPath}panganoli.mtl`);
-  
-  mtlLoader.load('cleaner.mtl', 
-    // onLoad callback
-    (materials) => {
-      status.value = 'Materials loaded, loading object...';
-      materials.preload();
+  gltfLoader.load(
+    modelPath,
+
+    (gltf) => {
+      scene.remove(cube);
+      model = gltf.scene;
       
-      // Debug available materials
-      console.log('Materials loaded:', materials);
       
-      // Get material names and check for texture maps
-      const materialNames = Object.keys(materials.materials);
-      console.log('Available materials:', materialNames);
-      
-      // Check if materials have texture maps
-      materialNames.forEach(name => {
-        const mat = materials.materials[name];
-        console.log(`Material ${name} maps:`, {
-          map: mat.map ? mat.map.name : 'None',
-          normalMap: mat.normalMap ? mat.normalMap.name : 'None'
-        });
+ 
+      model.traverse(child => {
+        if (child.isMesh) {
+          child.userData.originalMaterial = child.material;
+        }
       });
       
-      // Log image paths for debugging
-      if (materials.materialsInfo) {
-        console.log('Material info paths:', materials.materialsInfo);
-      }
+
+      const box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
       
-      const objLoader = new OBJLoader(loadingManager);
-      objLoader.setMaterials(materials);
-      objLoader.setPath(modelPath);
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const scale = 10 / maxDim;
+      model.scale.set(scale, scale, scale);
       
-      objLoader.load('cleaner.obj',
-        // onLoad callback 
-        (object) => {
-          scene.remove(cube); // Remove placeholder
-          model = object;
-          
-          // Debug object materials
-          object.traverse(child => {
-            if (child.isMesh) {
-              console.log('Mesh found:', child.name);
-              console.log('Material:', child.material);
-              
-              // Store original materials for later
-              child.userData.originalMaterial = child.material;
-            }
-          });
-          
-          // Scale and center model
-          const box = new THREE.Box3().setFromObject(object);
-          const size = box.getSize(new THREE.Vector3());
-          const center = box.getCenter(new THREE.Vector3());
-          
-          const maxDim = Math.max(size.x, size.y, size.z);
-          const scale = 10 / maxDim;
-          object.scale.set(scale, scale, scale);
-          
-          object.position.x = -center.x * scale;
-          object.position.y = -center.y * scale;
-          object.position.z = -center.z * scale;
-          
-          scene.add(object);
-          
-          // Reset camera and controls to focus on model
-          controls.target.set(0, 0, 0);
-          controls.update();
-          
-          status.value = 'Model loaded successfully';
-          console.log('Model loaded', object);
-        },
-        // onProgress callback
-        (xhr) => {
-          const loadingPercentage = Math.round((xhr.loaded / xhr.total) * 100);
-          status.value = `Loading object: ${loadingPercentage}%`;
-        },
-        // onError callback
-        (err) => {
-          error.value = `Error loading OBJ: ${err.message || 'Unknown error'}`;
-          console.error('Error loading OBJ:', err);
-        }
-      );
+      model.position.x = -center.x * scale;
+      model.position.y = -center.y * scale;
+      model.position.z = -center.z * scale;
+      
+      scene.add(model);
+      
+      controls.target.set(0, 0, 0);
+      controls.update();
+      
+      status.value = 'Model loaded successfully';
     },
-    // onProgress callback
+
     (xhr) => {
       if (xhr.lengthComputable) {
         const loadingPercentage = Math.round((xhr.loaded / xhr.total) * 100);
-        status.value = `Loading materials: ${loadingPercentage}%`;
+        status.value = `Loading model: ${loadingPercentage}%`;
       }
     },
-    // onError callback
+
     (err) => {
-      error.value = `Error loading MTL: ${err.message || 'Unknown error'}`;
-      console.error('Error loading MTL:', err);
+      error.value = `Error loading model: ${err.message || 'Unknown error'}`;
+      console.error('Error loading model:', err);
     }
   );
 }
@@ -242,13 +200,11 @@ function toggleWireframe() {
     model.traverse(child => {
       if (child.isMesh) {
         if (wireframe.value) {
-          // Create wireframe material
           child.material = new THREE.MeshBasicMaterial({
             color: 0x000000,
             wireframe: true
           });
         } else {
-          // Restore original material
           child.material = child.userData.originalMaterial;
         }
       }
@@ -258,8 +214,6 @@ function toggleWireframe() {
 
 function toggleGrid() {
   showGrid.value = !showGrid.value;
-  if (gridHelper) gridHelper.visible = showGrid.value;
-  if (axesHelper) axesHelper.visible = showGrid.value;
 }
 
 function animate() {
@@ -277,3 +231,21 @@ function onWindowResize() {
   }
 }
 </script>
+
+<style scoped>
+.control-icon {
+  font-size: 1.2em;
+  min-width: 24px;
+  text-align: center;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.animate-fade-out {
+  animation: fadeOut 1s ease-in-out forwards;
+  animation-delay: 4s;
+}
+</style>
