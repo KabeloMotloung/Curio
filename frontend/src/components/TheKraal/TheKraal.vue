@@ -1,6 +1,6 @@
 <template>
   <BackButton />
-  <ScrollProgress :totalSections="4" />
+  <ScrollProgress :sections="SECTIONS" />
 
   <div
     ref="loaderOverlay"
@@ -150,6 +150,14 @@ export default {
     const currentClockMessage = ref(0);
     const loaderOverlay = ref(null);
     const isLoading = ref(true);
+
+    const SECTIONS = [
+      { position: 0.00, name: 'Landing' },
+      { position: 0.099, name: 'Timeline' },
+      { position: 0.16, name: 'Background Info' },
+      { position: 0.75, name: 'Image Showcase' },
+      { position: 1, name: 'Page End' }
+    ];
 
     const clockMessages = [
       "Four and a half months",
@@ -460,6 +468,7 @@ export default {
       currentClockMessage,
       stringPaths,
       isLoading,
+      SECTIONS
     };
   },
 };

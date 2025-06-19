@@ -13,11 +13,11 @@
                    class="w-full h-full object-contain" />
             </div>
             <div class="flex flex-col items-center text-center mb-8">
-              <h3 class="text-2xl font-raleway font-light tracking-[0.25em] uppercase mb-3 text-white/80 group-hover:text-white transition-colors duration-300">Next Artifact</h3>
-              <p class="text-xl font-raleway font-light tracking-[0.15em] text-white/90 group-hover:text-white transition-colors duration-300">The Battle of Torquay</p>
+              <h3 class="text-sm font-raleway font-light tracking-[0.25em] uppercase mb-3 text-white/80 group-hover:text-white transition-colors duration-300">Next Artifact</h3>
+              <p class="text-3xl font-raleway font-light tracking-[0.15em] text-white/90 group-hover:text-white transition-colors duration-300">The Battle of Torquay</p>
             </div>
             <div class="flex items-center justify-center">
-              <span class="text-sm font-raleway font-light tracking-[0.25em] uppercase text-white/60 group-hover:text-white/80 transition-colors duration-300">Click to explore</span>
+              <span class="text-xs font-raleway font-light tracking-[0.25em] uppercase text-white/60 group-hover:text-white/80 transition-colors duration-300">Click to explore</span>
               <svg class="w-5 h-5 ml-2 text-white/60 group-hover:text-white/80 transition-colors duration-300 transform transition-transform duration-300 group-hover:translate-x-1" 
                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/>

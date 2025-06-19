@@ -1,6 +1,28 @@
 <template>
   <BackButton />
   <ScrollProgress :sections="SECTIONS" />
+
+  <div
+    ref="loaderOverlay"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[#111111] transition-opacity duration-1000"
+    :class="{ 'opacity-0 pointer-events-none': !isLoading }"
+  >
+    <div class="flex flex-col items-center">
+      <!-- Sleek spinner loader -->
+      <div class="relative w-16 h-16 mb-5">
+        <div
+          class="absolute inset-0 border-2 border-white/10 rounded-full"
+        ></div>
+        <div
+          class="absolute inset-0 border-2 border-transparent border-t-white rounded-full animate-spinner"
+        ></div>
+      </div>
+      <p class="text-white text-base font-raleway uppercase tracking-widest">
+        Loading<span ref="loadingDots">.</span>
+      </p>
+    </div>
+  </div>
+
   <div class="intro-container">
     <div class="particle-container">
       <div v-for="n in 300" :key="n" class="particle"></div>
@@ -264,6 +286,7 @@ export default {
   setup() {
     const bg = ref(null);
     const title = ref(null);
+    const isLoading = ref(true);
     const timelineEvents = [
       {
         date: "900 AD",
@@ -810,6 +833,11 @@ export default {
     }
 
     onMounted(() => {
+      isLoading.value = true; // Ensure loading is shown on mount
+      setTimeout(() => {
+        isLoading.value = false;
+      }, 2000); // 2 seconds
+
       ScrollTrigger.getAll().forEach(trigger => trigger.kill(false));
       const sections = gsap.utils.toArray(".panel");
       const timeline = gsap.timeline();
@@ -1108,7 +1136,7 @@ export default {
 
       console.log("Animations reset for navigation");
     }
-    return { title, timelineEvents, resetAnimations ,SECTIONS};
+    return { title, timelineEvents, resetAnimations ,SECTIONS, isLoading};
   },
 };
 
@@ -1842,6 +1870,16 @@ h2 {
     transform: translateY(-200px);
     opacity: 0;
   }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spinner {
+  animation: spinner 1s linear infinite;
 }
 
 /* Parallax Section */

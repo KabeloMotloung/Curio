@@ -4,6 +4,28 @@
     <BackButton />
 
     <ScrollProgress :sections="SECTIONS" />
+
+    <div
+      ref="loaderOverlay"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-[#111111] transition-opacity duration-1000"
+      :class="{ 'opacity-0 pointer-events-none': !isLoading }"
+    >
+      <div class="flex flex-col items-center">
+        <!-- Sleek spinner loader -->
+        <div class="relative w-16 h-16 mb-5">
+          <div
+            class="absolute inset-0 border-2 border-white/10 rounded-full"
+          ></div>
+          <div
+            class="absolute inset-0 border-2 border-transparent border-t-white rounded-full animate-spinner"
+          ></div>
+        </div>
+        <p class="text-white text-base font-raleway uppercase tracking-widest">
+          Loading<span ref="loadingDots">.</span>
+        </p>
+      </div>
+    </div>
+
     <!-- Hero Section -->
     <section
       ref="section1"
@@ -229,6 +251,7 @@ const section5 = ref(null)
 const painting = ref(null)
 const neuralCanvas = ref(null)
 const endContent = ref(null)
+const isLoading = ref(true);
 
 // Data
 const battleTimeline = [
@@ -421,6 +444,11 @@ const setupCanvasAnimations = () => {
 }
 
 onMounted(() => {
+  isLoading.value = true; // Ensure loading is shown on mount
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000); // 2 seconds
+
   // Setup section animations
   const sections = [section1, section3, section4, section5]
 
@@ -733,5 +761,15 @@ html {
 
 .pulse-hover:hover {
   animation: pulse 2s infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spinner {
+  animation: spinner 1s linear infinite;
 }
 </style>
