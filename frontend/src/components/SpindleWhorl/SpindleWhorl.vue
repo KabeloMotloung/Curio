@@ -248,7 +248,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref , onUnmounted} from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -262,6 +262,8 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 export default {
   components: { ScrollProgress, BackButton, ScrollArrow, SpindleWhorlPageEnd },
   setup() {
+    let breakpoints = [];
+    let indicator = null;
     const bg = ref(null);
     const title = ref(null);
     const timelineEvents = [
@@ -305,7 +307,7 @@ export default {
     ];
     function setupScrollBreakpoints() {
       // Define your section boundary points
-      const breakpoints = [
+      breakpoints = [
         {
           element: '.container',
           position: 'bottom',
@@ -358,7 +360,7 @@ export default {
       }
 
       // Create a pulse effect indicator
-      const indicator = document.createElement('div');
+      indicator = document.createElement('div');
       indicator.style.cssText = `
     position: fixed;
     bottom: 20%;
@@ -808,7 +810,14 @@ export default {
 
 
     }
-
+    onUnmounted(() => {
+      gsap.killTweensOf("*");
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      if (indicator && indicator.parentNode) {
+        indicator.parentNode.removeChild(indicator);
+      }
+      breakpoints = [];
+    });
     onMounted(() => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill(false));
       const sections = gsap.utils.toArray(".panel");
