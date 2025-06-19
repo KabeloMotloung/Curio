@@ -1,6 +1,6 @@
 <template>
   <BackButton />
-  <ScrollProgress :sections="SECTIONS"/>
+  <ScrollProgress :sections="SECTIONS" />
 
   <div
     ref="loaderOverlay"
@@ -69,12 +69,12 @@
         <div class="kraal">
           <div class="kraal-image-stack">
             <img
-              src="../assets/wovenFrame.jpg"
+              src="./assets/wovenFrame.jpg"
               alt="Woven Frame"
               class="woven-frame"
             />
             <img
-              src="../assets/the kraal.jpg"
+              src="./assets/theKraal.jpg"
               alt="The Kraal"
               class="kraal-image-top"
             />
@@ -117,13 +117,13 @@
 import { ref, onMounted } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Background from "./Background.vue";
-import Timeline from "./HorizontalTimeline.vue";
-import BackButton from "./BackButton.vue";
-import ScrollProgress from "../../UniversalComponents/ScrollProgress.vue";
-import ScrollArrow from "../../UniversalComponents/ScrollArrow.vue";
-import PageEnd from "./PageEnd.vue";
-import ClockModel from "./ClockModel.vue";
+import Background from "./components/Background.vue";
+import Timeline from "./components/HorizontalTimeline.vue";
+import BackButton from "./components/BackButton.vue";
+import ScrollProgress from "../UniversalComponents/ScrollProgress.vue";
+import ScrollArrow from "../UniversalComponents/ScrollArrow.vue";
+import PageEnd from "./components/PageEnd.vue";
+import ClockModel from "./components/ClockModel.vue";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -139,15 +139,6 @@ export default {
     PageEnd,
   },
   setup() {
-    const SECTIONS = [
-      { position: 0.00, name: 'Landing' },
-      { position: 0.10, name: 'Timeline Start' },
-      { position: 0.20, name: 'Background Info' },
-      { position: 0.7, name: 'Image Showcase' },
-      { position: 1, name: 'Page End' }
-    ];
-
-
     const landingScreen = ref(null);
     const backgroundSection = ref(null);
     const timelineSection = ref(null);
@@ -159,6 +150,14 @@ export default {
     const currentClockMessage = ref(0);
     const loaderOverlay = ref(null);
     const isLoading = ref(true);
+
+    const SECTIONS = [
+      { position: 0.00, name: 'Landing' },
+      { position: 0.099, name: 'Timeline' },
+      { position: 0.16, name: 'Background Info' },
+      { position: 0.75, name: 'Image Showcase' },
+      { position: 1, name: 'Page End' }
+    ];
 
     const clockMessages = [
       "Four and a half months",
@@ -469,7 +468,7 @@ export default {
       currentClockMessage,
       stringPaths,
       isLoading,
-      SECTIONS,
+      SECTIONS
     };
   },
 };
