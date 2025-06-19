@@ -88,16 +88,21 @@ const artifactInfoFallBack = {
 const fetchData = async () => {
   loading.value = true;
   error.value = null;
-
+  let response 
   try {
-    const response = await fetch('http://ec2-54-74-232-255.eu-west-1.compute.amazonaws.com:5000/api/v1/dynamoDB/');
+
+    try{
+      response = await fetch('http://localhost:5000/api/v1/dynamoDB/');
+    }catch{
+      response = await fetch('http://ec2-54-74-232-255.eu-west-1.compute.amazonaws.com:5000/api/v1/dynamoDB/');
+    }
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     artifactInfo.value = await response.json();
 
-    console.log('Formatted artifact info:', artifactInfo.value);
+    // console.log('Formatted artifact info:', artifactInfo.value);
 
   } catch {
     artifactInfo.value = Object.values(artifactInfoFallBack)

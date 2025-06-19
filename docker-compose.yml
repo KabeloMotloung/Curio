@@ -8,19 +8,3 @@ services:
       - "5000:5000"
     env_file:
       - .env
-    
-#   db:
-#     image: postgres 
-#     restart: always 
-#     container_name: curio_db
-#     ports:
-#       - "8600:5432" 
-#     volumes:
-#       - pgdata:/var/lib/postgresql/data 
-#     environment:
-#       - POSTGRES_DB=curio_db 
-#       - POSTGRES_USER=postgres 
-#       - POSTGRES_PASSWORD=root 
-
-# volumes: 
-#   pgdata:
