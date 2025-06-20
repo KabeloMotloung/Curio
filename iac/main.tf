@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-1"  # Match your existing EC2 instance region
+  region = "eu-west-1" 
 }
 
 resource "aws_instance" "this-instance" {
