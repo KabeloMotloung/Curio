@@ -79,6 +79,8 @@ resource "aws_s3_bucket" "this-bucket" {
 resource "aws_dynamodb_table" "this-table" {
   name           = "curio-table"
   hash_key       = "artifact-id"
+  read_capacity  = 5              
+  write_capacity = 5
 
   attribute {
     name = "artifact-id"
