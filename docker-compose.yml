@@ -1,16 +1,10 @@
-services: # Define the services to be run by Docker Compose
-  db:
-    image: postgres 
-    restart: always 
-    container_name: curio_db
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: curio_app
     ports:
-      - "8600:5432" 
-    volumes:
-      - pgdata:/var/lib/postgresql/data 
-    environment:
-      - POSTGRES_DB=curio_db 
-      - POSTGRES_USER=postgres 
-      - POSTGRES_PASSWORD=root 
-
-volumes: 
-  pgdata:
+      - "5000:5000"
+    env_file:
+      - .env
