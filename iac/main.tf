@@ -85,40 +85,5 @@ resource "aws_dynamodb_table" "this-table" {
     type = "S"
   }
 
-  attribute {
-    name = "artist"
-    type = "S"
-  }
-
-  attribute {
-    name = "date"
-    type = "S"
-  }
-
-  attribute {
-    name = "description"
-    type = "S"
-  }
-
-  attribute {
-    name = "image_url"
-    type = "S"
-  }
-
-  attribute {
-    name = "location"
-    type = "S"
-  }
-
-  attribute {
-    name = "title"
-    type = "S"
-  }
-
-  attribute {
-    name = "type"
-    type = "S"
-  }
-
 
 }
