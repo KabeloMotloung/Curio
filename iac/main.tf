@@ -11,7 +11,7 @@ resource "aws_security_group" "curio_security_group" {
     from_port   = 5000
     to_port     = 5000
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Consider restricting this for production
+    cidr_blocks = ["0.0.0.0/0"]  
     description = "Custom TCP"
   }
 
@@ -38,7 +38,7 @@ resource "aws_security_group" "curio_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Consider restricting this to your IP for security
+    cidr_blocks = ["0.0.0.0/0"] 
     description = "SSH"
   }
 
@@ -86,14 +86,15 @@ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip
 unzip awscliv2.zip
 sudo ./aws/install
 
-aws configure set aws_access_key_id AKIA3QBW7CVS3HMBKTOW
-aws configure set aws_secret_access_key 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
+aws configure set aws_access_key_id 
+aws configure set aws_secret_access_key
 aws configure set default.region eu-west-1
 aws configure set default.output json
 
 # Pull and run container
 docker pull a1watson/curio-app:latest
 docker run -d -p 5000:5000
+#add envs here
   
   EOT
   user_data_replace_on_change = true
