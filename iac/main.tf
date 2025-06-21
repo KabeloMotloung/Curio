@@ -62,7 +62,7 @@ output "security_group_id" {
 }
 
 resource "aws_instance" "this-instance" {
-  ami                         = "ami-0d5688bba1210af52"
+  ami                         = "ami-0db1de538d84beea0"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   vpc_security_group_ids = [
@@ -91,19 +91,9 @@ aws configure set aws_secret_access_key xMRoxBAsGQu4FvY/zJjXTzqamgn0wZDoy6qsca1i
 aws configure set default.region eu-west-1
 aws configure set default.output json
 
-# Authenticate with ECR
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 790389265765.dkr.ecr.eu-west-1.amazonaws.com
-
 # Pull and run container
-docker pull 790389265765.dkr.ecr.eu-west-1.amazonaws.com/curio:latest
-docker run -d -p 5000:5000 \
-  -e AWS_REGION=eu-west-1 \
-  -e AWS_TABLE_NAME=curio-table \
-  -e AWS_BUCKET_NAME=curio-bucket \
-  -e AWS_ACCESS_KEY_ID=AKIA3QBW7CVST73MGYMY \
-  -e AWS_SECRET_ACCESS_KEY=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 \
-  --name curio-app \
-  790389265765.dkr.ecr.eu-west-1.amazonaws.com/curio:latest
+docker pull a1watson/curio-app:latest
+docker run -d -p 5000:5000
   
   EOT
   user_data_replace_on_change = true
@@ -118,18 +108,6 @@ docker run -d -p 5000:5000 \
 
   lifecycle {
     ignore_changes = [ami]
-  }
-}
-
-resource "aws_ecr_repository" "this-repo" {
-  name                 = "curio"
-  image_tag_mutability = "MUTABLE"
-  encryption_configuration {
-    encryption_type = "AES256"
-  }
-
-  lifecycle {
-    prevent_destroy = false
   }
 }
 
@@ -148,6 +126,4 @@ resource "aws_dynamodb_table" "this-table" {
     name = "artifact-id"
     type = "S"
   }
-
-
 }
