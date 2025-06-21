@@ -14,7 +14,7 @@ pause > nul
 
 echo.
 echo Requesting Administrator privileges...
-powershell -Command "Start-Process PowerShell -ArgumentList '-ExecutionPolicy Bypass -File \"%~dp0terraform-setup.ps1\"' -Verb RunAs"
+powershell -Command "Start-Process PowerShell -ArgumentList '-NoExit -ExecutionPolicy Bypass -File \"%~dp0terraform-setup.ps1\"' -Verb RunAs"
 
 echo.
 echo Script launched with Administrator privileges.

@@ -1,4 +1,5 @@
-# Check if running as Administrator
+Set-Location -Path $PSScriptRoot
+
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Host "This script requires Administrator privileges. Please run PowerShell as Administrator." -ForegroundColor Red
     exit 1
@@ -87,3 +88,6 @@ if ($answer -eq "yes") {
 } else {
     Write-Host "Apply cancelled." -ForegroundColor Yellow
 }
+
+Write-Host "Press Enter to exit..."
+Read-Host
